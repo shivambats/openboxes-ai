@@ -1143,13 +1143,22 @@ class ProductAvailabilityService {
             add(Restrictions.eq('pa.location.id', command.location.id))
         }
 
+        DetachedCriteria needsAttentionQuery = DetachedCriteria.forClass(InventoryItem, 'reviewItem').with {
+            setProjection Projections.id()
+            add(Restrictions.eqProperty('reviewItem.product.id', 'this.id'))
+            add(Restrictions.eq('reviewItem.recallReviewState', 'NEEDS_ATTENTION'))
+        }
+
         PagedResultList products = Product.createCriteria().list([max: command.maxResults, offset: command.offset]) {
             eq("active", true)
+            if (command.showNeedsAttentionOnly) {
+                add Subqueries.exists(needsAttentionQuery)
+            }
 
             // Restrict products by selected product types
             if (command.productTypes) {
                 'in'("productType", command.productTypes)
-                if (!command.showOutOfStockProducts) {
+                if (!command.showOutOfStockProducts && !command.showNeedsAttentionOnly) {
                     // Read: 0 is less than result from subquery
                     add Subqueries.lt(0L, aggregatedQuantityQuery)
                 }
@@ -1157,7 +1166,7 @@ class ProductAvailabilityService {
             // Or apply default product type restrictions:
             // return products with product type with activity searchable no stock OR (searchable AND qoh > 0)
             else {
-                if (!command.showOutOfStockProducts) {
+                if (!command.showOutOfStockProducts && !command.showNeedsAttentionOnly) {
 
                     // SUM(product availability.quantity_on_hand) > 0
                     def quantityGreaterThanZero = Subqueries.lt(0L, aggregatedQuantityQuery)

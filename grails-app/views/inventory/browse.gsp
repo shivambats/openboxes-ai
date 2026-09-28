@@ -70,6 +70,9 @@
 													<g:message code="product.label"/>
 												</th>
 												<th class="middle">
+													<warehouse:message code="inventory.recallReview.label" default="Recall review"/>
+												</th>
+												<th class="middle">
 													<g:message code="productType.label"/>
 												</th>
                                                 <th class="middle">
@@ -109,6 +112,13 @@
 																<g:renderHandlingIcons product="${searchResult?.product}" />
 														   	</g:link>
 														</td>
+														<td class="middle">
+															<g:if test="${reviewCountsByProductId[searchResult?.product?.id]}">
+																<g:link controller="inventoryItem" action="showLotNumbers" params="['product.id': searchResult.product.id]">
+																	<g:render template="/inventoryItem/recallReviewBadge" model="[inventoryItem: null, reviewCount: reviewCountsByProductId[searchResult.product.id]]"/>
+																</g:link>
+															</g:if>
+														</td>
 														<td>
 															${searchResult?.product?.productType?.name}
 														</td>
@@ -139,7 +149,7 @@
 											</g:if>
 											<g:unless test="${commandInstance?.searchResults}">
 												<tr>
-													<td colspan="12" class="even center">
+													<td colspan="8" class="even center">
 														<div class="fade empty">
                                                             <warehouse:message code="inventory.searchNoMatch.message"
                                                                                args="[commandInstance?.searchTerms?:'',format.metadata(obj:commandInstance?.category)]"/>

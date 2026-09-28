@@ -149,4 +149,26 @@ class RoleInterceptorSpec extends Specification {
         'createProductFromTemplate' | 'manager' || 'requires'
         'createProductFromTemplate' | 'invoice' || 'does not require'
     }
+
+    void "shipment clerk access is restricted to the shipment allowlist"() {
+        expect:
+        RoleInterceptor.isShipmentClerkAction(controller, action) == allowed
+
+        where:
+        controller             | action                    || allowed
+        'shipment'             | 'showDetails'             || true
+        'shipment'             | 'save'                    || true
+        'shipment'             | 'deleteShipment'          || false
+        'shipment'             | 'receiveShipment'         || false
+        'stockMovementApi'     | 'read'                    || true
+        'stockMovementApi'     | 'updateShipment'          || true
+        'stockMovementApi'     | 'delete'                  || false
+        'stockMovementApi'     | 'updateInventoryItems'    || false
+        'stockMovementItemApi' | 'getStockMovementItems'   || true
+        'stockMovementItemApi' | 'eraseItem'               || false
+        'productApi'           | 'list'                    || true
+        'productApi'           | 'save'                    || false
+        'inventory'            | 'browse'                  || false
+        'user'                 | 'list'                    || false
+    }
 }

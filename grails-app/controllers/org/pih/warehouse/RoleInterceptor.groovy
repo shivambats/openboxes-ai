@@ -38,7 +38,8 @@ class RoleInterceptor {
 
     def static managerActions = [
         'inventory'           : ['createOutboundTransfer'],
-        'stockMovementItemApi': ['eraseItem']
+        'stockMovementItemApi': ['eraseItem'],
+        'shipmentReview'      : ['index', 'resolve']
     ]
 
     def static adminControllers = ['createProduct', 'createProductFromTemplate', 'admin']
@@ -65,7 +66,8 @@ class RoleInterceptor {
         'productsConfigurationApi'  : ['downloadCategories', 'importCategories'],
         'locationType'              : ['create', 'edit', 'delete', 'update', 'save'],
         'quartz'                    : ['*'],
-        'jobs'                      : ['*']
+        'jobs'                      : ['*'],
+        'recallReviewApi'           : ['markAttention', 'resolve']
     ]
 
     def static invoiceActions = [
@@ -100,11 +102,62 @@ class RoleInterceptor {
         'stockMovement'       : ['list'],
     ]
 
+    /**
+     * ROLE_SHIPMENT_CLERK is intentionally a default-deny service role. Keep
+     * this allowlist narrow: shipment records and the read-only lookup data
+     * required to work with them. Destructive actions, inventory adjustment,
+     * receiving, purchasing, orders, and user administration are excluded.
+     */
+    def static shipmentClerkActions = [
+        'shipment': [
+            'redirect', 'show', 'list', 'create', 'save', 'update',
+            'showDetails', 'showTracking', 'showTransactions', 'editDetails',
+            'sendShipment', 'refreshCurrentStatus', 'downloadLabels',
+            'showPackingList', 'downloadPackingList', 'editContents',
+            'editContainer', 'copyContainer', 'addDocument', 'editDocument',
+            'addComment', 'savePackage', 'saveComment', 'editItem', 'editEvent',
+            'addEvent', 'saveEvent', 'addShipmentItem', 'addReferenceNumber',
+            'form', 'view', 'generateDocuments', 'addToShipment',
+            'addToShipmentPost', 'exportPackingList'
+        ],
+        'shipmentItem': ['index', 'list', 'create', 'save', 'show', 'edit', 'update'],
+        'shipmentEvent': ['index', 'list', 'create', 'save', 'show', 'edit', 'update'],
+        'createShipmentWorkflow': ['index', 'createShipmentFlow'],
+        'stockMovement': [
+            'index', 'create', 'createOutbound', 'createInbound',
+            'createCombinedShipments', 'edit', 'show', 'list', 'updateStatus',
+            'documents', 'comments', 'addComment', 'editComment', 'saveComment',
+            'updateComment', 'packingList', 'receipts', 'events', 'uploadDocument',
+            'uploadDocuments', 'addDocument', 'exportCsv', 'exportItems'
+        ],
+        'stockMovementApi': [
+            'list', 'read', 'create', 'createCombinedShipments', 'updateShipment',
+            'status', 'updateStatus', 'updateShipmentItems', 'shippedItems',
+            'downloadPackingListTemplate', 'getDocuments'
+        ],
+        'stockMovementItemApi': ['list', 'read', 'details', 'getStockMovementItems'],
+        'selectOptionsApi': ['shipmentStatusCodesOptions'],
+        'locationApi': ['list'],
+        'productApi': ['list', 'search'],
+        'api': ['getAppContext', 'getMenuConfig'],
+        'dashboard': ['megamenu']
+    ]
+
     RoleInterceptor() {
         matchAll().except(uri: '/static/**').except(controller: "errors").except(uri: "/info").except(uri: "/health")
     }
 
     boolean before() {
+
+        // Evaluate the service-account ceiling before configurable RBAC rules.
+        if (session.user && userService.getEffectiveRoles(org.pih.warehouse.core.User.get(session.user.id))
+                .any { it.roleType == RoleType.ROLE_SIDECAR_BOT }) {
+            boolean allowed = isSidecarAction(controllerName, actionName)
+            if (!allowed) {
+                render status: 403, contentType: 'application/json', text: '{"error":"Shipment sidecar permission required"}'
+            }
+            return allowed
+        }
 
         def rules = grailsApplication.config.openboxes.security.rbac.rules
         def rule = rules.find { it.controller == controllerName && it.actions.contains(actionName) ||
@@ -145,6 +198,17 @@ class RoleInterceptor {
             return true
         }
 
+        // Shipment clerks are service/scoped users. Once this role is present,
+        // do not fall through to the broad hierarchical Browser/Manager checks.
+        if (session.user && userService.hasRoleShipmentClerk(session.user)) {
+            if (isShipmentClerkAction(controllerName, actionName)) {
+                return true
+            }
+            log.info("Shipment clerk ${session?.user?.username} does not have access to ${controllerName}/${actionName}")
+            redirect(controller: "errors", action: "handleForbidden")
+            return false
+        }
+
         // Authorized users
         def isNotAuthenticated = !userService.isUserInRole(session.user, RoleType.ROLE_AUTHENTICATED)
         def isNotBrowser = !userService.canUserBrowse(session.user) && !needRequestorOrManager(controllerName, actionName)
@@ -162,6 +226,12 @@ class RoleInterceptor {
             return false
         }
         return true
+    }
+
+    static boolean isSidecarAction(String controller, String action) {
+        (controller == 'shipmentApi' && action in ['list', 'read', 'history', 'update', 'comment', 'event', 'sync']) ||
+                (controller == 'api' && action in ['login', 'logout']) ||
+                (controller == 'auth' && action == 'logout')
     }
 
     static Boolean needSuperuser(controllerName, actionName) {
@@ -201,5 +271,9 @@ class RoleInterceptor {
 
     static Boolean needAuthenticatedActions(controllerName, actionName) {
         authenticatedActions[controllerName]?.contains(actionName)
+    }
+
+    static Boolean isShipmentClerkAction(controllerName, actionName) {
+        shipmentClerkActions[controllerName]?.contains(actionName) ?: false
     }
 }

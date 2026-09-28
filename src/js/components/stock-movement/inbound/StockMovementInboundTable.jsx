@@ -24,6 +24,7 @@ import StatusIndicator from 'utils/StatusIndicator';
 import Translate, { translateWithDefaultMessage } from 'utils/Translate';
 
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import './StockMovementInboundTable.scss';
 
 const StockMovementInboundTable = ({
   filterParams,
@@ -172,6 +173,21 @@ const StockMovementInboundTable = ({
           </TableCell>
         );
       },
+    },
+    {
+      Header: <Translate id="react.stockMovement.actionRequired.label" defaultMessage="Action Required" />,
+      accessor: 'actionRequired',
+      minWidth: 190,
+      sortable: false,
+      Cell: (row) => (
+        <TableCell {...row}>
+          {row.value === 'NEEDS_HUMAN_ATTENTION' ? (
+            <span className="inbound-attention-label">
+              {translate('react.stockMovement.needsHumanAttention.label', 'Needs Human Attention')}
+            </span>
+          ) : '—'}
+        </TableCell>
+      ),
     },
     {
       Header: <Translate id="react.stockMovement.column.name.label" defaultMessage="Name" />,

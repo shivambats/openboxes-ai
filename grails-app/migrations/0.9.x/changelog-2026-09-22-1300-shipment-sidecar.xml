@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet id="2026-09-22-1300-sidecar-comments" author="openai">
+        <sql>ALTER TABLE comment MODIFY COLUMN comment TEXT</sql>
+    </changeSet>
+    <changeSet id="2026-09-22-1301-sidecar-role" author="openai">
+        <preConditions onFail="MARK_RAN"><sqlCheck expectedResult="0">SELECT COUNT(*) FROM role WHERE role_type='ROLE_SIDECAR_BOT'</sqlCheck></preConditions>
+        <insert tableName="role">
+            <column name="id" value="ROLE_SIDECAR_BOT"/><column name="version" valueNumeric="0"/>
+            <column name="role_type" value="ROLE_SIDECAR_BOT"/><column name="name" value="Shipment Sidecar"/>
+            <column name="description" value="VIEW_SHIPMENT, EDIT_SHIPMENT (ETA only), ADD_COMMENT, CREATE_EVENT"/>
+        </insert>
+    </changeSet>
+    <changeSet id="2026-09-22-1302-sidecar-events" author="openai">
+        <sql>
+            INSERT INTO event_type (id,version,name,description,event_code,sort_order,active,date_created,last_updated)
+            SELECT name,0,name,'Sidecar shipment audit event','CUSTOM',100,1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP
+            FROM (SELECT 'AGENT_API_CHECKED' AS name UNION ALL SELECT 'AGENT_PORTAL_CHECKED'
+                  UNION ALL SELECT 'CHECK_SUCCESS' UNION ALL SELECT 'CARRIER_TRACKING_SYNCED'
+                  UNION ALL SELECT 'NEEDS_HUMAN_INTERVENTION' UNION ALL SELECT 'SIDECAR_WRITE') names
+            WHERE NOT EXISTS (SELECT 1 FROM event_type e WHERE e.name=names.name AND e.event_code='CUSTOM');
+        </sql>
+    </changeSet>
+    <changeSet id="2026-09-23-1303-business-delivery-events" author="openai">
+        <sql>
+            INSERT INTO event_type (id,version,name,description,event_code,sort_order,active,date_created,last_updated)
+            SELECT name,0,name,'Shipment delivery update','CUSTOM',100,1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP
+            FROM (SELECT 'Expected delivery date revised' AS name UNION ALL SELECT 'Delivery status confirmed'
+                  UNION ALL SELECT 'Delivery update requires review' UNION ALL SELECT 'Shipment note added') names
+            WHERE NOT EXISTS (SELECT 1 FROM event_type e WHERE e.name=names.name AND e.event_code='CUSTOM');
+        </sql>
+    </changeSet>
+    <!-- Convert only the two named synthetic fixtures. Keep the original Event and EventLog rows
+         as audit records, but detach the redundant process events from shipment history. -->
+    <changeSet id="2026-09-23-1304-business-fixture-history" author="openai">
+        <sql>
+            UPDATE event e
+            JOIN shipment_event se ON se.event_id=e.id
+            JOIN shipment s ON s.id=se.shipment_events_id
+            JOIN event_type et ON et.id=e.event_type_id
+            SET e.event_type_id='Expected delivery date revised'
+            WHERE s.shipment_number IN ('SHIP-2026-API1','SHIP-2026-WEB1')
+              AND s.additional_information LIKE '%"synthetic":true%'
+              AND et.name='CARRIER_TRACKING_SYNCED';
+        </sql>
+        <sql>
+            UPDATE event_log el
+            JOIN event e ON e.id=el.event_id
+            JOIN shipment_event se ON se.event_id=e.id
+            JOIN shipment s ON s.id=se.shipment_events_id
+            JOIN event_type et ON et.id=e.event_type_id
+            SET el.message='Expected delivery date revised'
+            WHERE s.shipment_number IN ('SHIP-2026-API1','SHIP-2026-WEB1')
+              AND s.additional_information LIKE '%"synthetic":true%'
+              AND et.name='Expected delivery date revised';
+        </sql>
+        <sql>
+            DELETE sel FROM shipment_event_log sel
+            JOIN event_log el ON el.id=sel.event_log_id
+            JOIN event e ON e.id=el.event_id
+            JOIN event_type et ON et.id=e.event_type_id
+            JOIN shipment s ON s.id=sel.shipment_id
+            WHERE s.shipment_number IN ('SHIP-2026-API1','SHIP-2026-WEB1')
+              AND s.additional_information LIKE '%"synthetic":true%'
+              AND et.name IN ('AGENT_API_CHECKED','AGENT_PORTAL_CHECKED','CHECK_SUCCESS');
+        </sql>
+        <sql>
+            DELETE se FROM shipment_event se
+            JOIN event e ON e.id=se.event_id
+            JOIN event_type et ON et.id=e.event_type_id
+            JOIN shipment s ON s.id=se.shipment_events_id
+            WHERE s.shipment_number IN ('SHIP-2026-API1','SHIP-2026-WEB1')
+              AND s.additional_information LIKE '%"synthetic":true%'
+              AND et.name IN ('AGENT_API_CHECKED','AGENT_PORTAL_CHECKED','CHECK_SUCCESS');
+        </sql>
+        <sql>
+            UPDATE comment c
+            JOIN shipment_comment sc ON sc.comment_id=c.id
+            JOIN shipment s ON s.id=sc.shipment_comments_id
+            SET c.comment=CASE s.shipment_number
+                WHEN 'SHIP-2026-API1' THEN 'EasyPost reports a weather delay at Columbus, OH Terminal. Reason: Weather delay on I-70 East. Expected delivery changed from 20 Sep 2026, 00:00 UTC to 24 Sep 2026, 10:00 UTC.'
+                WHEN 'SHIP-2026-WEB1' THEN 'LocalLTL reports a weather delay at Columbus, OH Terminal. Reason: Weather delay on I-70 East. Expected delivery changed from 21 Sep 2026, 00:00 UTC to 24 Sep 2026, 10:00 UTC.'
+                ELSE c.comment END
+            WHERE s.shipment_number IN ('SHIP-2026-API1','SHIP-2026-WEB1')
+              AND s.additional_information LIKE '%"synthetic":true%'
+              AND c.comment LIKE '%Sidecar Agent Report%';
+        </sql>
+    </changeSet>
+    <changeSet id="2026-09-23-1305-retire-technical-event-options" author="openai">
+        <sql>
+            UPDATE event_type SET active=0
+            WHERE event_code='CUSTOM'
+              AND name IN ('AGENT_API_CHECKED','AGENT_PORTAL_CHECKED','CHECK_SUCCESS',
+                           'CARRIER_TRACKING_SYNCED','NEEDS_HUMAN_INTERVENTION','SIDECAR_WRITE');
+        </sql>
+    </changeSet>
+    <changeSet id="2026-09-24-1306-carrier-email-events" author="openai">
+        <sql>
+            INSERT INTO event_type (id,version,name,description,event_code,sort_order,active,date_created,last_updated)
+            SELECT name,0,name,'Carrier email and receiving dock action','CUSTOM',100,1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP
+            FROM (SELECT 'CARRIER_EMAIL_RESOLVED' AS name UNION ALL SELECT 'Dock reappointment required') names
+            WHERE NOT EXISTS (SELECT 1 FROM event_type e WHERE e.name=names.name AND e.event_code='CUSTOM');
+        </sql>
+    </changeSet>
+    <changeSet id="2026-09-24-1307-incomplete-carrier-email-event" author="openai">
+        <sql>
+            INSERT INTO event_type (id,version,name,description,event_code,sort_order,active,date_created,last_updated)
+            SELECT 'CARRIER_EMAIL_NEEDS_CLARIFICATION',0,'CARRIER_EMAIL_NEEDS_CLARIFICATION',
+                   'Carrier email contains incomplete status evidence','CUSTOM',100,1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP
+            WHERE NOT EXISTS (SELECT 1 FROM event_type e
+                              WHERE e.name='CARRIER_EMAIL_NEEDS_CLARIFICATION' AND e.event_code='CUSTOM');
+        </sql>
+    </changeSet>
+    <changeSet id="2026-09-25-1308-carrier-date-only-event" author="openai">
+        <sql>
+            INSERT INTO event_type (id,version,name,description,event_code,sort_order,active,date_created,last_updated)
+            SELECT 'CARRIER_EMAIL_DATE_REPORTED',0,'CARRIER_EMAIL_DATE_REPORTED',
+                   'Carrier reported a delivery day without an exact arrival time','CUSTOM',100,1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP
+            WHERE NOT EXISTS (SELECT 1 FROM event_type e
+                              WHERE e.name='CARRIER_EMAIL_DATE_REPORTED' AND e.event_code='CUSTOM');
+        </sql>
+    </changeSet>
+</databaseChangeLog>

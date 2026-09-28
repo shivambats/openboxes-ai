@@ -88,6 +88,7 @@ import org.pih.warehouse.shipping.Shipment
 import org.pih.warehouse.shipping.ShipmentIdentifierService
 import org.pih.warehouse.shipping.ShipmentItem
 import org.pih.warehouse.shipping.ShipmentService
+import org.pih.warehouse.shipping.ShipmentSidecarService
 import org.pih.warehouse.shipping.ShipmentStatusCode
 import org.pih.warehouse.shipping.ShipmentType
 import org.pih.warehouse.shipping.ShipmentWorkflow
@@ -103,6 +104,7 @@ class StockMovementService {
     ShipmentIdentifierService shipmentIdentifierService
     RequisitionService requisitionService
     ShipmentService shipmentService
+    ShipmentSidecarService shipmentSidecarService
     InventoryService inventoryService
     ProductAvailabilityService productAvailabilityService
     LocationService locationService
@@ -444,6 +446,9 @@ class StockMovementService {
         Date createdBefore = params.createdBefore ? Date.parse("MM/dd/yyyy", params.createdBefore) : null
         List<ShipmentType> shipmentTypes = params.list("shipmentType") ? params.list("shipmentType").collect{ ShipmentType.read(it) } : null
         Location currentLocation = AuthService.currentLocation
+        Set<String> attentionShipmentIds = params.actionRequired == 'NEEDS_HUMAN_ATTENTION' ?
+                shipmentSidecarService.shipmentIdsNeedingHumanAttention(
+                        criteria.destination ?: currentLocation) : null
 
         PagedResultList<InboundStockMovementListItem> stockMovements = InboundStockMovementListItem.createCriteria().list(max: max, offset: offset) {
             // OBPIH-6403: We want to hide SMs with requisition of status REJECTED from the inbound list (only for the depot-depot case!!)
@@ -471,6 +476,13 @@ class StockMovementService {
                 }
             }
             if (criteria.destination) eq("destination", criteria.destination)
+            if (attentionShipmentIds != null) {
+                if (attentionShipmentIds) {
+                    shipment { 'in'('id', attentionShipmentIds) }
+                } else {
+                    eq('id', '__no_matching_review__')
+                }
+            }
             if (criteria.origin) eq("origin", criteria.origin)
             if (criteria.receiptStatusCodes) 'in'("currentStatus", criteria.receiptStatusCodes)
             if (criteria.createdBy) {

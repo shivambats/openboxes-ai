@@ -42,6 +42,12 @@ class UrlMappings {
 
         // REST APIs with complex resource names or subresources
 
+        "/api/shipments/$id/history"(controller: 'shipmentApi', action: 'history', method: 'GET')
+        "/api/shipments/$id/comments"(controller: 'shipmentApi', action: 'comment', method: 'POST')
+        "/api/shipments/$id/events"(controller: 'shipmentApi', action: 'event', method: 'POST')
+        "/api/shipments/$id/sync"(controller: 'shipmentApi', action: 'sync', method: 'POST')
+        "/api/sidecar/sandbox/seed"(controller: 'shipmentSandboxApi', action: 'seed', method: 'POST')
+
         "/api/categories"(parseRequest: true) {
             controller = { "categoryApi" }
             action = [GET: "list", POST: "save"]
@@ -140,6 +146,16 @@ class UrlMappings {
             action = [GET: "getInventoryItem"]
         }
 
+        "/api/recallReviews/attention"(parseRequest: true) {
+            controller = { "recallReviewApi" }
+            action = [POST: "markAttention"]
+        }
+
+        "/api/recallReviews/resolve"(parseRequest: true) {
+            controller = { "recallReviewApi" }
+            action = [POST: "resolve"]
+        }
+
         "/api/products/getLatestInventoryCountDate" {
             controller = { "productApi" }
             action = [GET: "getLatestInventoryCountDate"]
@@ -222,6 +238,16 @@ class UrlMappings {
         "/api/helpscout/configuration" {
             controller = { "helpScoutApi" }
             action = [GET: "configuration"]
+        }
+
+        "/api/agent/runs"(parseRequest: true) {
+            controller = "agentApi"
+            action = [GET: "listRuns", POST: "createRun"]
+        }
+
+        "/api/agent/runs/$id/events"(parseRequest: true) {
+            controller = "agentApi"
+            action = [GET: "listEvents"]
         }
 
         // Stock Movement Item API

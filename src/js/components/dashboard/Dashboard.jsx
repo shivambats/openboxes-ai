@@ -15,6 +15,7 @@ import {
   reorderIndicators,
   resetIndicators,
 } from 'actions';
+import AgentActivityPanel from 'components/dashboard/AgentActivityPanel';
 import Filter from 'components/dashboard/Filter';
 import GraphCard from 'components/dashboard/GraphCard';
 import LoadingNumbers from 'components/dashboard/LoadingNumbers';
@@ -431,6 +432,10 @@ class Dashboard extends Component {
             pageFilters={this.state.pageFilters}
           />
           <div className="cards-container">
+            <AgentActivityPanel
+              locationId={this.props.currentLocation}
+              currentUser={this.props.currentUser}
+            />
             {numberCards}
             <SortableCards
               allLocations={this.state.allLocations}

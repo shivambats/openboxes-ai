@@ -248,6 +248,7 @@ openboxes {
                         [label: "inbound.create.label", defaultLabel: "Create Inbound Movement", href: "/stockMovement/createInbound?direction=INBOUND"],
                         [label: "stockRequest.create.label", defaultLabel: "Create Stock Request", href: "/stockMovement/createRequest"],
                         [label: "inbound.list.label", defaultLabel: "List Inbound Movements", href: "/stockMovement/list?direction=INBOUND"],
+                        [label: "shipment.reviewQueue.label", defaultLabel: "Shipment human reviews", href: "/shipmentReview/index", minimumRequiredRole: RoleType.ROLE_MANAGER],
                         [label: "inboundReturns.create.label", defaultLabel: "Create Inbound Return", href: "/stockTransfer/createInboundReturn"]
                     ]
                 ],
@@ -286,6 +287,7 @@ openboxes {
                         [label: "outbound.create.label", defaultLabel: "Create Outbound Movements", href: "/stockMovement/createOutbound?direction=OUTBOUND"],
                         [label: "outbound.import.label", defaultLabel: "Import Completed Outbound", href: "/stockMovement/importOutboundStockMovement"],
                         [label: "outbound.list.label", defaultLabel: "List Outbound Movements", href: "/stockMovement/list?direction=OUTBOUND"],
+                        [label: "shipment.reviewQueue.label", defaultLabel: "Shipment human reviews", href: "/shipmentReview/index", minimumRequiredRole: RoleType.ROLE_MANAGER],
                         [label: "requests.list.label", defaultLabel: "List Requests", href: "/stockMovement/list?direction=OUTBOUND&sourceType=ELECTRONIC"],
                         [label: "outboundReturns.create.label", defaultLabel: "Create Outbound Return", href: "/stockTransfer/createOutboundReturn"]
                     ]

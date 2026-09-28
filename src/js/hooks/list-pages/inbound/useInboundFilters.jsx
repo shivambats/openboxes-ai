@@ -75,6 +75,12 @@ const useInboundFilters = () => {
       defaultValues.receiptStatusCode = shipmentStatuses
         .filter(({ value }) => statuses.includes(value));
     }
+    if (queryProps.actionRequired === 'NEEDS_HUMAN_ATTENTION') {
+      defaultValues.actionRequired = {
+        id: 'NEEDS_HUMAN_ATTENTION',
+        label: 'Needs Human Attention',
+      };
+    }
     if (queryProps.origin) {
       defaultValues.origin = await fetchLocationById(queryProps.origin);
     }
@@ -147,6 +153,7 @@ const useInboundFilters = () => {
       createdBefore: { name: 'createdBefore' },
       receiptStatusCode: { name: 'receiptStatusCode', accessor: 'id' },
       shipmentType: { name: 'shipmentType', accessor: 'id' },
+      actionRequired: { name: 'actionRequired', accessor: 'id' },
     };
 
     const transformedParams = transformFilterParams(values, filterAccessors);

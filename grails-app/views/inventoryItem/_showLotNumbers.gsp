@@ -10,13 +10,14 @@
 				<tr class="odd">
 					<th class="center" style=""><warehouse:message code="default.actions.label"/></th>
 					<th><warehouse:message code="default.lotSerialNo.label"/></th>
+					<th><warehouse:message code="inventory.recallReview.label" default="Recall review"/></th>
 					<th><warehouse:message code="default.expires.label"/></th>
 				</tr>
 			</thead>
 			<tbody>
 				<g:if test="${!commandInstance?.product?.inventoryItems}">
 					<tr class="even" style="min-height: 100px;">
-						<td colspan="3" style="text-align: center; vertical-align: middle">
+						<td colspan="4" style="text-align: center; vertical-align: middle">
 							<warehouse:message code="inventory.noItemsCurrentlyInStock.message"
 											   args="[format.product(product:commandInstance?.product).decodeHTML()]"/>
 						</td>
@@ -77,6 +78,9 @@
 						   ${inventoryItem?.lotNumber?:warehouse.message(code:'default.label')}
 						</td>
 						<td class="middle">
+						   <g:render template="recallReviewBadge" model="[inventoryItem: inventoryItem, reviewCount: 0]"/>
+						</td>
+						<td class="middle">
 							<g:if test="${inventoryItem?.expirationDate}">
 								<format:expirationDate obj="${inventoryItem?.expirationDate}"/>
 							</g:if>
@@ -117,4 +121,3 @@
 		</table>
 		</g:form>
 </div>
-

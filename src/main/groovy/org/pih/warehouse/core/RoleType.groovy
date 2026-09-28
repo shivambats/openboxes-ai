@@ -62,6 +62,7 @@ enum RoleType {
     ROLE_PACKER('Packer', 50),
     ROLE_RECEIVER('Receiver', 50),
     ROLE_SHIPMENT_CLERK('Shipment Clerk', 50),
+    ROLE_SIDECAR_BOT('Shipment Sidecar', 50),
     ROLE_STOCKER('Stocker', 50),
     ROLE_WORKER('Worker', 50),
 
@@ -121,6 +122,8 @@ enum RoleType {
                 ROLE_FINANCE,
                 ROLE_INVOICE,
                 ROLE_PRODUCT_MANAGER,
+                ROLE_SHIPMENT_CLERK,
+                ROLE_SIDECAR_BOT,
                 ROLE_USER_NOTIFICATION,
                 ROLE_PRODUCT_NOTIFICATION,
                 ROLE_ORDER_NOTIFICATION,
@@ -191,7 +194,9 @@ enum RoleType {
                 ROLE_MANAGER,
                 ROLE_ADMIN,
                 ROLE_SUPERUSER,
-                ROLE_BROWSER
+                ROLE_BROWSER,
+                ROLE_SHIPMENT_CLERK,
+                ROLE_SIDECAR_BOT
         ]
     }
 }

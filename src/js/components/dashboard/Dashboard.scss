@@ -248,6 +248,136 @@
   flex: 1;
 }
 
+.agent-activity-panel {
+  background: #fff;
+  border: 1px solid #d8e1e4;
+  border-left: 4px solid #1b7f79;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  margin: 16px 6%;
+  max-width: 1100px;
+  padding: 16px 20px;
+
+  .agent-activity-heading {
+    align-items: flex-start;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+
+    h2 {
+      color: #24464f;
+      font-size: 18px;
+      margin: 0 0 4px;
+    }
+
+    h2 i { margin-right: 8px; }
+
+    p {
+      color: #5c6b70;
+      font-size: 13px;
+      margin: 0;
+    }
+  }
+
+  .agent-activity-message {
+    color: #53636a;
+    font-size: 14px;
+    margin: 16px 0 0;
+  }
+
+  .agent-start-form {
+    align-items: end;
+    display: flex;
+    gap: 8px;
+    margin: 12px 0;
+
+    label { font-size: 12px; margin: 0; }
+
+    input {
+      border: 1px solid #ced4da;
+      border-radius: 3px;
+      font-size: 13px;
+      height: 31px;
+      padding: 5px 8px;
+    }
+  }
+
+  .agent-activity-error { color: #a33a32; }
+
+  .agent-activity-runs {
+    list-style: none;
+    margin: 16px 0 0;
+    padding: 0;
+  }
+
+  .agent-activity-run {
+    border-top: 1px solid #e5ebed;
+    padding: 12px 0;
+
+    p { font-size: 14px; margin: 8px 0; }
+  }
+
+  .agent-activity-run-heading {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  .agent-run-select {
+    align-items: center;
+    background: none;
+    border: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    text-align: left;
+    width: 100%;
+  }
+
+  .agent-event-list { color: #53636a; font-size: 13px; margin: 8px 0 0; padding-left: 20px; }
+
+  .agent-status {
+    background: #edf4f3;
+    border-radius: 12px;
+    color: #23645f;
+    font-size: 12px;
+    padding: 3px 8px;
+    text-transform: capitalize;
+  }
+
+  .agent-status-awaiting_approval { background: #fff3d9; color: #856404; }
+  .agent-status-blocked { background: #fbe7e6; color: #9a2f28; }
+  .agent-proposal, .agent-approval-required { display: block; font-size: 13px; }
+  .agent-proposal { color: #24464f; }
+  .agent-approval-required { color: #856404; margin-top: 4px; }
+  .agent-approval-required i { margin-right: 5px; }
+
+  .agent-evidence, .agent-action-state, .agent-decision-state {
+    color: #53636a;
+    font-size: 13px;
+    margin: 8px 0 0;
+  }
+
+  .agent-controls { display: flex; gap: 8px; margin-top: 12px; }
+
+  .agent-activity-details {
+    color: #53636a;
+    font-size: 13px;
+    margin-top: 12px;
+
+    summary { cursor: pointer; }
+    ol { margin: 8px 0 0; padding-left: 20px; }
+    li { margin: 6px 0; }
+    time { color: #748087; display: block; font-size: 12px; }
+  }
+
+  @media (max-width: 600px) {
+    margin: 12px;
+    .agent-activity-heading, .agent-activity-run-heading { align-items: flex-start; flex-direction: column; }
+  }
+}
+
 .archive-div {
   position: fixed;
   width: 100%;

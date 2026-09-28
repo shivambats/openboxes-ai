@@ -114,11 +114,14 @@
 						<g:link controller="shipment" action="list" params="[status:'PENDING']"><warehouse:message code="shipping.listOutgoing.label"  default="List outgoing shipments"/></g:link>
 					</span>
 				</li>
-				<li>
-					<span class="menuButton">
-						<g:link controller="createShipmentWorkflow" action="index"><warehouse:message code="shipping.add.label" default="Add a shipment"/></g:link>
-					</span>
-				</li>
+                <li>
+                    <span class="menuButton">
+                        <g:link controller="createShipmentWorkflow" action="index"><warehouse:message code="shipping.add.label" default="Add a shipment"/></g:link>
+                    </span>
+                </li>
+                <g:isUserInRole roles="[org.pih.warehouse.core.RoleType.ROLE_MANAGER, org.pih.warehouse.core.RoleType.ROLE_ADMIN, org.pih.warehouse.core.RoleType.ROLE_SUPERUSER]">
+                    <li><span class="menuButton"><g:link controller="shipmentReview" action="index">Shipment human reviews</g:link></span></li>
+                </g:isUserInRole>
 			</ul>
 		</div>
 	</g:supports>

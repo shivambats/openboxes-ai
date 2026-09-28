@@ -25,10 +25,11 @@ class Comment implements Comparable, Serializable {
 
     static mapping = {
         id generator: 'uuid'
+        comment type: 'text'
     }
 
     static constraints = {
-        comment(nullable: false, maxSize: 255)
+        comment(nullable: false, maxSize: 60000)
         sender(nullable: true)
         recipient(nullable: true)
         dateSent(nullable: true)

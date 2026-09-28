@@ -37,7 +37,7 @@
 							   <td valign="top" class="value ${hasErrors(bean: eventInstance, field: 'eventType', 'errors')}">
 									<g:if test="${!eventInstance?.eventType}">
 										<g:select id="eventType.id" name='eventType.id' noSelection="['':warehouse.message(code:'default.selectOne.label')]"
-                                                  from='${org.pih.warehouse.core.EventType.list()}' optionKey="id"
+                                                  from='${org.pih.warehouse.core.EventType.list().findAll { it.active }}' optionKey="id"
                                                   optionValue="name" value="${eventInstance.eventType}" >
 										</g:select>
 									</g:if>

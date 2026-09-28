@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet id="2026-09-22-1200-add-shipment-clerk-role" author="openai">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*) FROM role WHERE role_type = 'ROLE_SHIPMENT_CLERK'
+            </sqlCheck>
+        </preConditions>
+        <insert tableName="role">
+            <column name="id" value="ROLE_SHIPMENT_CLERK"/>
+            <column name="version" valueNumeric="0"/>
+            <column name="role_type" value="ROLE_SHIPMENT_CLERK"/>
+            <column name="name" value="Shipment Clerk"/>
+            <column name="description" value="Read and write non-destructive shipment data only"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

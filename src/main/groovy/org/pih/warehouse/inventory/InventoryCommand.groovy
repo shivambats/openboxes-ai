@@ -38,6 +38,7 @@ class InventoryCommand implements Validateable {
     Boolean showNonInventoryProducts = Boolean.FALSE
     // indicates whether out of stock products for the warehouse should be included
     Boolean showOutOfStockProducts = Boolean.FALSE
+    Boolean showNeedsAttentionOnly = Boolean.FALSE
 
     // all of the resulting ProductCommands above, organized by Category
     Boolean searchPerformed = Boolean.FALSE
@@ -56,6 +57,7 @@ class InventoryCommand implements Validateable {
         showUnsupportedProducts(nullable: true)
         showNonInventoryProducts(nullable: true)
         showOutOfStockProducts(nullable: true)
+        showNeedsAttentionOnly(nullable: true)
         searchPerformed(nullable: true)
     }
 }

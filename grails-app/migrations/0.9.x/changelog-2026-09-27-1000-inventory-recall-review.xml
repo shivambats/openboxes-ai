@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet id="2026-09-27-1000-inventory-recall-review" author="openai">
+        <addColumn tableName="inventory_item">
+            <column name="recall_review_state" type="VARCHAR(40)"/>
+            <column name="recall_review_reason" type="VARCHAR(80)"/>
+            <column name="recall_review_source_url" type="VARCHAR(1000)"/>
+            <column name="recall_review_response_id" type="VARCHAR(120)"/>
+            <column name="recall_review_updated_at" type="DATETIME"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

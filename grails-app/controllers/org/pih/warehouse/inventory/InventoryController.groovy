@@ -146,7 +146,14 @@ class InventoryController {
 
         // Set defaults
         command.location = command?.location ?: Location.get(session.warehouse.id)
-        def category = params.categoryId ? Category.get(params.categoryId) : productService.getRootCategory()
+        def rootCategory = productService.getRootCategory()
+        def category = params.categoryId ? Category.get(params.categoryId) : rootCategory
+        // The root category is the default browser scope, but marked lots can belong
+        // to categories outside that tree. A review-only search spans all categories
+        // unless the user explicitly selects a narrower category.
+        if (command.showNeedsAttentionOnly && category?.id == rootCategory?.id) {
+            category = null
+        }
         command.category = category?.id ? category : null
         command.catalogs = params.catalogs ? command.catalogs : null
         command.tags = params.tags ? command.tags : null
@@ -154,7 +161,21 @@ class InventoryController {
         command.offset = params?.offset as Integer
         command.searchResults = productAvailabilityService.searchProducts(command)
 
-        [commandInstance: command]
+        def productIds = command.searchResults.collect { it?.product?.id }.findAll { it }.unique()
+        def reviewCountsByProductId = [:]
+        if (productIds) {
+            InventoryItem.executeQuery('''
+                select item.product.id, count(item.id)
+                from InventoryItem item
+                where item.product.id in (:productIds)
+                  and item.recallReviewState = :state
+                group by item.product.id
+            ''', [productIds: productIds, state: 'NEEDS_ATTENTION']).each { row ->
+                reviewCountsByProductId[row[0]] = row[1]
+            }
+        }
+
+        [commandInstance: command, reviewCountsByProductId: reviewCountsByProductId]
     }
 
     /**

@@ -44,6 +44,13 @@ class InventoryItem implements Serializable {
     Date expirationDate
     LotStatusCode lotStatus
 
+    // Review marker is separate from lotStatus: a search result alone is not a shipping hold.
+    String recallReviewState
+    String recallReviewReason
+    String recallReviewSourceUrl
+    String recallReviewResponseId
+    Date recallReviewUpdatedAt
+
     String comments
 
     Integer quantity
@@ -72,6 +79,11 @@ class InventoryItem implements Serializable {
         expirationDate(shared:"expirationDateConstraint")
         comments(nullable: true)
         lotStatus(nullable: true)
+        recallReviewState(nullable: true, inList: ['NEEDS_ATTENTION'])
+        recallReviewReason(nullable: true, maxSize: 80)
+        recallReviewSourceUrl(nullable: true, maxSize: 1000)
+        recallReviewResponseId(nullable: true, maxSize: 120)
+        recallReviewUpdatedAt(nullable: true)
     }
 
     Map toJson() {
@@ -84,7 +96,10 @@ class InventoryItem implements Serializable {
                 "quantityOnHand" : quantity ?: 0,
                 "quantityATP"    : quantity ?: 0,       //todo: quantity available to promise will coming soon
                 "expires"        : expirationStatus,
-                "lotStatus"      : lotStatus
+                "lotStatus"      : lotStatus,
+                "recallReviewState": recallReviewState,
+                "recallReviewReason": recallReviewReason,
+                "recallReviewSourceUrl": recallReviewSourceUrl
         ]
     }
 

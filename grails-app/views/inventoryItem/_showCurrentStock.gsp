@@ -17,6 +17,9 @@
                     <warehouse:message code="default.lotSerialNo.label" default="Lot/Serial No"/>
                 </th>
                 <th>
+                    <warehouse:message code="inventory.recallReview.label" default="Recall review"/>
+                </th>
+                <th>
                     <warehouse:message code="default.expires.label" default="Expires"/>
                 </th>
                 <th>
@@ -62,6 +65,9 @@
                         ${entry?.inventoryItem?.lotNumber?:"Default"}
                     </td>
                     <td>
+                        <g:render template="recallReviewBadge" model="[inventoryItem: entry?.inventoryItem, reviewCount: 0]"/>
+                    </td>
+                    <td>
                         <g:expirationDate date="${entry?.inventoryItem?.expirationDate}"/>
                     </td>
                     <td>
@@ -86,7 +92,7 @@
             </g:each>
             <g:unless test="${commandInstance.availableItems}">
                 <tr>
-                    <td colspan="6">
+                    <td colspan="8">
                         <div class="fade empty center">
                             <warehouse:message code="inventory.noItemsCurrentlyInStock.message"
                                                args="[format.product(product:commandInstance?.product).decodeHTML()]"/>
@@ -97,7 +103,7 @@
         </tbody>
         <tfoot>
             <tr class="odd" style="border-top: 1px solid lightgrey; border-bottom: 0px solid lightgrey">
-                <td colspan="4" class="right">
+                <td colspan="5" class="right">
                     <!-- This space intentially left blank -->
                 </td>
                 <td>
@@ -170,4 +176,3 @@
 
     });
 </g:javascript>
-

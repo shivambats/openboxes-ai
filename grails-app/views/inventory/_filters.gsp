@@ -41,6 +41,10 @@
 				<g:checkBox name="showOutOfStockProducts" value="${commandInstance.showOutOfStockProducts}"/>
 				<label for="showOutOfStockProducts">${warehouse.message(code:'inventory.showOutOfStockProducts.label')}</label>
 			</div>
+			<div class="filter-list-item">
+				<g:checkBox name="showNeedsAttentionOnly" value="${commandInstance.showNeedsAttentionOnly}"/>
+				<label for="showNeedsAttentionOnly"><warehouse:message code="inventory.needsAttentionOnly.label" default="Needs attention only"/></label>
+			</div>
 			<div class="buttons">
 				<button type="submit" class="button icon search" name="searchPerformed" value="true">
 					<warehouse:message code="default.search.label"/>

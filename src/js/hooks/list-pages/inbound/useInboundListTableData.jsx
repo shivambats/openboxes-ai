@@ -20,7 +20,8 @@ const useInboundListTableData = (filterParams) => {
     sortingParams,
   }) => {
     const {
-      receiptStatusCode, origin, destination, requestedBy, createdBy, updatedBy, shipmentType,
+      receiptStatusCode, origin, destination, requestedBy, createdBy, updatedBy,
+      shipmentType, actionRequired,
     } = filterParams;
     return _.omitBy({
       ...filterParams,
@@ -33,6 +34,7 @@ const useInboundListTableData = (filterParams) => {
       createdBy: createdBy?.id,
       updatedBy: updatedBy?.id,
       shipmentType: shipmentType?.map?.(({ id }) => id),
+      actionRequired: actionRequired?.id,
       ...sortingParams,
     }, (value) => {
       if (typeof value === 'object' && _.isEmpty(value)) return true;

@@ -1,6 +1,12 @@
 # OpenBoxes Docker
 An overview of how Docker is used within OpenBoxes.
 
+## Restart the local app
+
+From the repository root, run `./docker/restart-openboxes-local.sh`. This restarts
+only the running OpenBoxes app container in the local sidecar Compose stack and
+waits for `/openboxes/health` to report `UP`. It does not rebuild the WAR.
+
 ## Docker compose files
 We provide the following compose files for running the application under different setups. You can switch between them with the `-f` commandline arg. If you don't specify which file to use, `docker-compose.yml` will be used.
 

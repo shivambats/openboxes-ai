@@ -308,6 +308,16 @@ class UserService {
         return false
     }
 
+    Boolean hasRoleShipmentClerk(User u) {
+        if (u) {
+            User user = User.get(u.id)
+            return getEffectiveRoles(user).any { Role role ->
+                role.roleType == RoleType.ROLE_SHIPMENT_CLERK
+            }
+        }
+        return false
+    }
+
     Boolean hasRoleBrowser(User u) {
         if (u) {
             def user = User.get(u.id)

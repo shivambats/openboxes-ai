@@ -1,0 +1,7 @@
+httpx>=0.27,<1
+playwright>=1.49,<2
+fastapi>=0.115,<1
+uvicorn>=0.32,<1
+pytest>=8,<10
+langgraph>=0.2,<2
+langgraph-checkpoint-sqlite>=3,<4

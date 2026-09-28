@@ -3,6 +3,18 @@ import FilterSelectField from 'components/form-elements/FilterSelectField';
 import DateFormat from 'consts/dateFormat';
 
 export default {
+  actionRequired: {
+    type: FilterSelectField,
+    attributes: {
+      filterElement: true,
+      placeholder: 'react.stockMovement.actionRequired.label',
+      defaultPlaceholder: 'Action Required',
+      ariaLabel: 'Action Required',
+      valueKey: 'id',
+      labelKey: 'label',
+      options: [{ id: 'NEEDS_HUMAN_ATTENTION', label: 'Needs Human Attention' }],
+    },
+  },
   receiptStatusCode: {
     type: FilterSelectField,
     attributes: {

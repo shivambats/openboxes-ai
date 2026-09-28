@@ -1,0 +1,9 @@
+// Local Java 17 test runner: legacy Jacoco 0.7.6 cannot instrument this JVM.
+// This does not change production build dependencies or claim coverage results.
+allprojects {
+    afterEvaluate {
+        tasks.withType(Test) {
+            jacoco.enabled = false
+        }
+    }
+}
