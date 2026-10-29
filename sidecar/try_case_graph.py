@@ -9,7 +9,6 @@ import argparse
 import hashlib
 import json
 import os
-import re
 import uuid
 from collections import deque
 from datetime import datetime, timedelta, timezone
@@ -52,39 +51,6 @@ class DemoMail:
 class NoModel:
     def extract(self, instruction, evidence):
         raise RuntimeError('The local demo must not call a model')
-
-
-class OfflineEmailExtractor:
-    """Small local fixture extractor; it makes no network or model call."""
-
-    def extract(self, instruction, evidence):
-        body = evidence.get('text') or ''
-        source = (evidence.get('subject') or '') + '\n' + body
-        references = [reference for reference in DEMO_SHIPMENT_NUMBERS
-                      if reference in source]
-        for match in re.finditer(
-                r'\btracking\s*(?:number|#|no\.?)\s*[:#-]?\s*([A-Za-z0-9][A-Za-z0-9-]{2,99})\b',
-                source, re.IGNORECASE):
-            if match.group(1) not in references:
-                references.append(match.group(1))
-        status = 'UNKNOWN'
-        quote = ''
-        for pattern, value in ((r'\b(?:delayed|delay)\b', 'DELAYED'),
-                               (r'\bin transit\b', 'IN_TRANSIT'),
-                               (r'\bout for delivery\b', 'OUT_FOR_DELIVERY')):
-            match = re.search(pattern, body, re.IGNORECASE)
-            if match:
-                status, quote = value, match.group(0)
-                break
-        eta_match = re.search(r'\b20\d\d-\d\d-\d\dT\d\d:\d\d(?::\d\d)?(?:Z|[+-]\d\d:\d\d)\b',
-                              body)
-        eta = eta_match.group(0) if eta_match else ''
-        intent = 'delayed_shipment' if status != 'UNKNOWN' or eta else 'unsupported'
-        return ({'intent': intent, 'references': references,
-                 'search_clues': {},
-                 'reported_status': status, 'status_quote': quote,
-                 'reported_eta': eta, 'eta_quote': eta},
-                {'model': 'offline-fixture-rules-v1', 'usage': None})
 
 
 def carrier_observation(scenario):
@@ -148,8 +114,6 @@ def main():
     email_start.add_argument('message_id')
     email_start.add_argument('--scenario', choices=['future_eta', 'needs_contact', 'unavailable'],
                              default='future_eta')
-    email_start.add_argument('--offline-extraction', action='store_true',
-                             help='Use local fixture rules; do not send email content to OpenRouter')
     email_followup = commands.add_parser('email-followup',
                                          help='Add a later message from the same thread to a case')
     email_followup.add_argument('case_id')
@@ -157,8 +121,6 @@ def main():
     email_followup.add_argument('--scenario',
                                 choices=['future_eta', 'needs_contact', 'unavailable'],
                                 default='future_eta')
-    email_followup.add_argument('--offline-extraction', action='store_true',
-                                help='Use local fixture rules; do not send email content to OpenRouter')
     approve = commands.add_parser('approve', help='Approve the exact printed proposal in simulation')
     approve.add_argument('case_id')
     approve.add_argument('proposal_hash')
@@ -188,8 +150,7 @@ def main():
             reader.client.close()
         return
     if args.command in {'email-start', 'email-followup'}:
-        model = (OfflineEmailExtractor() if args.offline_extraction else
-                 OpenRouter(config.openrouter_key, config.openrouter_model))
+        model = OpenRouter(config.openrouter_key, config.openrouter_model)
     wms = OpenBoxesTool(config)
     evidence = EvidenceStore(config.state_path + '.case-evidence.sqlite3')
     try:

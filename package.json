@@ -14,7 +14,8 @@
   },
   "scripts": {
     "watch": "webpack --watch --progress --mode=development",
-    "bundle": "webpack --no-color --mode=production",
+    "bundle": "webpack --no-color --mode=production && npm run bundle:chat-markdown",
+    "bundle:chat-markdown": "webpack --config webpack.chat-markdown.config.js --mode=production",
     "test": "jest",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build",
@@ -74,6 +75,7 @@
     "immutability-helper": "2.9.1",
     "js-file-download": "0.4.12",
     "lodash": "4.17.21",
+    "micromark": "2.11.4",
     "moment": "2.29.4",
     "popper.js": "1.16.1",
     "prop-types": "15.8.1",

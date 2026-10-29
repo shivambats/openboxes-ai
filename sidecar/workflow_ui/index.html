@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenBoxes · Agent workflow</title>
+  <link rel="stylesheet" href="/workflow.css">
+  <script src="/chat-markdown.js" defer></script>
+  <script src="/workflow.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">↗</div>
+      <div><h1>Logistics agent workflow</h1><p>OpenBoxes sidecar · local incident console</p></div>
+    </div>
+    <div class="top-controls">
+      <button id="new-session" class="primary" type="button">New case</button>
+      <button id="sample-session" class="quiet" type="button">Try sample</button>
+      <span id="connection" class="connection">Connecting</span>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <section class="panel chat-panel" aria-labelledby="chat-title">
+      <div class="panel-header"><div><span class="eyebrow">01 · Conversation</span><h2 id="chat-title">Driver & dispatcher</h2></div><span id="case-status" class="status-pill">No case</span></div>
+      <div class="chat-mode-switch" aria-label="Conversation mode"><button id="driver-mode" type="button" class="chat-mode-active">Driver incident</button><button id="operator-mode" type="button">Operator chat</button></div>
+      <div id="case-context" class="case-context">Describe the incident and include the shipment number in your first message. The model will identify the shipment.</div>
+      <div id="chat-log" class="chat-log" role="log" aria-live="polite"><div class="empty-chat">The driver conversation will appear here.</div></div>
+      <form id="chat-form" class="chat-form">
+        <label for="chat-input">Driver update</label>
+        <textarea id="chat-input" rows="3" maxlength="4000" placeholder="For SHIP-2026-API1, my truck broke down on I-80. Everyone is safe…"></textarea>
+        <div class="attachment-control"><label for="chat-image">Attach scene photo</label><input id="chat-image" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><span id="image-name">No photo selected</span></div>
+        <div class="form-footer"><span>Synthetic test emails only · no dispatch or WMS writes</span><button id="send-message" class="primary" type="submit">Send update <span aria-hidden="true">↑</span></button></div>
+      </form>
+      <div id="operator-case-context" class="case-context" hidden>Ask about a shipment or your Needs Attention work queue. The model identifies the request from your message.</div>
+      <div id="operator-chat-log" class="chat-log" role="log" aria-live="polite" hidden><div class="empty-chat">Ask a question about a synthetic shipment.</div></div>
+      <form id="operator-chat-form" class="chat-form" hidden>
+        <label for="operator-chat-input">Ask the logistics agent</label>
+        <textarea id="operator-chat-input" rows="3" maxlength="4000" placeholder="Is the driver notified about SHIP-2026-API1?"></textarea>
+        <div class="form-footer"><label class="access-toggle" title="Run the request with a read-only OpenBoxes role"><input id="operator-read-only" type="checkbox"> Read-only user</label><span>Local chat · synthetic cases · test inbox only</span><button id="operator-reset" class="quiet" type="button">Reset chat</button><button id="operator-send" class="primary" type="submit">Send <span aria-hidden="true">↑</span></button></div>
+      </form>
+    </section>
+
+    <section class="panel graph-panel" aria-labelledby="graph-title">
+      <div class="panel-header"><div><span class="eyebrow">02 · Runtime</span><h2 id="graph-title">Execution graph</h2></div><span id="step-count" class="small-badge">0 events</span></div>
+      <div class="execution-source"><label for="execution-select">Showing</label><select id="execution-select"><option value="chat">Current chat</option></select><span id="execution-status">Chat session</span></div>
+      <p class="panel-intro">Every tool the operator chat can run; the running tool glows amber. Select “Run order” beside a message to list its steps in the order they ran; select a step to see its prompt in Model evidence.</p>
+      <div class="runtime-scroll">
+        <section id="tool-board" class="tool-board" aria-labelledby="tool-board-title">
+          <div class="tool-board-head"><h3 id="tool-board-title">Agent tools</h3><span id="tool-board-status" class="tool-board-status" role="status" aria-live="polite">Idle</span></div>
+          <div id="tool-stages" class="tool-stages" aria-label="Loop stages"></div>
+          <div id="tool-grid" class="tool-grid" role="list" aria-label="Chat capabilities"></div>
+        </section>
+        <section class="run-trace-board" aria-labelledby="run-trace-title">
+          <div class="tool-board-head"><h3 id="run-trace-title">Run order</h3><span id="run-trace-message" class="tool-board-status">No message selected</span></div>
+          <div id="run-trace" class="run-trace" aria-live="polite"><p class="run-trace-empty">Send an operator message. Each step appears here in the order it ran.</p></div>
+        </section>
+        <div id="graph-list" class="graph-list" aria-live="polite"></div>
+      </div>
+      <div class="node-inspector"><div class="node-inspector-title">Selected node</div><div id="node-details" class="node-details">Select a node to see its latest state update.</div></div>
+    </section>
+
+    <section class="right-column" aria-label="Workflow data">
+      <div class="panel state-panel"><div class="panel-header"><div><span class="eyebrow">03 · Checkpoint</span><h2>Shared Graph State</h2></div><button id="copy-state" class="quiet" type="button">Copy JSON</button></div><p class="panel-intro">The current checkpoint, shared across the parent graph and its handler subgraph.</p><pre id="state-json" class="json-view">Awaiting a case…</pre></div>
+      <div class="panel model-panel"><div class="panel-header"><div><span class="eyebrow">04 · Model evidence</span><h2>LLM request & response</h2></div><span id="model-count" class="small-badge">0 calls</span></div><p id="model-intro" class="panel-intro">Exact Jev and OpenRouter request bodies and returned content for the selected step.</p><div id="model-calls" class="model-calls" role="region" aria-label="LLM calls" tabindex="0"><div class="empty-model">Model calls will appear after the first driver update.</div></div></div>
+    </section>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

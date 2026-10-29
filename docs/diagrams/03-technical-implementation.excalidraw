@@ -1,0 +1,1974 @@
+{
+ "type": "excalidraw",
+ "version": 2,
+ "source": "https://excalidraw.com",
+ "elements": [
+  {
+   "id": "text_1",
+   "type": "text",
+   "x": 40,
+   "y": 30,
+   "width": 1293,
+   "height": 40,
+   "strokeColor": "#1e40af",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Under the hood: one message, four steps, the right model for each",
+   "fontSize": 32,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_2",
+   "type": "text",
+   "x": 40,
+   "y": 82,
+   "width": 1086,
+   "height": 22,
+   "strokeColor": "#64748b",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Follow one real request about SHIP-2026-BOX1 from the operator's question to the recorded answer.",
+   "fontSize": 18,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "line_3",
+   "type": "line",
+   "x": 64,
+   "y": 232,
+   "width": 24,
+   "height": 18,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "#ffffff",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     -6,
+     18
+    ],
+    [
+     18,
+     0
+    ],
+    [
+     0,
+     0
+    ]
+   ],
+   "polygon": true,
+   "groupIds": [
+    "ask"
+   ]
+  },
+  {
+   "id": "rectangle_4",
+   "type": "rectangle",
+   "x": 40,
+   "y": 170,
+   "width": 210,
+   "height": 64,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "#ffffff",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "roundness": {
+    "type": 3
+   },
+   "groupIds": [
+    "ask"
+   ]
+  },
+  {
+   "id": "text_5",
+   "type": "text",
+   "x": 50,
+   "y": 180,
+   "width": 190,
+   "height": 40,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Has the warehouse\nreplied?",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25,
+   "groupIds": [
+    "ask"
+   ]
+  },
+  {
+   "id": "ellipse_6",
+   "type": "ellipse",
+   "x": 130,
+   "y": 262,
+   "width": 28,
+   "height": 28,
+   "strokeColor": "#c2410c",
+   "backgroundColor": "#fed7aa",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "groupIds": [
+    "operator"
+   ]
+  },
+  {
+   "id": "rectangle_7",
+   "type": "rectangle",
+   "x": 122,
+   "y": 294,
+   "width": 44,
+   "height": 32,
+   "strokeColor": "#c2410c",
+   "backgroundColor": "#fed7aa",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "roundness": {
+    "type": 3
+   },
+   "groupIds": [
+    "operator"
+   ]
+  },
+  {
+   "id": "text_8",
+   "type": "text",
+   "x": 40,
+   "y": 340,
+   "width": 210,
+   "height": 37,
+   "strokeColor": "#64748b",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Operator in\nOpenBoxes chat",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_9",
+   "type": "text",
+   "x": 300,
+   "y": 150,
+   "width": 340,
+   "height": 27,
+   "strokeColor": "#1e40af",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "1  READ",
+   "fontSize": 22,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_10",
+   "type": "text",
+   "x": 300,
+   "y": 184,
+   "width": 340,
+   "height": 37,
+   "strokeColor": "#64748b",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Understands the request\nand finds what it names",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "rectangle_11",
+   "type": "rectangle",
+   "x": 300,
+   "y": 330,
+   "width": 340,
+   "height": 42,
+   "strokeColor": "#6d28d9",
+   "backgroundColor": "#ddd6fe",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "roundness": {
+    "type": 3
+   }
+  },
+  {
+   "id": "text_12",
+   "type": "text",
+   "x": 300,
+   "y": 340,
+   "width": 340,
+   "height": 20,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "DeepSeek v4.1 Flash",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "rectangle_13",
+   "type": "rectangle",
+   "x": 300,
+   "y": 390,
+   "width": 340,
+   "height": 140,
+   "strokeColor": "#1e293b",
+   "backgroundColor": "#1e293b",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "roundness": {
+    "type": 3
+   }
+  },
+  {
+   "id": "text_14",
+   "type": "text",
+   "x": 316,
+   "y": 404,
+   "width": 316,
+   "height": 93,
+   "strokeColor": "#22c55e",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "intent   : reply check\nshipment : SHIP-2026-BOX1\ncontact  : sending warehouse\nquote    : \"the warehouse\n            replied\"",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_15",
+   "type": "text",
+   "x": 680,
+   "y": 150,
+   "width": 340,
+   "height": 27,
+   "strokeColor": "#1e40af",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "2  CHOOSE",
+   "fontSize": 22,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_16",
+   "type": "text",
+   "x": 680,
+   "y": 184,
+   "width": 340,
+   "height": 37,
+   "strokeColor": "#64748b",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Picks one tool from the\nones this user may run",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "rectangle_17",
+   "type": "rectangle",
+   "x": 680,
+   "y": 330,
+   "width": 340,
+   "height": 42,
+   "strokeColor": "#b45309",
+   "backgroundColor": "#fef3c7",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "roundness": {
+    "type": 3
+   }
+  },
+  {
+   "id": "text_18",
+   "type": "text",
+   "x": 680,
+   "y": 340,
+   "width": 340,
+   "height": 20,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Jev 1.13",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "rectangle_19",
+   "type": "rectangle",
+   "x": 680,
+   "y": 390,
+   "width": 340,
+   "height": 140,
+   "strokeColor": "#1e293b",
+   "backgroundColor": "#1e293b",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "roundness": {
+    "type": 3
+   }
+  },
+  {
+   "id": "text_20",
+   "type": "text",
+   "x": 696,
+   "y": 404,
+   "width": 316,
+   "height": 75,
+   "strokeColor": "#22c55e",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "choice     : check contact\n             replies\nconfidence : 0.89\ncost       : about $0.00003",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_21",
+   "type": "text",
+   "x": 1060,
+   "y": 150,
+   "width": 340,
+   "height": 27,
+   "strokeColor": "#1e40af",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "3  DO",
+   "fontSize": 22,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_22",
+   "type": "text",
+   "x": 1060,
+   "y": 184,
+   "width": 340,
+   "height": 37,
+   "strokeColor": "#64748b",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Runs the tool; the tool\nchecks its own rules",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "rectangle_23",
+   "type": "rectangle",
+   "x": 1060,
+   "y": 330,
+   "width": 340,
+   "height": 42,
+   "strokeColor": "#047857",
+   "backgroundColor": "#a7f3d0",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "roundness": {
+    "type": 3
+   }
+  },
+  {
+   "id": "text_24",
+   "type": "text",
+   "x": 1060,
+   "y": 340,
+   "width": 340,
+   "height": 20,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Tool + guardrails (code)",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "rectangle_25",
+   "type": "rectangle",
+   "x": 1060,
+   "y": 390,
+   "width": 340,
+   "height": 140,
+   "strokeColor": "#1e293b",
+   "backgroundColor": "#1e293b",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "roundness": {
+    "type": 3
+   }
+  },
+  {
+   "id": "text_26",
+   "type": "text",
+   "x": 1076,
+   "y": 404,
+   "width": 316,
+   "height": 75,
+   "strokeColor": "#22c55e",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "role and warehouse : ok\nreads email thread : ok\nfound reply        : 07:59 UTC\nsends anything?    : no",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_27",
+   "type": "text",
+   "x": 1440,
+   "y": 150,
+   "width": 340,
+   "height": 27,
+   "strokeColor": "#1e40af",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "4  REPLY",
+   "fontSize": 22,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_28",
+   "type": "text",
+   "x": 1440,
+   "y": 184,
+   "width": 340,
+   "height": 37,
+   "strokeColor": "#64748b",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Answers in plain words and\nlogs it on the shipment",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "rectangle_29",
+   "type": "rectangle",
+   "x": 1440,
+   "y": 330,
+   "width": 340,
+   "height": 42,
+   "strokeColor": "#6d28d9",
+   "backgroundColor": "#ddd6fe",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "roundness": {
+    "type": 3
+   }
+  },
+  {
+   "id": "text_30",
+   "type": "text",
+   "x": 1440,
+   "y": 340,
+   "width": 340,
+   "height": 20,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "DeepSeek writes, if needed",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "rectangle_31",
+   "type": "rectangle",
+   "x": 1440,
+   "y": 390,
+   "width": 340,
+   "height": 140,
+   "strokeColor": "#1e293b",
+   "backgroundColor": "#1e293b",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "roundness": {
+    "type": 3
+   }
+  },
+  {
+   "id": "text_32",
+   "type": "text",
+   "x": 1456,
+   "y": 404,
+   "width": 316,
+   "height": 93,
+   "strokeColor": "#22c55e",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Yes. The sending warehouse\nwrote \"On its way, should\nreach by noon today\" at\n07:59 UTC.\n+ OpenBoxes: reply received",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "ellipse_33",
+   "type": "ellipse",
+   "x": 440,
+   "y": 240,
+   "width": 45.03703703703704,
+   "height": 45.03703703703704,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "#dbeafe",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "groupIds": [
+    "i_read"
+   ]
+  },
+  {
+   "id": "line_34",
+   "type": "line",
+   "x": 479.1111111111111,
+   "y": 279.1111111111111,
+   "width": 21.333333333333332,
+   "height": 21.333333333333332,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 4,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     21.333333333333332,
+     21.333333333333332
+    ]
+   ],
+   "groupIds": [
+    "i_read"
+   ]
+  },
+  {
+   "id": "diamond_35",
+   "type": "diamond",
+   "x": 800,
+   "y": 236,
+   "width": 100,
+   "height": 80,
+   "strokeColor": "#b45309",
+   "backgroundColor": "#fef3c7",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100
+  },
+  {
+   "id": "text_36",
+   "type": "text",
+   "x": 800,
+   "y": 260,
+   "width": 100,
+   "height": 32,
+   "strokeColor": "#b45309",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "?",
+   "fontSize": 26,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "line_37",
+   "type": "line",
+   "x": 1170,
+   "y": 240,
+   "width": 60.0,
+   "height": 62.0,
+   "strokeColor": "#047857",
+   "backgroundColor": "#a7f3d0",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     30.0,
+     0
+    ],
+    [
+     60.0,
+     10.0
+    ],
+    [
+     56.0,
+     44.0
+    ],
+    [
+     30.0,
+     62.0
+    ],
+    [
+     4.0,
+     44.0
+    ],
+    [
+     0,
+     10.0
+    ],
+    [
+     30.0,
+     0
+    ]
+   ],
+   "polygon": true,
+   "groupIds": [
+    "i_do_shield"
+   ]
+  },
+  {
+   "id": "line_38",
+   "type": "line",
+   "x": 1186.0,
+   "y": 262.0,
+   "width": 28.0,
+   "height": 22.0,
+   "strokeColor": "#047857",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     12.0
+    ],
+    [
+     10.0,
+     22.0
+    ],
+    [
+     28.0,
+     0
+    ]
+   ],
+   "groupIds": [
+    "i_do_shield"
+   ]
+  },
+  {
+   "id": "rectangle_39",
+   "type": "rectangle",
+   "x": 1242,
+   "y": 254,
+   "width": 64,
+   "height": 44,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "#ffffff",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "groupIds": [
+    "i_do_mail"
+   ]
+  },
+  {
+   "id": "line_40",
+   "type": "line",
+   "x": 1242,
+   "y": 254,
+   "width": 64,
+   "height": 23.76,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     32.0,
+     23.76
+    ],
+    [
+     64,
+     0
+    ]
+   ],
+   "groupIds": [
+    "i_do_mail"
+   ]
+  },
+  {
+   "id": "line_41",
+   "type": "line",
+   "x": 1544,
+   "y": 282,
+   "width": 24,
+   "height": 18,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "#ffffff",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     -6,
+     18
+    ],
+    [
+     18,
+     0
+    ],
+    [
+     0,
+     0
+    ]
+   ],
+   "polygon": true,
+   "groupIds": [
+    "i_reply"
+   ]
+  },
+  {
+   "id": "rectangle_42",
+   "type": "rectangle",
+   "x": 1520,
+   "y": 238,
+   "width": 180,
+   "height": 46,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "#ffffff",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "roundness": {
+    "type": 3
+   },
+   "groupIds": [
+    "i_reply"
+   ]
+  },
+  {
+   "id": "text_43",
+   "type": "text",
+   "x": 1530,
+   "y": 248,
+   "width": 160,
+   "height": 17,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Yes, they replied",
+   "fontSize": 14,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25,
+   "groupIds": [
+    "i_reply"
+   ]
+  },
+  {
+   "id": "arrow_45",
+   "type": "arrow",
+   "x": 255,
+   "y": 202,
+   "width": 44,
+   "height": 148,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     40,
+     0
+    ],
+    [
+     40,
+     148
+    ],
+    [
+     44,
+     148
+    ]
+   ],
+   "endArrowhead": "arrow"
+  },
+  {
+   "id": "arrow_47",
+   "type": "arrow",
+   "x": 640,
+   "y": 351,
+   "width": 38,
+   "height": 0,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     38,
+     0
+    ]
+   ],
+   "endArrowhead": "arrow"
+  },
+  {
+   "id": "arrow_49",
+   "type": "arrow",
+   "x": 1020,
+   "y": 351,
+   "width": 38,
+   "height": 0,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     38,
+     0
+    ]
+   ],
+   "endArrowhead": "arrow"
+  },
+  {
+   "id": "arrow_51",
+   "type": "arrow",
+   "x": 1400,
+   "y": 351,
+   "width": 38,
+   "height": 0,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     38,
+     0
+    ]
+   ],
+   "endArrowhead": "arrow"
+  },
+  {
+   "id": "arrow_53",
+   "type": "arrow",
+   "x": 1230,
+   "y": 530,
+   "width": 380,
+   "height": 44,
+   "strokeColor": "#b45309",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     44
+    ],
+    [
+     -380,
+     44
+    ],
+    [
+     -380,
+     4
+    ]
+   ],
+   "endArrowhead": "arrow"
+  },
+  {
+   "id": "text_54",
+   "type": "text",
+   "x": 880,
+   "y": 590,
+   "width": 520,
+   "height": 18,
+   "strokeColor": "#b45309",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "result goes back to Jev: answer now, or run one more tool",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_55",
+   "type": "text",
+   "x": 880,
+   "y": 614,
+   "width": 520,
+   "height": 17,
+   "strokeColor": "#64748b",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "at most 4 steps and 1 consequential action per request",
+   "fontSize": 14,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "line_56",
+   "type": "line",
+   "x": 40,
+   "y": 690,
+   "width": 1740,
+   "height": 0,
+   "strokeColor": "#64748b",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     1740,
+     0
+    ]
+   ],
+   "strokeStyle": "dashed"
+  },
+  {
+   "id": "text_57",
+   "type": "text",
+   "x": 40,
+   "y": 712,
+   "width": 400,
+   "height": 25,
+   "strokeColor": "#047857",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "WHAT THE TOOLS CHECK, EVERY TIME",
+   "fontSize": 20,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "line_58",
+   "type": "line",
+   "x": 40,
+   "y": 756,
+   "width": 40.0,
+   "height": 41.33333333333333,
+   "strokeColor": "#047857",
+   "backgroundColor": "#a7f3d0",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     20.0,
+     0
+    ],
+    [
+     40.0,
+     6.666666666666666
+    ],
+    [
+     37.33333333333333,
+     29.333333333333332
+    ],
+    [
+     20.0,
+     41.33333333333333
+    ],
+    [
+     2.6666666666666665,
+     29.333333333333332
+    ],
+    [
+     0,
+     6.666666666666666
+    ],
+    [
+     20.0,
+     0
+    ]
+   ],
+   "polygon": true,
+   "groupIds": [
+    "rule_0"
+   ]
+  },
+  {
+   "id": "line_59",
+   "type": "line",
+   "x": 50.666666666666664,
+   "y": 770.6666666666666,
+   "width": 18.666666666666664,
+   "height": 14.666666666666666,
+   "strokeColor": "#047857",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     8.0
+    ],
+    [
+     6.666666666666666,
+     14.666666666666666
+    ],
+    [
+     18.666666666666664,
+     0
+    ]
+   ],
+   "groupIds": [
+    "rule_0"
+   ]
+  },
+  {
+   "id": "text_60",
+   "type": "text",
+   "x": 92,
+   "y": 760,
+   "width": 290,
+   "height": 37,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Can this person's role\ndo this?",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "line_61",
+   "type": "line",
+   "x": 390,
+   "y": 756,
+   "width": 40.0,
+   "height": 41.33333333333333,
+   "strokeColor": "#047857",
+   "backgroundColor": "#a7f3d0",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     20.0,
+     0
+    ],
+    [
+     40.0,
+     6.666666666666666
+    ],
+    [
+     37.33333333333333,
+     29.333333333333332
+    ],
+    [
+     20.0,
+     41.33333333333333
+    ],
+    [
+     2.6666666666666665,
+     29.333333333333332
+    ],
+    [
+     0,
+     6.666666666666666
+    ],
+    [
+     20.0,
+     0
+    ]
+   ],
+   "polygon": true,
+   "groupIds": [
+    "rule_1"
+   ]
+  },
+  {
+   "id": "line_62",
+   "type": "line",
+   "x": 400.6666666666667,
+   "y": 770.6666666666666,
+   "width": 18.666666666666664,
+   "height": 14.666666666666666,
+   "strokeColor": "#047857",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     8.0
+    ],
+    [
+     6.666666666666666,
+     14.666666666666666
+    ],
+    [
+     18.666666666666664,
+     0
+    ]
+   ],
+   "groupIds": [
+    "rule_1"
+   ]
+  },
+  {
+   "id": "text_63",
+   "type": "text",
+   "x": 442,
+   "y": 760,
+   "width": 290,
+   "height": 37,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Is the shipment in\ntheir warehouse?",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "line_64",
+   "type": "line",
+   "x": 740,
+   "y": 756,
+   "width": 40.0,
+   "height": 41.33333333333333,
+   "strokeColor": "#047857",
+   "backgroundColor": "#a7f3d0",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     20.0,
+     0
+    ],
+    [
+     40.0,
+     6.666666666666666
+    ],
+    [
+     37.33333333333333,
+     29.333333333333332
+    ],
+    [
+     20.0,
+     41.33333333333333
+    ],
+    [
+     2.6666666666666665,
+     29.333333333333332
+    ],
+    [
+     0,
+     6.666666666666666
+    ],
+    [
+     20.0,
+     0
+    ]
+   ],
+   "polygon": true,
+   "groupIds": [
+    "rule_2"
+   ]
+  },
+  {
+   "id": "line_65",
+   "type": "line",
+   "x": 750.6666666666666,
+   "y": 770.6666666666666,
+   "width": 18.666666666666664,
+   "height": 14.666666666666666,
+   "strokeColor": "#047857",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     8.0
+    ],
+    [
+     6.666666666666666,
+     14.666666666666666
+    ],
+    [
+     18.666666666666664,
+     0
+    ]
+   ],
+   "groupIds": [
+    "rule_2"
+   ]
+  },
+  {
+   "id": "text_66",
+   "type": "text",
+   "x": 792,
+   "y": 760,
+   "width": 290,
+   "height": 37,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Did a person ask for\nthis send or booking?",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "line_67",
+   "type": "line",
+   "x": 1090,
+   "y": 756,
+   "width": 40.0,
+   "height": 41.33333333333333,
+   "strokeColor": "#047857",
+   "backgroundColor": "#a7f3d0",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     20.0,
+     0
+    ],
+    [
+     40.0,
+     6.666666666666666
+    ],
+    [
+     37.33333333333333,
+     29.333333333333332
+    ],
+    [
+     20.0,
+     41.33333333333333
+    ],
+    [
+     2.6666666666666665,
+     29.333333333333332
+    ],
+    [
+     0,
+     6.666666666666666
+    ],
+    [
+     20.0,
+     0
+    ]
+   ],
+   "polygon": true,
+   "groupIds": [
+    "rule_3"
+   ]
+  },
+  {
+   "id": "line_68",
+   "type": "line",
+   "x": 1100.6666666666667,
+   "y": 770.6666666666666,
+   "width": 18.666666666666664,
+   "height": 14.666666666666666,
+   "strokeColor": "#047857",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     8.0
+    ],
+    [
+     6.666666666666666,
+     14.666666666666666
+    ],
+    [
+     18.666666666666664,
+     0
+    ]
+   ],
+   "groupIds": [
+    "rule_3"
+   ]
+  },
+  {
+   "id": "text_69",
+   "type": "text",
+   "x": 1142,
+   "y": 760,
+   "width": 290,
+   "height": 37,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Has the contact replied\nsince our last email?",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "line_70",
+   "type": "line",
+   "x": 1440,
+   "y": 756,
+   "width": 40.0,
+   "height": 41.33333333333333,
+   "strokeColor": "#047857",
+   "backgroundColor": "#a7f3d0",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     20.0,
+     0
+    ],
+    [
+     40.0,
+     6.666666666666666
+    ],
+    [
+     37.33333333333333,
+     29.333333333333332
+    ],
+    [
+     20.0,
+     41.33333333333333
+    ],
+    [
+     2.6666666666666665,
+     29.333333333333332
+    ],
+    [
+     0,
+     6.666666666666666
+    ],
+    [
+     20.0,
+     0
+    ]
+   ],
+   "polygon": true,
+   "groupIds": [
+    "rule_4"
+   ]
+  },
+  {
+   "id": "line_71",
+   "type": "line",
+   "x": 1450.6666666666667,
+   "y": 770.6666666666666,
+   "width": 18.666666666666664,
+   "height": 14.666666666666666,
+   "strokeColor": "#047857",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     8.0
+    ],
+    [
+     6.666666666666666,
+     14.666666666666666
+    ],
+    [
+     18.666666666666664,
+     0
+    ]
+   ],
+   "groupIds": [
+    "rule_4"
+   ]
+  },
+  {
+   "id": "text_72",
+   "type": "text",
+   "x": 1492,
+   "y": 760,
+   "width": 290,
+   "height": 37,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Is it written to\nthe action ledger?",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "line_73",
+   "type": "line",
+   "x": 40,
+   "y": 840,
+   "width": 1740,
+   "height": 0,
+   "strokeColor": "#64748b",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     1740,
+     0
+    ]
+   ],
+   "strokeStyle": "dashed"
+  },
+  {
+   "id": "text_74",
+   "type": "text",
+   "x": 40,
+   "y": 862,
+   "width": 301,
+   "height": 25,
+   "strokeColor": "#6d28d9",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "OTHER JOBS, OTHER MODELS",
+   "fontSize": 20,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "rectangle_75",
+   "type": "rectangle",
+   "x": 40,
+   "y": 904,
+   "width": 44,
+   "height": 34,
+   "strokeColor": "#6d28d9",
+   "backgroundColor": "#ddd6fe",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100
+  },
+  {
+   "id": "ellipse_76",
+   "type": "ellipse",
+   "x": 50,
+   "y": 909,
+   "width": 24,
+   "height": 24,
+   "strokeColor": "#6d28d9",
+   "backgroundColor": "#ffffff",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100
+  },
+  {
+   "id": "text_77",
+   "type": "text",
+   "x": 96,
+   "y": 902,
+   "width": 330,
+   "height": 37,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "GPT-4.1 mini vision\nreads driver scene photos",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "ellipse_78",
+   "type": "ellipse",
+   "x": 470,
+   "y": 900,
+   "width": 30.962962962962962,
+   "height": 30.962962962962962,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "#dbeafe",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "groupIds": [
+    "m_web"
+   ]
+  },
+  {
+   "id": "line_79",
+   "type": "line",
+   "x": 496.8888888888889,
+   "y": 926.8888888888889,
+   "width": 14.666666666666666,
+   "height": 14.666666666666666,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 4,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     14.666666666666666,
+     14.666666666666666
+    ]
+   ],
+   "groupIds": [
+    "m_web"
+   ]
+  },
+  {
+   "id": "text_80",
+   "type": "text",
+   "x": 526,
+   "y": 902,
+   "width": 330,
+   "height": 37,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "GPT-4.1 mini research\nfinds tow services online",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "ellipse_81",
+   "type": "ellipse",
+   "x": 900,
+   "y": 898,
+   "width": 44.0,
+   "height": 44.0,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "#ffffff",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "groupIds": [
+    "m_clock"
+   ]
+  },
+  {
+   "id": "line_82",
+   "type": "line",
+   "x": 922.0,
+   "y": 920.0,
+   "width": 0,
+   "height": 14.666666666666666,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     -14.666666666666666
+    ]
+   ],
+   "groupIds": [
+    "m_clock"
+   ]
+  },
+  {
+   "id": "line_83",
+   "type": "line",
+   "x": 922.0,
+   "y": 920.0,
+   "width": 10.266666666666666,
+   "height": 4.3999999999999995,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     10.266666666666666,
+     4.3999999999999995
+    ]
+   ],
+   "groupIds": [
+    "m_clock"
+   ]
+  },
+  {
+   "id": "text_84",
+   "type": "text",
+   "x": 956,
+   "y": 902,
+   "width": 330,
+   "height": 56,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Plain code, no model\nSLA clock, follow-up timers,\nauto-chase every 10 min",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "ellipse_85",
+   "type": "ellipse",
+   "x": 1338,
+   "y": 896,
+   "width": 28,
+   "height": 28,
+   "strokeColor": "#c2410c",
+   "backgroundColor": "#fed7aa",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "groupIds": [
+    "m_person"
+   ]
+  },
+  {
+   "id": "rectangle_86",
+   "type": "rectangle",
+   "x": 1330,
+   "y": 928,
+   "width": 44,
+   "height": 32,
+   "strokeColor": "#c2410c",
+   "backgroundColor": "#fed7aa",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "roundness": {
+    "type": 3
+   },
+   "groupIds": [
+    "m_person"
+   ]
+  },
+  {
+   "id": "text_87",
+   "type": "text",
+   "x": 1386,
+   "y": 902,
+   "width": 380,
+   "height": 56,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "A person\nbookings, dispatch, and\nanything the agent hands off",
+   "fontSize": 15,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_88",
+   "type": "text",
+   "x": 40,
+   "y": 1000,
+   "width": 1245,
+   "height": 27,
+   "strokeColor": "#1e40af",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "A cheap typed model chooses, a capable model reads and writes, and code enforces the rules.",
+   "fontSize": 22,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  }
+ ],
+ "appState": {
+  "viewBackgroundColor": "#ffffff",
+  "gridSize": 20
+ },
+ "files": {}
+}

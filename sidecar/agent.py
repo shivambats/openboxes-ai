@@ -6,6 +6,7 @@ import sqlite3
 import uuid
 from datetime import datetime, timezone
 from models import timestamp
+from execution_observer import observed_capability
 
 
 class Journal:
@@ -81,6 +82,7 @@ class Agent:
         payload = {'idempotency_key': str(uuid.uuid4()), 'version': current['version'],
                    'source': source, 'context': decision}
         carrier_request = None
+        contact_needed = False
         try:
             number = current.get('tracking_number')
             if not number:
@@ -95,23 +97,28 @@ class Agent:
             payload.update({'outcome': 'success', 'expectedDeliveryDate': tracking.revised_eta if changed else None,
                             'metadata': tracking.raw, 'comment': report(current, tracking, changed)})
             payload['evidence_hash'] = hashlib.sha256(json.dumps(tracking.raw, sort_keys=True).encode()).hexdigest()
+            contact_needed = tracking.status == 'DELAYED'
         except Exception as error:
             # Do not include raw exception strings: HTTP exceptions can contain secrets/URLs.
             payload.update({'outcome': 'human', 'metadata': {'error_type': type(error).__name__},
                             'comment': 'Delivery update requires review. Carrier tracking could not confirm '
                                        'a reliable status and future arrival date. The expected delivery date '
                                        'was left unchanged.'})
+            contact_needed = True
             if all(current.get(field) for field in ('bol_number', 'pro_number', 'dispatch_email')):
                 carrier_request = {'shipment_id': sid, 'bol': current['bol_number'],
                                    'pro': current['pro_number'], 'recipient': current['dispatch_email'],
                                    'trigger': 'ambiguous_portal' if source == 'Web' else 'unhandled_delay'}
         if not apply:
             return {'shipment': sid, 'decision': 'proposal', 'payload': payload,
+                    'contact_needed': contact_needed,
                     'carrier_request': carrier_request}
         result = self.deliver(sid, payload)
         return {'shipment': sid, 'decision': 'committed', 'result': result,
+                'contact_needed': contact_needed,
                 'carrier_request': carrier_request}
 
+    @observed_capability('sweep_delayed_shipments')
     def sweep(self, apply=False):
         outcomes = []
         # Resolve uncertain commits even when a successful ETA change removed an item from overdue results.

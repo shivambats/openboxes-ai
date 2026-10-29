@@ -1,0 +1,1835 @@
+{
+  "dataset_version": "synthetic-case-graph-live-v1",
+  "started_utc": "2026-09-28T13:19:57.623557+00:00",
+  "finished_utc": "2026-09-28T13:30:26.364265+00:00",
+  "model": "deepseek/deepseek-v4.1-flash",
+  "temperature": 0,
+  "prompt_version": "ShipmentCaseGraph triage v2",
+  "source": "Synthetic inbound emails; frozen WMS and carrier responses; no mail send or WMS write",
+  "summary": {
+    "passed": 56,
+    "total": 60,
+    "provider_cost_usd": 0.03350092,
+    "p50_agent_latency_ms": 3870.5,
+    "p95_agent_latency_ms": 21905,
+    "input_tokens": 19831,
+    "output_tokens": 31455,
+    "provider_calls": 62
+  },
+  "trials": [
+    {
+      "case_id": "tracking",
+      "trial": 1,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-PAPER1",
+      "actual_shipment": "SHIP-2026-PAPER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "TEST-PAPER-001"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 3439,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601598-gdS66tpD5QERqiAVmLGU",
+          "http_status": 200,
+          "latency_ms": 3418,
+          "input_tokens": 313,
+          "output_tokens": 207,
+          "provider_cost_usd": 0.0003423
+        }
+      ],
+      "input_tokens": 313,
+      "output_tokens": 207,
+      "provider_cost_usd": 0.0003423
+    },
+    {
+      "case_id": "route_product",
+      "trial": 1,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-PAPER1",
+      "actual_shipment": "SHIP-2026-PAPER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {
+        "origin": "New Jersey Paper Supplier",
+        "destination": "Chicago Distribution Center",
+        "product": "Copy Paper Box",
+        "quantity": "20"
+      },
+      "agent_latency_ms": 9932,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601601-ptFjNFZrAsmeEPLDF7cn",
+          "http_status": 200,
+          "latency_ms": 9915,
+          "input_tokens": 341,
+          "output_tokens": 726,
+          "provider_cost_usd": 0.0005401
+        }
+      ],
+      "input_tokens": 341,
+      "output_tokens": 726,
+      "provider_cost_usd": 0.0005401
+    },
+    {
+      "case_id": "route_only",
+      "trial": 1,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-TONER1",
+      "actual_shipment": "SHIP-2026-TONER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {
+        "origin": "New Jersey Paper Supplier",
+        "destination": "Chicago Distribution Center",
+        "product": "Printer Toner Cartridge"
+      },
+      "agent_latency_ms": 2696,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601611-QiylD2sde4KAi3Kobd6G",
+          "http_status": 200,
+          "latency_ms": 2683,
+          "input_tokens": 327,
+          "output_tokens": 537,
+          "provider_cost_usd": 0.0007425
+        }
+      ],
+      "input_tokens": 327,
+      "output_tokens": 537,
+      "provider_cost_usd": 0.0007425
+    },
+    {
+      "case_id": "product_typo",
+      "trial": 1,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "paper-1"
+      ],
+      "extracted_search_clues": {
+        "origin": "Jersey",
+        "destination": "Chicago",
+        "product": "box page",
+        "quantity": "20"
+      },
+      "agent_latency_ms": 4267,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601613-G67zIY8AbVgauWTP9Q6P",
+          "http_status": 200,
+          "latency_ms": 4258,
+          "input_tokens": 314,
+          "output_tokens": 468,
+          "provider_cost_usd": 0.0006558
+        }
+      ],
+      "input_tokens": 314,
+      "output_tokens": 468,
+      "provider_cost_usd": 0.0006558
+    },
+    {
+      "case_id": "duplicate",
+      "trial": 1,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "archive-1",
+        "archive-2"
+      ],
+      "extracted_search_clues": {
+        "origin": "Ohio Packaging Supplier",
+        "destination": "Chicago Distribution Center",
+        "product": "Archive Box",
+        "quantity": "15"
+      },
+      "agent_latency_ms": 6137,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601617-jQzEWP28siPXfbA3ERC5",
+          "http_status": 200,
+          "latency_ms": 6126,
+          "input_tokens": 315,
+          "output_tokens": 489,
+          "provider_cost_usd": 0.0003074175
+        }
+      ],
+      "input_tokens": 315,
+      "output_tokens": 489,
+      "provider_cost_usd": 0.000307417
+    },
+    {
+      "case_id": "unknown_tracking",
+      "trial": 1,
+      "expected_match": "unmatched",
+      "actual_match": "unmatched",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "400567"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 2910,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601624-jnDZFJMAMvL8me3LIDhS",
+          "http_status": 200,
+          "latency_ms": 2898,
+          "input_tokens": 313,
+          "output_tokens": 227,
+          "provider_cost_usd": 0.0001501285
+        }
+      ],
+      "input_tokens": 313,
+      "output_tokens": 227,
+      "provider_cost_usd": 0.000150129
+    },
+    {
+      "case_id": "shipment_number",
+      "trial": 1,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-PAPER1",
+      "actual_shipment": "SHIP-2026-PAPER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "SHIP-2026-PAPER1"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 1909,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601627-KDJZAwhwoCRcxHTfGElW",
+          "http_status": 200,
+          "latency_ms": 1893,
+          "input_tokens": 322,
+          "output_tokens": 276,
+          "provider_cost_usd": 0.0004278
+        }
+      ],
+      "input_tokens": 322,
+      "output_tokens": 276,
+      "provider_cost_usd": 0.0004278
+    },
+    {
+      "case_id": "toner_tracking",
+      "trial": 1,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-TONER1",
+      "actual_shipment": "SHIP-2026-TONER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "TEST-TONER-001"
+      ],
+      "extracted_search_clues": {
+        "product": "Toner"
+      },
+      "agent_latency_ms": 1542,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601628-yiFc4Qw7ItKPP3jw6ZMN",
+          "http_status": 200,
+          "latency_ms": 1529,
+          "input_tokens": 314,
+          "output_tokens": 306,
+          "provider_cost_usd": 0.0004614
+        }
+      ],
+      "input_tokens": 314,
+      "output_tokens": 306,
+      "provider_cost_usd": 0.0004614
+    },
+    {
+      "case_id": "archive_exact",
+      "trial": 1,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-ARCHIVE2",
+      "actual_shipment": "SHIP-2026-ARCHIVE2",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "SHIP-2026-ARCHIVE2"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 1913,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601630-r8oQmUTog4cY9aoenWas",
+          "http_status": 200,
+          "latency_ms": 1898,
+          "input_tokens": 312,
+          "output_tokens": 231,
+          "provider_cost_usd": 0.000152484
+        }
+      ],
+      "input_tokens": 312,
+      "output_tokens": 231,
+      "provider_cost_usd": 0.000152484
+    },
+    {
+      "case_id": "terminal_reference",
+      "trial": 1,
+      "expected_match": "unmatched",
+      "actual_match": "unmatched",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "TEST-CLOSED-001"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 5653,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601633-UUmDjH4w3tUf4IBmVIW7",
+          "http_status": 200,
+          "latency_ms": 5643,
+          "input_tokens": 310,
+          "output_tokens": 314,
+          "provider_cost_usd": 0.000202195
+        }
+      ],
+      "input_tokens": 310,
+      "output_tokens": 314,
+      "provider_cost_usd": 0.000202195
+    },
+    {
+      "case_id": "unknown_shipment",
+      "trial": 1,
+      "expected_match": "unmatched",
+      "actual_match": "unmatched",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "SHIP-2026-NOT-FOUND"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 4097,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601638-vP2Orx9k5Hv1TfXkVBTj",
+          "http_status": 200,
+          "latency_ms": 4085,
+          "input_tokens": 314,
+          "output_tokens": 289,
+          "provider_cost_usd": 0.000187373
+        }
+      ],
+      "input_tokens": 314,
+      "output_tokens": 289,
+      "provider_cost_usd": 0.000187373
+    },
+    {
+      "case_id": "no_identifier",
+      "trial": 1,
+      "expected_match": "unmatched",
+      "actual_match": "unmatched",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 2357,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601642-kqbzR1So76IP836dTkbB",
+          "http_status": 200,
+          "latency_ms": 2345,
+          "input_tokens": 336,
+          "output_tokens": 230,
+          "provider_cost_usd": 0.00019494
+        }
+      ],
+      "input_tokens": 336,
+      "output_tokens": 230,
+      "provider_cost_usd": 0.00019494
+    },
+    {
+      "case_id": "route_ambiguous",
+      "trial": 1,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "paper-1",
+        "toner-1"
+      ],
+      "extracted_search_clues": {
+        "origin": "New Jersey",
+        "destination": "Chicago Distribution Center"
+      },
+      "agent_latency_ms": 6965,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601644-wrtUVMmLXoHFHqv0FDCX",
+          "http_status": 200,
+          "latency_ms": 6953,
+          "input_tokens": 340,
+          "output_tokens": 504,
+          "provider_cost_usd": 0.00037384
+        }
+      ],
+      "input_tokens": 340,
+      "output_tokens": 504,
+      "provider_cost_usd": 0.00037384
+    },
+    {
+      "case_id": "paper_quantity",
+      "trial": 1,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-PAPER1",
+      "actual_shipment": "SHIP-2026-PAPER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {
+        "destination": "Chicago Distribution Center",
+        "product": "Copy Paper Box",
+        "quantity": "20"
+      },
+      "agent_latency_ms": 21663,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601651-Fh8Ax6h51Bqkb4sbMcqX",
+          "http_status": 200,
+          "latency_ms": 21645,
+          "input_tokens": 316,
+          "output_tokens": 388,
+          "provider_cost_usd": 0.00012358
+        }
+      ],
+      "input_tokens": 316,
+      "output_tokens": 388,
+      "provider_cost_usd": 0.00012358
+    },
+    {
+      "case_id": "toner_product",
+      "trial": 1,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-TONER1",
+      "actual_shipment": "SHIP-2026-TONER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {
+        "origin": "New Jersey",
+        "product": "Printer Toner Cartridge"
+      },
+      "agent_latency_ms": 6736,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601673-cYJcbEwv6pGowZ9s5EeF",
+          "http_status": 200,
+          "latency_ms": 6721,
+          "input_tokens": 337,
+          "output_tokens": 805,
+          "provider_cost_usd": 0.00059065
+        }
+      ],
+      "input_tokens": 337,
+      "output_tokens": 805,
+      "provider_cost_usd": 0.00059065
+    },
+    {
+      "case_id": "archive_count",
+      "trial": 1,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "archive-1",
+        "archive-2"
+      ],
+      "extracted_search_clues": {
+        "origin": "Ohio",
+        "product": "Archive Box",
+        "quantity": "15"
+      },
+      "agent_latency_ms": 15841,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601679-lYHN1kNYvjJ9KrBO3M6u",
+          "http_status": 200,
+          "latency_ms": 15828,
+          "input_tokens": 336,
+          "output_tokens": 1075,
+          "provider_cost_usd": 0.00074419
+        }
+      ],
+      "input_tokens": 336,
+      "output_tokens": 1075,
+      "provider_cost_usd": 0.00074419
+    },
+    {
+      "case_id": "partial_product",
+      "trial": 1,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "paper-1"
+      ],
+      "extracted_search_clues": {
+        "origin": "New Jersey Paper Supplier",
+        "destination": "Chicago Distribution Center",
+        "product": "page boxes",
+        "quantity": "20"
+      },
+      "agent_latency_ms": 2593,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601695-cMiVoQFZrRFmHhCfL90b",
+          "http_status": 200,
+          "latency_ms": 2580,
+          "input_tokens": 319,
+          "output_tokens": 576,
+          "provider_cost_usd": 0.0007869
+        }
+      ],
+      "input_tokens": 319,
+      "output_tokens": 576,
+      "provider_cost_usd": 0.0007869
+    },
+    {
+      "case_id": "irrelevant_thread",
+      "trial": 1,
+      "expected_match": "unmatched",
+      "actual_match": null,
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": false,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 3136,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601698-9D9b6yGzTqKyaNY7AnAB",
+          "http_status": 200,
+          "latency_ms": 3086,
+          "input_tokens": 308,
+          "output_tokens": 197,
+          "provider_cost_usd": 0.000131906
+        }
+      ],
+      "input_tokens": 308,
+      "output_tokens": 197,
+      "provider_cost_usd": 0.000131906
+    },
+    {
+      "case_id": "wrong_product_quantity",
+      "trial": 1,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "paper-1",
+        "toner-1"
+      ],
+      "extracted_search_clues": {
+        "origin": "New Jersey Paper Supplier",
+        "destination": "Chicago Distribution Center",
+        "product": "Printer Toner Cartridge",
+        "quantity": "20"
+      },
+      "agent_latency_ms": 4613,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601701-HktMaEdZCAcBbMkZ1r7B",
+          "http_status": 200,
+          "latency_ms": 4602,
+          "input_tokens": 345,
+          "output_tokens": 379,
+          "provider_cost_usd": 0.00029359
+        }
+      ],
+      "input_tokens": 345,
+      "output_tokens": 379,
+      "provider_cost_usd": 0.00029359
+    },
+    {
+      "case_id": "punctuation_reference",
+      "trial": 1,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-PAPER1",
+      "actual_shipment": "SHIP-2026-PAPER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "TEST-PAPER-001"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 3050,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601706-U8w9DdkyQjtJuDxhNI5N",
+          "http_status": 200,
+          "latency_ms": 3033,
+          "input_tokens": 320,
+          "output_tokens": 330,
+          "provider_cost_usd": 0.00021224
+        }
+      ],
+      "input_tokens": 320,
+      "output_tokens": 330,
+      "provider_cost_usd": 0.00021224
+    },
+    {
+      "case_id": "tracking",
+      "trial": 2,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-PAPER1",
+      "actual_shipment": "SHIP-2026-PAPER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "TEST-PAPER-001"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 1968,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601709-BfR3UIq4y8ivXSRWZqBB",
+          "http_status": 200,
+          "latency_ms": 1952,
+          "input_tokens": 339,
+          "output_tokens": 265,
+          "provider_cost_usd": 0.00024005
+        }
+      ],
+      "input_tokens": 339,
+      "output_tokens": 265,
+      "provider_cost_usd": 0.00024005
+    },
+    {
+      "case_id": "route_product",
+      "trial": 2,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-PAPER1",
+      "actual_shipment": "SHIP-2026-PAPER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {
+        "origin": "New Jersey Paper Supplier",
+        "destination": "Chicago Distribution Center",
+        "product": "Copy Paper Box",
+        "quantity": "20"
+      },
+      "agent_latency_ms": 5654,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601711-LdtHhTGU3HPLQ0rVZtp3",
+          "http_status": 200,
+          "latency_ms": 5638,
+          "input_tokens": 315,
+          "output_tokens": 626,
+          "provider_cost_usd": 0.0003896175
+        }
+      ],
+      "input_tokens": 315,
+      "output_tokens": 626,
+      "provider_cost_usd": 0.000389617
+    },
+    {
+      "case_id": "route_only",
+      "trial": 2,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-TONER1",
+      "actual_shipment": "SHIP-2026-TONER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {
+        "origin": "New Jersey Paper Supplier",
+        "destination": "Chicago Distribution Center",
+        "product": "Printer Toner Cartridge"
+      },
+      "agent_latency_ms": 6376,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601716-M1HrsuoT0wQRXMY3UU9x",
+          "http_status": 200,
+          "latency_ms": 6361,
+          "input_tokens": 325,
+          "output_tokens": 383,
+          "provider_cost_usd": 0.0001922
+        }
+      ],
+      "input_tokens": 325,
+      "output_tokens": 383,
+      "provider_cost_usd": 0.0001922
+    },
+    {
+      "case_id": "product_typo",
+      "trial": 2,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "paper-1"
+      ],
+      "extracted_search_clues": {
+        "origin": "Jersey",
+        "destination": "Chicago",
+        "product": "Paper boxes",
+        "quantity": "20"
+      },
+      "agent_latency_ms": 5994,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601723-02B2cRJ6Y4IvIM3LDP4v",
+          "http_status": 200,
+          "latency_ms": 5983,
+          "input_tokens": 337,
+          "output_tokens": 1085,
+          "provider_cost_usd": 0.00077265
+        }
+      ],
+      "input_tokens": 337,
+      "output_tokens": 1085,
+      "provider_cost_usd": 0.00077265
+    },
+    {
+      "case_id": "duplicate",
+      "trial": 2,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "archive-1",
+        "archive-2"
+      ],
+      "extracted_search_clues": {
+        "origin": "Ohio Packaging Supplier",
+        "destination": "Chicago Distribution Center",
+        "product": "Archive Box",
+        "quantity": "15"
+      },
+      "agent_latency_ms": 7166,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601729-fP0zQRRvowdXqxOlYg0l",
+          "http_status": 200,
+          "latency_ms": 7155,
+          "input_tokens": 318,
+          "output_tokens": 763,
+          "provider_cost_usd": 0.001011
+        }
+      ],
+      "input_tokens": 318,
+      "output_tokens": 763,
+      "provider_cost_usd": 0.001011
+    },
+    {
+      "case_id": "unknown_tracking",
+      "trial": 2,
+      "expected_match": "unmatched",
+      "actual_match": "unmatched",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "400567"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 1535,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601736-VssZJxi2OjNUatc79KqC",
+          "http_status": 200,
+          "latency_ms": 1523,
+          "input_tokens": 313,
+          "output_tokens": 187,
+          "provider_cost_usd": 0.0003183
+        }
+      ],
+      "input_tokens": 313,
+      "output_tokens": 187,
+      "provider_cost_usd": 0.0003183
+    },
+    {
+      "case_id": "shipment_number",
+      "trial": 2,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-PAPER1",
+      "actual_shipment": "SHIP-2026-PAPER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "SHIP-2026-PAPER1"
+      ],
+      "extracted_search_clues": {
+        "product": "PAPER1"
+      },
+      "agent_latency_ms": 11993,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601737-XuRvm7my8XH8NFDpGs5M",
+          "http_status": 200,
+          "latency_ms": 11975,
+          "input_tokens": 319,
+          "output_tokens": 1401,
+          "provider_cost_usd": 0.0008547955
+        }
+      ],
+      "input_tokens": 319,
+      "output_tokens": 1401,
+      "provider_cost_usd": 0.000854796
+    },
+    {
+      "case_id": "toner_tracking",
+      "trial": 2,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-TONER1",
+      "actual_shipment": "SHIP-2026-TONER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "TEST-TONER-001"
+      ],
+      "extracted_search_clues": {
+        "product": "Toner"
+      },
+      "agent_latency_ms": 2883,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601749-7E6rhrAtC07uwUEKckIl",
+          "http_status": 200,
+          "latency_ms": 2869,
+          "input_tokens": 313,
+          "output_tokens": 479,
+          "provider_cost_usd": 0.0006687
+        }
+      ],
+      "input_tokens": 313,
+      "output_tokens": 479,
+      "provider_cost_usd": 0.0006687
+    },
+    {
+      "case_id": "archive_exact",
+      "trial": 2,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-ARCHIVE2",
+      "actual_shipment": "SHIP-2026-ARCHIVE2",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "SHIP-2026-ARCHIVE2"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 1927,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601752-IS2HzPvSxML5tnJV3aKw",
+          "http_status": 200,
+          "latency_ms": 1913,
+          "input_tokens": 316,
+          "output_tokens": 241,
+          "provider_cost_usd": 0.000158534
+        }
+      ],
+      "input_tokens": 316,
+      "output_tokens": 241,
+      "provider_cost_usd": 0.000158534
+    },
+    {
+      "case_id": "terminal_reference",
+      "trial": 2,
+      "expected_match": "unmatched",
+      "actual_match": "unmatched",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "TEST-CLOSED-001"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 5929,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601754-wRAHOJuB8i9J68k2UYIS",
+          "http_status": 200,
+          "latency_ms": 5918,
+          "input_tokens": 311,
+          "output_tokens": 388,
+          "provider_cost_usd": 0.0002465115
+        }
+      ],
+      "input_tokens": 311,
+      "output_tokens": 388,
+      "provider_cost_usd": 0.000246511
+    },
+    {
+      "case_id": "unknown_shipment",
+      "trial": 2,
+      "expected_match": "unmatched",
+      "actual_match": "unmatched",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "SHIP-2026-NOT-FOUND"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 2254,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601760-xIx0ktfweDhtJflgffOx",
+          "http_status": 200,
+          "latency_ms": 2242,
+          "input_tokens": 312,
+          "output_tokens": 240,
+          "provider_cost_usd": 0.000157756
+        }
+      ],
+      "input_tokens": 312,
+      "output_tokens": 240,
+      "provider_cost_usd": 0.000157756
+    },
+    {
+      "case_id": "no_identifier",
+      "trial": 2,
+      "expected_match": "unmatched",
+      "actual_match": "unmatched",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 4811,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601762-lyLzA50FF5eU4PXkTknH",
+          "http_status": 200,
+          "latency_ms": 4799,
+          "input_tokens": 338,
+          "output_tokens": 246,
+          "provider_cost_usd": 0.00020574
+        }
+      ],
+      "input_tokens": 338,
+      "output_tokens": 246,
+      "provider_cost_usd": 0.00020574
+    },
+    {
+      "case_id": "route_ambiguous",
+      "trial": 2,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "paper-1",
+        "toner-1"
+      ],
+      "extracted_search_clues": {
+        "origin": "New Jersey Paper Supplier",
+        "destination": "Chicago Distribution Center"
+      },
+      "agent_latency_ms": 1931,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601767-utjbtgPdW64MppV9bogA",
+          "http_status": 200,
+          "latency_ms": 1919,
+          "input_tokens": 314,
+          "output_tokens": 400,
+          "provider_cost_usd": 0.0005742
+        }
+      ],
+      "input_tokens": 314,
+      "output_tokens": 400,
+      "provider_cost_usd": 0.0005742
+    },
+    {
+      "case_id": "paper_quantity",
+      "trial": 2,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-PAPER1",
+      "actual_shipment": "SHIP-2026-PAPER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {
+        "destination": "Chicago Distribution Center",
+        "product": "Copy Paper Box",
+        "quantity": "20"
+      },
+      "agent_latency_ms": 3127,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601769-8BTXWtFTZGMe2OyoAQLZ",
+          "http_status": 200,
+          "latency_ms": 3110,
+          "input_tokens": 343,
+          "output_tokens": 457,
+          "provider_cost_usd": 0.00036565
+        }
+      ],
+      "input_tokens": 343,
+      "output_tokens": 457,
+      "provider_cost_usd": 0.00036565
+    },
+    {
+      "case_id": "toner_product",
+      "trial": 2,
+      "expected_match": "unique",
+      "actual_match": "unmatched",
+      "expected_shipment": "SHIP-2026-TONER1",
+      "actual_shipment": null,
+      "passed": false,
+      "error_type": null,
+      "extracted_references": [
+        "Printer Toner Cartridge",
+        "New Jersey Paper Supplier"
+      ],
+      "extracted_search_clues": {
+        "origin": "New Jersey",
+        "product": "Printer Toner Cartridge"
+      },
+      "agent_latency_ms": 7139,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601772-l6IhsXuyXahWEhqDTfF3",
+          "http_status": 200,
+          "latency_ms": 7128,
+          "input_tokens": 317,
+          "output_tokens": 613,
+          "provider_cost_usd": 0.0008307
+        }
+      ],
+      "input_tokens": 317,
+      "output_tokens": 613,
+      "provider_cost_usd": 0.0008307
+    },
+    {
+      "case_id": "archive_count",
+      "trial": 2,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "archive-1",
+        "archive-2"
+      ],
+      "extracted_search_clues": {
+        "origin": "Ohio Packaging Supplier",
+        "product": "Archive Box",
+        "quantity": "15"
+      },
+      "agent_latency_ms": 21905,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601779-f7qUfTxaqP83EsBI8UAw",
+          "http_status": 200,
+          "latency_ms": 14720,
+          "input_tokens": 310,
+          "output_tokens": 1600,
+          "provider_cost_usd": 0.000973795
+        },
+        {
+          "response_id": "gen-1790601794-Efh3AnvLrLak4fxAQTBn",
+          "http_status": 200,
+          "latency_ms": 7173,
+          "input_tokens": 310,
+          "output_tokens": 645,
+          "provider_cost_usd": 0.000867
+        }
+      ],
+      "input_tokens": 620,
+      "output_tokens": 2245,
+      "provider_cost_usd": 0.001840795
+    },
+    {
+      "case_id": "partial_product",
+      "trial": 2,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "paper-1"
+      ],
+      "extracted_search_clues": {
+        "origin": "New Jersey Paper Supplier",
+        "destination": "Chicago Distribution Center",
+        "product": "page boxes",
+        "quantity": "20"
+      },
+      "agent_latency_ms": 6607,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601801-zrk8dpePzSKbt5LomZgs",
+          "http_status": 200,
+          "latency_ms": 6595,
+          "input_tokens": 338,
+          "output_tokens": 744,
+          "provider_cost_usd": 0.0009942
+        }
+      ],
+      "input_tokens": 338,
+      "output_tokens": 744,
+      "provider_cost_usd": 0.0009942
+    },
+    {
+      "case_id": "irrelevant_thread",
+      "trial": 2,
+      "expected_match": "unmatched",
+      "actual_match": null,
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": false,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 4813,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601808-BbZNI5rq1z7y6UPUeVMs",
+          "http_status": 200,
+          "latency_ms": 4801,
+          "input_tokens": 312,
+          "output_tokens": 157,
+          "provider_cost_usd": 0.000282
+        }
+      ],
+      "input_tokens": 312,
+      "output_tokens": 157,
+      "provider_cost_usd": 0.000282
+    },
+    {
+      "case_id": "wrong_product_quantity",
+      "trial": 2,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "paper-1",
+        "toner-1"
+      ],
+      "extracted_search_clues": {
+        "origin": "New Jersey Paper Supplier",
+        "destination": "Chicago Distribution Center",
+        "product": "Printer Toner Cartridge",
+        "quantity": "20"
+      },
+      "agent_latency_ms": 4119,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601813-OES9gSkN9vxzgqyoaDam",
+          "http_status": 200,
+          "latency_ms": 4103,
+          "input_tokens": 321,
+          "output_tokens": 359,
+          "provider_cost_usd": 0.0002296845
+        }
+      ],
+      "input_tokens": 321,
+      "output_tokens": 359,
+      "provider_cost_usd": 0.000229684
+    },
+    {
+      "case_id": "punctuation_reference",
+      "trial": 2,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-PAPER1",
+      "actual_shipment": "SHIP-2026-PAPER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "TEST-PAPER-001"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 34306,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601817-y6Uv8YryZcOFdQsdWJUa",
+          "http_status": 200,
+          "latency_ms": 34290,
+          "input_tokens": 321,
+          "output_tokens": 1230,
+          "provider_cost_usd": 0.0015723
+        }
+      ],
+      "input_tokens": 321,
+      "output_tokens": 1230,
+      "provider_cost_usd": 0.0015723
+    },
+    {
+      "case_id": "tracking",
+      "trial": 3,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-PAPER1",
+      "actual_shipment": "SHIP-2026-PAPER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "TEST-PAPER-001"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 3162,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601883-1aGI3QVyDeRuUKgvZsn6",
+          "http_status": 200,
+          "latency_ms": 3148,
+          "input_tokens": 319,
+          "output_tokens": 300,
+          "provider_cost_usd": 0.0001941955
+        }
+      ],
+      "input_tokens": 319,
+      "output_tokens": 300,
+      "provider_cost_usd": 0.000194195
+    },
+    {
+      "case_id": "route_product",
+      "trial": 3,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-PAPER1",
+      "actual_shipment": "SHIP-2026-PAPER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {
+        "origin": "New Jersey Paper Supplier",
+        "destination": "Chicago Distribution Center",
+        "product": "Copy Paper Box",
+        "quantity": "20"
+      },
+      "agent_latency_ms": 2970,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601886-8nCDN88uV1sTnUrZxh1G",
+          "http_status": 200,
+          "latency_ms": 2955,
+          "input_tokens": 320,
+          "output_tokens": 422,
+          "provider_cost_usd": 0.0006024
+        }
+      ],
+      "input_tokens": 320,
+      "output_tokens": 422,
+      "provider_cost_usd": 0.0006024
+    },
+    {
+      "case_id": "route_only",
+      "trial": 3,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-TONER1",
+      "actual_shipment": "SHIP-2026-TONER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {
+        "origin": "New Jersey Paper Supplier",
+        "destination": "Chicago Distribution Center",
+        "product": "Printer Toner Cartridge"
+      },
+      "agent_latency_ms": 2768,
+      "model_calls": [
+        {
+          "response_id": "gen-1790601889-4bEKbJNTG59rqUQ28y0i",
+          "http_status": 200,
+          "latency_ms": 2751,
+          "input_tokens": 323,
+          "output_tokens": 315,
+          "provider_cost_usd": 0.0004749
+        }
+      ],
+      "input_tokens": 323,
+      "output_tokens": 315,
+      "provider_cost_usd": 0.0004749
+    },
+    {
+      "case_id": "product_typo",
+      "trial": 3,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "paper-1"
+      ],
+      "extracted_search_clues": {
+        "origin": "Jersey",
+        "destination": "Chicago",
+        "product": "box page",
+        "quantity": "20"
+      },
+      "agent_latency_ms": 84452,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602137-tTPkA18H8TM1BPVVrwVq",
+          "http_status": 200,
+          "latency_ms": 19979,
+          "input_tokens": 314,
+          "output_tokens": 1600,
+          "provider_cost_usd": 0.0020142
+        },
+        {
+          "response_id": "gen-1790602156-AgZmnhT0HzCNfHqyQcTt",
+          "http_status": 200,
+          "latency_ms": 3323,
+          "input_tokens": 314,
+          "output_tokens": 550,
+          "provider_cost_usd": 0.000678936
+        }
+      ],
+      "input_tokens": 628,
+      "output_tokens": 2150,
+      "provider_cost_usd": 0.002693136
+    },
+    {
+      "case_id": "duplicate",
+      "trial": 3,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "archive-1",
+        "archive-2"
+      ],
+      "extracted_search_clues": {
+        "origin": "Ohio Packaging Supplier",
+        "destination": "Chicago Distribution Center",
+        "product": "Archive Box",
+        "quantity": "15"
+      },
+      "agent_latency_ms": 2189,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602160-drXImQIbUkwOrq1H1VXH",
+          "http_status": 200,
+          "latency_ms": 2167,
+          "input_tokens": 318,
+          "output_tokens": 342,
+          "provider_cost_usd": 0.0005058
+        }
+      ],
+      "input_tokens": 318,
+      "output_tokens": 342,
+      "provider_cost_usd": 0.0005058
+    },
+    {
+      "case_id": "unknown_tracking",
+      "trial": 3,
+      "expected_match": "unmatched",
+      "actual_match": "unmatched",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "400567"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 987,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602162-1YTZ6HM0nh9CLLinHpAv",
+          "http_status": 200,
+          "latency_ms": 963,
+          "input_tokens": 314,
+          "output_tokens": 192,
+          "provider_cost_usd": 0.0003246
+        }
+      ],
+      "input_tokens": 314,
+      "output_tokens": 192,
+      "provider_cost_usd": 0.0003246
+    },
+    {
+      "case_id": "shipment_number",
+      "trial": 3,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-PAPER1",
+      "actual_shipment": "SHIP-2026-PAPER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "SHIP-2026-PAPER1"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 5294,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602163-QkHRQgdylnWMSamjgmWE",
+          "http_status": 200,
+          "latency_ms": 5261,
+          "input_tokens": 321,
+          "output_tokens": 469,
+          "provider_cost_usd": 0.0006591
+        }
+      ],
+      "input_tokens": 321,
+      "output_tokens": 469,
+      "provider_cost_usd": 0.0006591
+    },
+    {
+      "case_id": "toner_tracking",
+      "trial": 3,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-TONER1",
+      "actual_shipment": "SHIP-2026-TONER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "TEST-TONER-001"
+      ],
+      "extracted_search_clues": {
+        "product": "Toner"
+      },
+      "agent_latency_ms": 3903,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602168-N1V5J0qffhsUDe2c2ojN",
+          "http_status": 200,
+          "latency_ms": 3871,
+          "input_tokens": 311,
+          "output_tokens": 398,
+          "provider_cost_usd": 0.000495636
+        }
+      ],
+      "input_tokens": 311,
+      "output_tokens": 398,
+      "provider_cost_usd": 0.000495636
+    },
+    {
+      "case_id": "archive_exact",
+      "trial": 3,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-ARCHIVE2",
+      "actual_shipment": "SHIP-2026-ARCHIVE2",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "SHIP-2026-ARCHIVE2"
+      ],
+      "extracted_search_clues": {
+        "product": "Archive carton"
+      },
+      "agent_latency_ms": 2522,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602172-s5TXIIXmOrmVy9au49bt",
+          "http_status": 200,
+          "latency_ms": 2491,
+          "input_tokens": 313,
+          "output_tokens": 490,
+          "provider_cost_usd": 0.0006819
+        }
+      ],
+      "input_tokens": 313,
+      "output_tokens": 490,
+      "provider_cost_usd": 0.0006819
+    },
+    {
+      "case_id": "terminal_reference",
+      "trial": 3,
+      "expected_match": "unmatched",
+      "actual_match": "unmatched",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "TEST-CLOSED-001"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 3718,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602175-6JCpqL81yUddNTeIZupv",
+          "http_status": 200,
+          "latency_ms": 3695,
+          "input_tokens": 311,
+          "output_tokens": 267,
+          "provider_cost_usd": 0.0004137
+        }
+      ],
+      "input_tokens": 311,
+      "output_tokens": 267,
+      "provider_cost_usd": 0.0004137
+    },
+    {
+      "case_id": "unknown_shipment",
+      "trial": 3,
+      "expected_match": "unmatched",
+      "actual_match": "unmatched",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "SHIP-2026-NOT-FOUND"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 2317,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602178-l8oJ088uluCB2kWLxUmF",
+          "http_status": 200,
+          "latency_ms": 2304,
+          "input_tokens": 315,
+          "output_tokens": 200,
+          "provider_cost_usd": 0.0003345
+        }
+      ],
+      "input_tokens": 315,
+      "output_tokens": 200,
+      "provider_cost_usd": 0.0003345
+    },
+    {
+      "case_id": "no_identifier",
+      "trial": 3,
+      "expected_match": "unmatched",
+      "actual_match": "unmatched",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 2816,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602181-zgEUFZBDzBsxZTAULyyk",
+          "http_status": 200,
+          "latency_ms": 2793,
+          "input_tokens": 314,
+          "output_tokens": 342,
+          "provider_cost_usd": 0.0005046
+        }
+      ],
+      "input_tokens": 314,
+      "output_tokens": 342,
+      "provider_cost_usd": 0.0005046
+    },
+    {
+      "case_id": "route_ambiguous",
+      "trial": 3,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "paper-1",
+        "toner-1"
+      ],
+      "extracted_search_clues": {
+        "origin": "New Jersey Paper Supplier",
+        "destination": "Chicago Distribution Center"
+      },
+      "agent_latency_ms": 9767,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602184-C6q2KzbDfo40xUQgNu51",
+          "http_status": 200,
+          "latency_ms": 9739,
+          "input_tokens": 317,
+          "output_tokens": 497,
+          "provider_cost_usd": 0.0006915
+        }
+      ],
+      "input_tokens": 317,
+      "output_tokens": 497,
+      "provider_cost_usd": 0.0006915
+    },
+    {
+      "case_id": "paper_quantity",
+      "trial": 3,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-PAPER1",
+      "actual_shipment": "SHIP-2026-PAPER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {
+        "destination": "Chicago Distribution Center",
+        "product": "Copy Paper Box",
+        "quantity": "20"
+      },
+      "agent_latency_ms": 2215,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602193-7H83RPLo2fS8Sl8UzOCz",
+          "http_status": 200,
+          "latency_ms": 2177,
+          "input_tokens": 314,
+          "output_tokens": 431,
+          "provider_cost_usd": 0.0006114
+        }
+      ],
+      "input_tokens": 314,
+      "output_tokens": 431,
+      "provider_cost_usd": 0.0006114
+    },
+    {
+      "case_id": "toner_product",
+      "trial": 3,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-TONER1",
+      "actual_shipment": "SHIP-2026-TONER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {
+        "origin": "New Jersey",
+        "product": "Printer Toner Cartridge"
+      },
+      "agent_latency_ms": 4485,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602196-atoaUjJO2UgEJVaw9D7O",
+          "http_status": 200,
+          "latency_ms": 4450,
+          "input_tokens": 317,
+          "output_tokens": 712,
+          "provider_cost_usd": 0.0009495
+        }
+      ],
+      "input_tokens": 317,
+      "output_tokens": 712,
+      "provider_cost_usd": 0.0009495
+    },
+    {
+      "case_id": "archive_count",
+      "trial": 3,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "archive-1",
+        "archive-2"
+      ],
+      "extracted_search_clues": {
+        "origin": "Ohio Packaging Supplier",
+        "product": "Archive Box",
+        "quantity": "15"
+      },
+      "agent_latency_ms": 5688,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602200-S7nGgSwEgF5mFz7nNPH7",
+          "http_status": 200,
+          "latency_ms": 5667,
+          "input_tokens": 313,
+          "output_tokens": 1023,
+          "provider_cost_usd": 0.0013215
+        }
+      ],
+      "input_tokens": 313,
+      "output_tokens": 1023,
+      "provider_cost_usd": 0.0013215
+    },
+    {
+      "case_id": "partial_product",
+      "trial": 3,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "paper-1"
+      ],
+      "extracted_search_clues": {
+        "origin": "New Jersey Paper Supplier",
+        "destination": "Chicago Distribution Center",
+        "product": "page boxes",
+        "quantity": "20"
+      },
+      "agent_latency_ms": 12201,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602206-6uM889i9aIQfYScedqhY",
+          "http_status": 200,
+          "latency_ms": 12177,
+          "input_tokens": 317,
+          "output_tokens": 748,
+          "provider_cost_usd": 0.0009927
+        }
+      ],
+      "input_tokens": 317,
+      "output_tokens": 748,
+      "provider_cost_usd": 0.0009927
+    },
+    {
+      "case_id": "irrelevant_thread",
+      "trial": 3,
+      "expected_match": "unmatched",
+      "actual_match": null,
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": false,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 1326,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602218-z3dj3Uq8bC9NgBatTIAl",
+          "http_status": 200,
+          "latency_ms": 1303,
+          "input_tokens": 310,
+          "output_tokens": 158,
+          "provider_cost_usd": 0.0002826
+        }
+      ],
+      "input_tokens": 310,
+      "output_tokens": 158,
+      "provider_cost_usd": 0.0002826
+    },
+    {
+      "case_id": "wrong_product_quantity",
+      "trial": 3,
+      "expected_match": "ambiguous",
+      "actual_match": "ambiguous",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "paper-1",
+        "toner-1"
+      ],
+      "extracted_search_clues": {
+        "origin": "New Jersey Paper Supplier",
+        "destination": "Chicago Distribution Center",
+        "product": "Printer Toner Cartridge",
+        "quantity": "20"
+      },
+      "agent_latency_ms": 2769,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602219-0Euh3qLqw2LX6mBzApue",
+          "http_status": 200,
+          "latency_ms": 2743,
+          "input_tokens": 320,
+          "output_tokens": 421,
+          "provider_cost_usd": 0.0006012
+        }
+      ],
+      "input_tokens": 320,
+      "output_tokens": 421,
+      "provider_cost_usd": 0.0006012
+    },
+    {
+      "case_id": "punctuation_reference",
+      "trial": 3,
+      "expected_match": "unique",
+      "actual_match": "unique",
+      "expected_shipment": "SHIP-2026-PAPER1",
+      "actual_shipment": "SHIP-2026-PAPER1",
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [
+        "TEST-PAPER-001"
+      ],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 3838,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602222-lWgh9vetCxIXH5jG6zOw",
+          "http_status": 200,
+          "latency_ms": 3809,
+          "input_tokens": 322,
+          "output_tokens": 515,
+          "provider_cost_usd": 0.000639336
+        }
+      ],
+      "input_tokens": 322,
+      "output_tokens": 515,
+      "provider_cost_usd": 0.000639336
+    }
+  ]
+}

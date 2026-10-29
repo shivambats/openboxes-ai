@@ -1,0 +1,105 @@
+{
+  "dataset_version": "synthetic-case-graph-live-v1",
+  "started_utc": "2026-09-28T13:31:38.427316+00:00",
+  "finished_utc": "2026-09-28T13:31:53.786862+00:00",
+  "model": "deepseek/deepseek-v4.1-flash",
+  "temperature": 0,
+  "prompt_version": "ShipmentCaseGraph triage v2",
+  "source": "Synthetic inbound emails; frozen WMS and carrier responses; no mail send or WMS write",
+  "summary": {
+    "passed": 3,
+    "total": 3,
+    "provider_cost_usd": 0.000562276,
+    "p50_agent_latency_ms": 1503,
+    "p95_agent_latency_ms": 12414,
+    "input_tokens": 975,
+    "output_tokens": 527,
+    "provider_calls": 3
+  },
+  "trials": [
+    {
+      "case_id": "irrelevant_thread",
+      "trial": 1,
+      "expected_match": null,
+      "actual_match": null,
+      "expected_status": "review",
+      "actual_status": "review",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 1503,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602298-UVpUwbnoq9wYsJEYNVX1",
+          "http_status": 200,
+          "latency_ms": 1487,
+          "input_tokens": 310,
+          "output_tokens": 165,
+          "provider_cost_usd": 0.000215736
+        }
+      ],
+      "input_tokens": 310,
+      "output_tokens": 165,
+      "provider_cost_usd": 0.000215736
+    },
+    {
+      "case_id": "irrelevant_thread",
+      "trial": 2,
+      "expected_match": null,
+      "actual_match": null,
+      "expected_status": "review",
+      "actual_status": "review",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 12414,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602299-gLhhOowXDMSDjWkHz8WF",
+          "http_status": 200,
+          "latency_ms": 12393,
+          "input_tokens": 330,
+          "output_tokens": 193,
+          "provider_cost_usd": 0.00016969
+        }
+      ],
+      "input_tokens": 330,
+      "output_tokens": 193,
+      "provider_cost_usd": 0.00016969
+    },
+    {
+      "case_id": "irrelevant_thread",
+      "trial": 3,
+      "expected_match": null,
+      "actual_match": null,
+      "expected_status": "review",
+      "actual_status": "review",
+      "expected_shipment": null,
+      "actual_shipment": null,
+      "passed": true,
+      "error_type": null,
+      "extracted_references": [],
+      "extracted_search_clues": {},
+      "agent_latency_ms": 1443,
+      "model_calls": [
+        {
+          "response_id": "gen-1790602312-S4JpOyxQttxxXILJxnxI",
+          "http_status": 200,
+          "latency_ms": 1427,
+          "input_tokens": 335,
+          "output_tokens": 169,
+          "provider_cost_usd": 0.00017685
+        }
+      ],
+      "input_tokens": 335,
+      "output_tokens": 169,
+      "provider_cost_usd": 0.00017685
+    }
+  ]
+}

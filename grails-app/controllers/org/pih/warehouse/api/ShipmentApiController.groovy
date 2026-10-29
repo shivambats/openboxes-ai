@@ -9,7 +9,7 @@ class ShipmentApiController {
     ShipmentSidecarService shipmentSidecarService
 
     static allowedMethods = [list: 'GET', read: 'GET', history: 'GET', update: ['PUT', 'POST'],
-                             comment: 'POST', event: 'POST', sync: 'POST']
+                             comment: 'POST', event: 'POST', sync: 'POST', recovery: 'POST']
 
     private void respondWith(Closure action) {
         try {
@@ -32,4 +32,5 @@ class ShipmentApiController {
     def comment() { respondWith { shipmentSidecarService.mutate(User.get(session.user.id), params.id, 'comment', request.JSON as Map) } }
     def event() { respondWith { shipmentSidecarService.mutate(User.get(session.user.id), params.id, 'event', request.JSON as Map) } }
     def sync() { respondWith { shipmentSidecarService.mutate(User.get(session.user.id), params.id, 'sync', request.JSON as Map) } }
+    def recovery() { respondWith { shipmentSidecarService.createRecoveryShipment(User.get(session.user.id), request.JSON as Map) } }
 }

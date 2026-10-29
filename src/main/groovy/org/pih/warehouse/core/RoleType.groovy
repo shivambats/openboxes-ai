@@ -62,7 +62,7 @@ enum RoleType {
     ROLE_PACKER('Packer', 50),
     ROLE_RECEIVER('Receiver', 50),
     ROLE_SHIPMENT_CLERK('Shipment Clerk', 50),
-    ROLE_SIDECAR_BOT('Shipment Sidecar', 50),
+    ROLE_SIDECAR_BOT('Vegath Agent', 50),
     ROLE_STOCKER('Stocker', 50),
     ROLE_WORKER('Worker', 50),
 

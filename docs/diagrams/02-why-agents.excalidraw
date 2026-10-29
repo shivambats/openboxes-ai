@@ -1,0 +1,1385 @@
+{
+ "type": "excalidraw",
+ "version": 2,
+ "source": "https://excalidraw.com",
+ "elements": [
+  {
+   "id": "text_1",
+   "type": "text",
+   "x": 40,
+   "y": 30,
+   "width": 876,
+   "height": 40,
+   "strokeColor": "#1e40af",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Why an agent: give it the job, not the steps",
+   "fontSize": 32,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_2",
+   "type": "text",
+   "x": 40,
+   "y": 82,
+   "width": 1365,
+   "height": 22,
+   "strokeColor": "#64748b",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "A script follows steps someone wrote in advance. An agent is given a goal and works out the next step, inside firm limits.",
+   "fontSize": 18,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "rectangle_3",
+   "type": "rectangle",
+   "x": 40,
+   "y": 135,
+   "width": 1740,
+   "height": 84,
+   "strokeColor": "#6d28d9",
+   "backgroundColor": "#ddd6fe",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "roundness": {
+    "type": 3
+   }
+  },
+  {
+   "id": "ellipse_4",
+   "type": "ellipse",
+   "x": 74,
+   "y": 145,
+   "width": 28,
+   "height": 28,
+   "strokeColor": "#6d28d9",
+   "backgroundColor": "#ddd6fe",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "groupIds": [
+    "agent"
+   ]
+  },
+  {
+   "id": "rectangle_5",
+   "type": "rectangle",
+   "x": 66,
+   "y": 177,
+   "width": 44,
+   "height": 32,
+   "strokeColor": "#6d28d9",
+   "backgroundColor": "#ddd6fe",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "roundness": {
+    "type": 3
+   },
+   "groupIds": [
+    "agent"
+   ]
+  },
+  {
+   "id": "text_6",
+   "type": "text",
+   "x": 130,
+   "y": 150,
+   "width": 73,
+   "height": 20,
+   "strokeColor": "#6d28d9",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "THE JOB",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_7",
+   "type": "text",
+   "x": 130,
+   "y": 174,
+   "width": 1081,
+   "height": 27,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Get operations unblocked, with the least risk and cost, without missing an SLA.",
+   "fontSize": 22,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_8",
+   "type": "text",
+   "x": 40,
+   "y": 255,
+   "width": 376,
+   "height": 25,
+   "strokeColor": "#1e40af",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "ONE EXCEPTION, START TO FINISH",
+   "fontSize": 20,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "ellipse_9",
+   "type": "ellipse",
+   "x": 198.0,
+   "y": 298.0,
+   "width": 84.0,
+   "height": 84.0,
+   "strokeColor": "#dc2626",
+   "backgroundColor": "#fee2e2",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "groupIds": [
+    "notice"
+   ]
+  },
+  {
+   "id": "ellipse_10",
+   "type": "ellipse",
+   "x": 205,
+   "y": 305,
+   "width": 70.0,
+   "height": 70.0,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "#ffffff",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "groupIds": [
+    "notice"
+   ]
+  },
+  {
+   "id": "line_11",
+   "type": "line",
+   "x": 240.0,
+   "y": 340.0,
+   "width": 0,
+   "height": 23.333333333333336,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     -23.333333333333336
+    ]
+   ],
+   "groupIds": [
+    "notice"
+   ]
+  },
+  {
+   "id": "line_12",
+   "type": "line",
+   "x": 240.0,
+   "y": 340.0,
+   "width": 16.333333333333336,
+   "height": 7.0,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     16.333333333333336,
+     7.0
+    ]
+   ],
+   "groupIds": [
+    "notice"
+   ]
+  },
+  {
+   "id": "rectangle_13",
+   "type": "rectangle",
+   "x": 620,
+   "y": 318,
+   "width": 80,
+   "height": 54,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "#ffffff",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "groupIds": [
+    "mail"
+   ]
+  },
+  {
+   "id": "line_14",
+   "type": "line",
+   "x": 620,
+   "y": 318,
+   "width": 80,
+   "height": 29.160000000000004,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     40.0,
+     29.160000000000004
+    ],
+    [
+     80,
+     0
+    ]
+   ],
+   "groupIds": [
+    "mail"
+   ]
+  },
+  {
+   "id": "ellipse_15",
+   "type": "ellipse",
+   "x": 686,
+   "y": 300,
+   "width": 45.03703703703704,
+   "height": 45.03703703703704,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "#dbeafe",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "groupIds": [
+    "read"
+   ]
+  },
+  {
+   "id": "line_16",
+   "type": "line",
+   "x": 725.1111111111111,
+   "y": 339.1111111111111,
+   "width": 21.333333333333332,
+   "height": 21.333333333333332,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 4,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     21.333333333333332,
+     21.333333333333332
+    ]
+   ],
+   "groupIds": [
+    "read"
+   ]
+  },
+  {
+   "id": "diamond_17",
+   "type": "diamond",
+   "x": 1070,
+   "y": 302,
+   "width": 100,
+   "height": 84,
+   "strokeColor": "#b45309",
+   "backgroundColor": "#fef3c7",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100
+  },
+  {
+   "id": "text_18",
+   "type": "text",
+   "x": 1070,
+   "y": 328,
+   "width": 100,
+   "height": 35,
+   "strokeColor": "#b45309",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "?",
+   "fontSize": 28,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "line_19",
+   "type": "line",
+   "x": 1526,
+   "y": 304,
+   "width": 70.0,
+   "height": 72.33333333333334,
+   "strokeColor": "#047857",
+   "backgroundColor": "#a7f3d0",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     35.0,
+     0
+    ],
+    [
+     70.0,
+     11.666666666666668
+    ],
+    [
+     65.33333333333334,
+     51.333333333333336
+    ],
+    [
+     35.0,
+     72.33333333333334
+    ],
+    [
+     4.666666666666667,
+     51.333333333333336
+    ],
+    [
+     0,
+     11.666666666666668
+    ],
+    [
+     35.0,
+     0
+    ]
+   ],
+   "polygon": true,
+   "groupIds": [
+    "act"
+   ]
+  },
+  {
+   "id": "line_20",
+   "type": "line",
+   "x": 1544.6666666666667,
+   "y": 329.6666666666667,
+   "width": 32.66666666666667,
+   "height": 25.666666666666668,
+   "strokeColor": "#047857",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     14.0
+    ],
+    [
+     11.666666666666668,
+     25.666666666666668
+    ],
+    [
+     32.66666666666667,
+     0
+    ]
+   ],
+   "groupIds": [
+    "act"
+   ]
+  },
+  {
+   "id": "arrow_22",
+   "type": "arrow",
+   "x": 330,
+   "y": 345,
+   "width": 260,
+   "height": 0,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     260,
+     0
+    ]
+   ],
+   "endArrowhead": "arrow"
+  },
+  {
+   "id": "arrow_24",
+   "type": "arrow",
+   "x": 770,
+   "y": 345,
+   "width": 260,
+   "height": 0,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     260,
+     0
+    ]
+   ],
+   "endArrowhead": "arrow"
+  },
+  {
+   "id": "arrow_26",
+   "type": "arrow",
+   "x": 1210,
+   "y": 345,
+   "width": 260,
+   "height": 0,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     260,
+     0
+    ]
+   ],
+   "endArrowhead": "arrow"
+  },
+  {
+   "id": "text_27",
+   "type": "text",
+   "x": 40,
+   "y": 405,
+   "width": 400,
+   "height": 27,
+   "strokeColor": "#1e40af",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "1  Notice",
+   "fontSize": 22,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_28",
+   "type": "text",
+   "x": 40,
+   "y": 440,
+   "width": 400,
+   "height": 40,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "SHIP-2026-BOX1 is 19 days\npast its delivery date.",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_29",
+   "type": "text",
+   "x": 480,
+   "y": 405,
+   "width": 400,
+   "height": 27,
+   "strokeColor": "#1e40af",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "2  Understand",
+   "fontSize": 22,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_30",
+   "type": "text",
+   "x": 480,
+   "y": 440,
+   "width": 400,
+   "height": 60,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Reads the warehouse reply,\n\"should reach by noon today\",\nand works out that meant 13 Oct.",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_31",
+   "type": "text",
+   "x": 920,
+   "y": 405,
+   "width": 400,
+   "height": 27,
+   "strokeColor": "#1e40af",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "3  Decide",
+   "fontSize": 22,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_32",
+   "type": "text",
+   "x": 920,
+   "y": 440,
+   "width": 400,
+   "height": 60,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "A reply already came in, so\nanother email adds nothing.\nTell the operator, then wait.",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_33",
+   "type": "text",
+   "x": 1360,
+   "y": 405,
+   "width": 400,
+   "height": 27,
+   "strokeColor": "#1e40af",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "4  Act, safely",
+   "fontSize": 22,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_34",
+   "type": "text",
+   "x": 1360,
+   "y": 440,
+   "width": 400,
+   "height": 60,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Records the reply on the\nshipment. Chases again only\nif no answer within 4 hours.",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "arrow_36",
+   "type": "arrow",
+   "x": 1560,
+   "y": 515,
+   "width": 1320,
+   "height": 35,
+   "strokeColor": "#6d28d9",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     35
+    ],
+    [
+     -1320,
+     35
+    ],
+    [
+     -1320,
+     4
+    ]
+   ],
+   "endArrowhead": "arrow"
+  },
+  {
+   "id": "text_37",
+   "type": "text",
+   "x": 40,
+   "y": 562,
+   "width": 1740,
+   "height": 20,
+   "strokeColor": "#6d28d9",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "It checks back until the shipment is unblocked, and hands off to a person when it cannot get there.",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "center",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "line_38",
+   "type": "line",
+   "x": 40,
+   "y": 610,
+   "width": 1740,
+   "height": 0,
+   "strokeColor": "#64748b",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     1740,
+     0
+    ]
+   ],
+   "strokeStyle": "dashed"
+  },
+  {
+   "id": "text_39",
+   "type": "text",
+   "x": 40,
+   "y": 635,
+   "width": 103,
+   "height": 25,
+   "strokeColor": "#b91c1c",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "A SCRIPT",
+   "fontSize": 20,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "ellipse_40",
+   "type": "ellipse",
+   "x": 56,
+   "y": 712,
+   "width": 18,
+   "height": 18,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "#3b82f6",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100
+  },
+  {
+   "id": "arrow_42",
+   "type": "arrow",
+   "x": 76,
+   "y": 721,
+   "width": 250,
+   "height": 0,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     250,
+     0
+    ]
+   ],
+   "endArrowhead": "arrow"
+  },
+  {
+   "id": "line_43",
+   "type": "line",
+   "x": 340,
+   "y": 676,
+   "width": 0,
+   "height": 90,
+   "strokeColor": "#b91c1c",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 6,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     90
+    ]
+   ]
+  },
+  {
+   "id": "text_44",
+   "type": "text",
+   "x": 356,
+   "y": 708,
+   "width": 53,
+   "height": 20,
+   "strokeColor": "#b91c1c",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "stuck",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_45",
+   "type": "text",
+   "x": 40,
+   "y": 790,
+   "width": 420,
+   "height": 60,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Follows fixed steps. Anything\nunplanned leaves it stuck, or it\nrepeats the same email.",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_46",
+   "type": "text",
+   "x": 560,
+   "y": 635,
+   "width": 103,
+   "height": 25,
+   "strokeColor": "#6d28d9",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "AN AGENT",
+   "fontSize": 20,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "ellipse_47",
+   "type": "ellipse",
+   "x": 576,
+   "y": 712,
+   "width": 18,
+   "height": 18,
+   "strokeColor": "#1e3a5f",
+   "backgroundColor": "#3b82f6",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100
+  },
+  {
+   "id": "line_48",
+   "type": "line",
+   "x": 720,
+   "y": 676,
+   "width": 0,
+   "height": 90,
+   "strokeColor": "#64748b",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 6,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     90
+    ]
+   ]
+  },
+  {
+   "id": "arrow_50",
+   "type": "arrow",
+   "x": 596,
+   "y": 721,
+   "width": 290,
+   "height": 66,
+   "strokeColor": "#6d28d9",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     80,
+     0
+    ],
+    [
+     100,
+     -66
+    ],
+    [
+     184,
+     -66
+    ],
+    [
+     204,
+     0
+    ],
+    [
+     290,
+     0
+    ]
+   ],
+   "endArrowhead": "arrow"
+  },
+  {
+   "id": "ellipse_51",
+   "type": "ellipse",
+   "x": 894,
+   "y": 709,
+   "width": 24,
+   "height": 24,
+   "strokeColor": "#047857",
+   "backgroundColor": "#a7f3d0",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100
+  },
+  {
+   "id": "text_52",
+   "type": "text",
+   "x": 928,
+   "y": 710,
+   "width": 43,
+   "height": 20,
+   "strokeColor": "#047857",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "goal",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_53",
+   "type": "text",
+   "x": 560,
+   "y": 790,
+   "width": 420,
+   "height": 60,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Works toward the goal. Reads\nwhat happened and picks the\nnext step that helps.",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_54",
+   "type": "text",
+   "x": 1100,
+   "y": 635,
+   "width": 177,
+   "height": 25,
+   "strokeColor": "#047857",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "THREE PROMISES",
+   "fontSize": 20,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "line_55",
+   "type": "line",
+   "x": 1100,
+   "y": 676,
+   "width": 44.0,
+   "height": 45.46666666666666,
+   "strokeColor": "#047857",
+   "backgroundColor": "#a7f3d0",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     22.0,
+     0
+    ],
+    [
+     44.0,
+     7.333333333333333
+    ],
+    [
+     41.06666666666666,
+     32.266666666666666
+    ],
+    [
+     22.0,
+     45.46666666666666
+    ],
+    [
+     2.933333333333333,
+     32.266666666666666
+    ],
+    [
+     0,
+     7.333333333333333
+    ],
+    [
+     22.0,
+     0
+    ]
+   ],
+   "polygon": true,
+   "groupIds": [
+    "promise_0"
+   ]
+  },
+  {
+   "id": "line_56",
+   "type": "line",
+   "x": 1111.7333333333333,
+   "y": 692.1333333333333,
+   "width": 20.53333333333333,
+   "height": 16.133333333333333,
+   "strokeColor": "#047857",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     8.799999999999999
+    ],
+    [
+     7.333333333333333,
+     16.133333333333333
+    ],
+    [
+     20.53333333333333,
+     0
+    ]
+   ],
+   "groupIds": [
+    "promise_0"
+   ]
+  },
+  {
+   "id": "text_57",
+   "type": "text",
+   "x": 1160,
+   "y": 680,
+   "width": 600,
+   "height": 40,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Asks a person before any\nbooking or dispatch",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "line_58",
+   "type": "line",
+   "x": 1100,
+   "y": 742,
+   "width": 44.0,
+   "height": 45.46666666666666,
+   "strokeColor": "#047857",
+   "backgroundColor": "#a7f3d0",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     22.0,
+     0
+    ],
+    [
+     44.0,
+     7.333333333333333
+    ],
+    [
+     41.06666666666666,
+     32.266666666666666
+    ],
+    [
+     22.0,
+     45.46666666666666
+    ],
+    [
+     2.933333333333333,
+     32.266666666666666
+    ],
+    [
+     0,
+     7.333333333333333
+    ],
+    [
+     22.0,
+     0
+    ]
+   ],
+   "polygon": true,
+   "groupIds": [
+    "promise_1"
+   ]
+  },
+  {
+   "id": "line_59",
+   "type": "line",
+   "x": 1111.7333333333333,
+   "y": 758.1333333333333,
+   "width": 20.53333333333333,
+   "height": 16.133333333333333,
+   "strokeColor": "#047857",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     8.799999999999999
+    ],
+    [
+     7.333333333333333,
+     16.133333333333333
+    ],
+    [
+     20.53333333333333,
+     0
+    ]
+   ],
+   "groupIds": [
+    "promise_1"
+   ]
+  },
+  {
+   "id": "text_60",
+   "type": "text",
+   "x": 1160,
+   "y": 746,
+   "width": 600,
+   "height": 40,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Never asks a contact twice\nbefore they reply",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "line_61",
+   "type": "line",
+   "x": 1100,
+   "y": 808,
+   "width": 44.0,
+   "height": 45.46666666666666,
+   "strokeColor": "#047857",
+   "backgroundColor": "#a7f3d0",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     22.0,
+     0
+    ],
+    [
+     44.0,
+     7.333333333333333
+    ],
+    [
+     41.06666666666666,
+     32.266666666666666
+    ],
+    [
+     22.0,
+     45.46666666666666
+    ],
+    [
+     2.933333333333333,
+     32.266666666666666
+    ],
+    [
+     0,
+     7.333333333333333
+    ],
+    [
+     22.0,
+     0
+    ]
+   ],
+   "polygon": true,
+   "groupIds": [
+    "promise_2"
+   ]
+  },
+  {
+   "id": "line_62",
+   "type": "line",
+   "x": 1111.7333333333333,
+   "y": 824.1333333333333,
+   "width": 20.53333333333333,
+   "height": 16.133333333333333,
+   "strokeColor": "#047857",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 3,
+   "roughness": 0,
+   "opacity": 100,
+   "points": [
+    [
+     0,
+     8.799999999999999
+    ],
+    [
+     7.333333333333333,
+     16.133333333333333
+    ],
+    [
+     20.53333333333333,
+     0
+    ]
+   ],
+   "groupIds": [
+    "promise_2"
+   ]
+  },
+  {
+   "id": "text_63",
+   "type": "text",
+   "x": 1160,
+   "y": 812,
+   "width": 600,
+   "height": 40,
+   "strokeColor": "#374151",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "Hands off to a person\nwhen it is stuck",
+   "fontSize": 16,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  },
+  {
+   "id": "text_64",
+   "type": "text",
+   "x": 40,
+   "y": 900,
+   "width": 1298,
+   "height": 30,
+   "strokeColor": "#1e40af",
+   "backgroundColor": "transparent",
+   "fillStyle": "solid",
+   "strokeWidth": 1,
+   "roughness": 0,
+   "opacity": 100,
+   "text": "The model decides. The tools enforce. People stay in charge of the consequential calls.",
+   "fontSize": 24,
+   "fontFamily": 3,
+   "textAlign": "left",
+   "verticalAlign": "top",
+   "lineHeight": 1.25
+  }
+ ],
+ "appState": {
+  "viewBackgroundColor": "#ffffff",
+  "gridSize": 20
+ },
+ "files": {}
+}

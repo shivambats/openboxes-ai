@@ -3,7 +3,7 @@ from unittest.mock import Mock
 import pytest
 
 from carrier_email import (CarrierJournal, clarification_block_reason, prior_thread_reports,
-                           relative_delivery_date, request_status, resolve_reply)
+                           normalize_provisional, request_status, resolve_reply)
 from email_orchestrator import process_polled_message
 from agent import Agent
 from datetime import date, datetime, timezone
@@ -42,13 +42,13 @@ def test_request_is_previewed_then_sent_once(tmp_path):
     journal.close()
 
 
-def test_synthetic_message_is_labelled_and_test_recipient_is_allowlisted(tmp_path, monkeypatch):
+def test_demo_message_has_no_test_label_and_test_recipient_is_allowlisted(tmp_path, monkeypatch):
     journal, wms, mail = setup(tmp_path)
     monkeypatch.setenv('CARRIER_TEST_RECIPIENTS', 'first@example.com,second@example.com')
     preview = request_status(mail, wms, journal, 's1', 'SYN-BOL-1', 'SYN-PRO-1',
                              'first@example.com', 'ambiguous_portal')
-    assert preview['subject'].startswith('[TEST] [ACTION REQUIRED]')
-    assert 'no real shipment' in preview['body']
+    assert preview['subject'].startswith('[ACTION REQUIRED]')
+    assert 'Synthetic' not in preview['body'] and 'no real shipment' not in preview['body']
     with pytest.raises(ValueError):
         request_status(mail, wms, journal, 's1', 'SYN-BOL-1', 'SYN-PRO-1',
                        'outside@example.com', 'ambiguous_portal', apply=True)
@@ -209,6 +209,8 @@ def test_relative_day_and_should_be_record_date_and_dock_flag_once(tmp_path, mon
     mail.get.return_value = message
     mail.reply.return_value = {'message_id': 'confirm-partial', 'thread_id': 't1'}
     model = Mock()
+    model.extract.return_value = ({'date_quote': 'Next Wednesday', 'weekday': 'wednesday',
+                                   'dock_quote': 'Should be', 'dock_change': True}, {})
     result = process_polled_message({'message_id': 'partial'}, mail, Mock(), model,
                                     wms, journal, True)
     assert result['outcome'] == 'confirmation_sent'
@@ -223,7 +225,7 @@ def test_relative_day_and_should_be_record_date_and_dock_flag_once(tmp_path, mon
     assert '2026-09-30' in sent
     assert 'flagging the receiving dock team' in sent
     assert 'appointment is not yet booked' in sent
-    model.extract.assert_not_called()
+    model.extract.assert_called_once()
     replay = process_polled_message({'message_id': 'partial'}, mail, Mock(), model,
                                     wms, journal, True)
     assert replay['outcome'] == 'confirmation_sent'
@@ -232,11 +234,12 @@ def test_relative_day_and_should_be_record_date_and_dock_flag_once(tmp_path, mon
     journal.close()
 
 
-def test_relative_day_is_anchored_to_email_date():
-    assert relative_delivery_date('Next Wednesday',
-        datetime(2026, 9, 24, 10, tzinfo=timezone.utc)) == ('2026-09-30', 'Next Wednesday')
-    assert relative_delivery_date('next Wednesday',
-        datetime(2026, 9, 23, 10, tzinfo=timezone.utc)) == ('2026-09-30', 'next Wednesday')
+def test_relative_day_is_anchored_to_email_date(monkeypatch):
+    monkeypatch.setattr('carrier_email.today_utc', lambda: date(2026, 9, 25))
+    answer = {'date_quote': 'Next Wednesday', 'weekday': 'wednesday',
+              'dock_quote': 'Should be', 'dock_change': True}
+    assert normalize_provisional(answer, {'text': 'Next Wednesday. Should be',
+        'timestamp': '2026-09-24T10:00:00Z'}) == ('2026-09-30', 'Next Wednesday', 'Should be')
 
 
 def test_recorded_incomplete_reply_can_be_upgraded_without_duplicate_evidence(tmp_path, monkeypatch):
@@ -257,7 +260,10 @@ def test_recorded_incomplete_reply_can_be_upgraded_without_duplicate_evidence(tm
         'metadata': {'thread_id': 't1', 'message_id': 'partial',
                      'email_timestamp': '2026-09-24T09:00:00Z',
                      'evidence_quote': message['text']}}]
-    result = process_polled_message({'message_id': 'partial'}, mail, Mock(), Mock(),
+    model = Mock()
+    model.extract.return_value = ({'date_quote': 'Next Wednesday', 'weekday': 'wednesday',
+                                   'dock_quote': 'Should be', 'dock_change': True}, {})
+    result = process_polled_message({'message_id': 'partial'}, mail, Mock(), model,
                                     wms, journal, True)
     assert result['outcome'] == 'confirmation_sent'
     assert journal.reply('partial')[0] == 'provisional_done'
@@ -335,7 +341,10 @@ def test_fourth_clarification_is_allowed_then_next_reply_escalates(tmp_path):
     message = {'message_id': 'fifth', 'thread_id': 't1', 'from': 'dispatch@carrier.com',
                'timestamp': '2026-09-24T10:00:00Z', 'text': 'It is still stuck'}
     mail.get.return_value = message
-    outcome = process_polled_message({'message_id': 'fifth'}, mail, Mock(), Mock(),
+    model = Mock()
+    model.extract.return_value = ({'status': 'DELAYED', 'revised_eta': None,
+                                   'delay_reason': 'UNKNOWN', 'requires_reappointment': None}, {})
+    outcome = process_polled_message({'message_id': 'fifth'}, mail, Mock(), model,
                                      wms, journal, True)
     assert outcome['outcome'] == 'escalated'
     body = wms.commit.call_args.args[1]
@@ -402,7 +411,10 @@ def test_escalation_after_evidence_write_retries_same_payload(tmp_path):
     mail.get.return_value = message
     journal.save_reply('existing', 'incomplete_done', {'shipment_id': 's1',
         'clarification_fields': ['eta'], 'body': {'metadata': {'evidence_quote': 'It is still stuck'}}})
-    first = process_polled_message({'message_id': 'existing'}, mail, Mock(), Mock(),
+    model = Mock()
+    model.extract.return_value = ({'date_quote': '', 'weekday': '',
+                                   'dock_quote': '', 'dock_change': False}, {})
+    first = process_polled_message({'message_id': 'existing'}, mail, Mock(), model,
                                    wms, journal, True)
     assert first['outcome'] == 'escalated'
     assert wms.commit.call_count == 1

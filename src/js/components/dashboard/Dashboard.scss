@@ -5,10 +5,75 @@
   user-select: none;
   display: flex;
   align-items: start;
-  .filter-and-cards-container {
-    width: 100%;
+  height: var(--dashboard-viewport-height, calc(100dvh - 80px));
+  min-height: 0;
+  overflow: hidden;
+  // Kept mounted behind an open record so going back keeps the cards and scroll.
+  .filter-and-cards-container.behind-record {
+    display: none;
+  }
+  // A record page opened from the chat fills the right side; the chat stays put.
+  .record-pane {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    background: #fff;
+    border-left: 1px solid #e3e6ea;
+    .record-pane-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 0 0 auto;
+      padding: 6px 12px;
+      border-bottom: 1px solid #e3e6ea;
+      background: #f7f8fa;
+      font-size: 12px;
+    }
+    .record-pane-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border: 1px solid #cfd5dc;
+      border-radius: 4px;
+      background: #fff;
+      color: #1f3b57;
+      font-size: 12px;
+      cursor: pointer;
+      &:hover { background: #eef2f6; }
+    }
+    .record-pane-title {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #4a5560;
+    }
+    .record-pane-external {
+      color: #4a5560;
+      padding: 4px 6px;
+      &:hover { color: #1f3b57; }
+    }
+    .record-pane-frame {
+      flex: 1;
+      width: 100%;
+      min-height: 0;
+      border: 0;
+    }
+  }
+  .filter-and-cards-container {
+    width: auto;
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
     .category-filter {
       display: flex;
       flex-direction: row;
@@ -130,18 +195,38 @@
 }
 
 .configs-left-nav {
-  position: sticky;
+  position: relative;
+  flex: 0 0 200px;
   background-color: #ededed;
   display: flex;
   flex-direction: column;
   width: 200px;
-  height: 100vh;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
   z-index: 2;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.09);
+  transition: flex-basis .2s ease, width .2s ease, margin-left .2s ease;
 
   @media (max-width: 1115px) {
     position: fixed;
-    top: unset;
+    top: 0;
+    height: 100dvh;
+    overflow: visible;
+
+    // The menu slides fully away here, so its toggle sits just outside it.
+    .toggle-nav {
+      position: absolute;
+      top: 16px;
+      right: -30px;
+      width: 30px;
+      padding: 0;
+      justify-content: center;
+      border: none;
+      border-radius: 0 50% 50% 0;
+      background: #878787;
+      color: #ededed;
+    }
   }
 
   .update-section {
@@ -178,27 +263,44 @@
     }
   }
 
+  // Wide screens collapse to an icon rail; narrow screens slide the menu away.
   &.hidden {
-    margin-left: -200px;
+    flex-basis: 52px;
+    width: 52px;
+
+    .configs-list-label, .update-section { display: none; }
+    .configs-list .configs-list-item { padding: 8px 0; button { justify-content: center; i { margin-right: 0; } } }
+    .toggle-nav { justify-content: center; }
+
+    @media (max-width: 1115px) {
+      margin-left: -200px;
+      width: 200px;
+    }
   }
 
   .toggle-nav {
-    position: absolute;
-    top: 16px;
-    right: -25px;
-    width: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 0 0 auto;
+    width: 100%;
+    height: 34px;
+    padding: 0 16px;
     border: none;
-    background: #878787;
-    color: #ededed;
-    padding: 4px;
-    text-align: left;
-    border-top-right-radius: 100%;
-    border-bottom-right-radius: 100%;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.09);
+    border-bottom: 1px solid #dcdcdc;
+    background: transparent;
+    color: #6f6f6f;
+    font-size: 16px;
     cursor: pointer;
+
+    &:hover, &:focus-visible { background: #e2e2e2; color: #3d3d3d; }
   }
 
   .configs-list {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    margin: 0;
     list-style: none;
     padding: 0;
 
@@ -246,6 +348,114 @@
 
 .cards-container {
   flex: 1;
+}
+
+.dashboard-attention {
+  background: #e9eff1;
+  border: 1px solid #d9e4e7;
+  border-radius: 18px;
+  margin: 18px 3% 28px;
+  padding: 20px;
+  color: #20343d;
+
+  .dashboard-attention-heading {
+    align-items: end;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    h2 { font-size: 25px; font-weight: 700; letter-spacing: -0.025em; margin: 3px 0 4px; }
+    p { color: #647780; font-size: 13px; margin: 0; }
+  }
+
+  .dashboard-attention-eyebrow {
+    color: #54717b;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+  }
+
+  .dashboard-attention-refresh {
+    background: #fff;
+    border: 1px solid #d8e2e6;
+    border-radius: 8px;
+    color: #36535d;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 12px;
+
+    &:hover { border-color: #9bb7bf; }
+    &:disabled { cursor: default; opacity: 0.6; }
+    i { margin-right: 4px; }
+  }
+
+  .dashboard-attention-grid { display: grid; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .dashboard-attention-card {
+    background: #fff;
+    border: 1px solid #e1e9eb;
+    border-radius: 14px;
+    box-shadow: 0 7px 24px rgba(30, 55, 66, 0.06);
+    display: flex;
+    flex-direction: column;
+    min-height: 286px;
+    overflow: hidden;
+    padding: 20px 22px;
+    position: relative;
+
+    &::before { background: #277d88; content: ''; height: 3px; left: 0; position: absolute; right: 0; top: 0; }
+    h3 { font-size: 17px; font-weight: 700; margin: 17px 0 5px; }
+    > p { color: #647780; font-size: 13px; line-height: 1.5; margin: 0; }
+  }
+
+  .dashboard-attention-card--recall::before { background: #b76b4c; }
+  .dashboard-attention-card-top { align-items: center; display: flex; justify-content: space-between; }
+  .dashboard-attention-icon {
+    align-items: center;
+    background: #e9f4f5;
+    border-radius: 10px;
+    color: #257481;
+    display: flex;
+    font-size: 17px;
+    height: 38px;
+    justify-content: center;
+    width: 38px;
+  }
+  .dashboard-attention-card--recall .dashboard-attention-icon { background: #fcf0e9; color: #a65f43; }
+  .dashboard-attention-tag { color: #81939b; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; }
+  .dashboard-attention-stat {
+    align-items: baseline;
+    display: flex;
+    gap: 9px;
+    margin: 19px 0 13px;
+
+    strong { font-size: 30px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+    span { color: #647780; font-size: 12px; }
+  }
+  .dashboard-attention-preview {
+    border-top: 1px solid #edf1f2;
+    margin-bottom: 14px;
+    padding-top: 12px;
+
+    > span { color: #81939b; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; }
+    a { color: #36535d; display: flex; font-size: 12px; gap: 8px; justify-content: space-between; padding-top: 8px; }
+    a span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    a span:last-child { flex: none; }
+  }
+  .dashboard-attention-note { border-top: 1px solid #edf1f2; color: #647780; font-size: 12px; line-height: 1.5; padding-top: 12px; }
+  .dashboard-attention-link { color: #216e79; font-size: 12px; font-weight: 700; margin-top: auto; padding-top: 12px; }
+  .dashboard-attention-card--recall .dashboard-attention-link { color: #a45c40; }
+  .dashboard-attention-link i { margin-left: 4px; transition: transform 0.15s ease; }
+  .dashboard-attention-link:hover i { transform: translateX(3px); }
+
+  @media (max-width: 760px) {
+    margin: 16px 12px 24px;
+    padding: 16px;
+    .dashboard-attention-grid { grid-template-columns: 1fr; }
+    .dashboard-attention-card { min-height: 0; }
+  }
 }
 
 .agent-activity-panel {

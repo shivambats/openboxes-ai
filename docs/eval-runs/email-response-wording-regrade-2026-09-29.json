@@ -1,0 +1,247 @@
+{
+  "source_run": "live-email-response-development-2026-09-28.json",
+  "label_version": "synthetic-email-response-v1.1",
+  "note": "Post-run wording check only; raw run checks and score remain unchanged. Added no-redundant-question constraints for ER-04 and ER-05.",
+  "trials": [
+    {
+      "case_id": "ER-01",
+      "trial": 1,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-02",
+      "trial": 1,
+      "quality_regrade": {
+        "required_reply": false,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-03",
+      "trial": 1,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-04",
+      "trial": 1,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": false
+      }
+    },
+    {
+      "case_id": "ER-05",
+      "trial": 1,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": false
+      }
+    },
+    {
+      "case_id": "ER-06",
+      "trial": 1,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-07",
+      "trial": 1,
+      "quality_regrade": {
+        "required_reply": false,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-08",
+      "trial": 1,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-09",
+      "trial": 1,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-10",
+      "trial": 1,
+      "quality_regrade": {
+        "required_reply": false,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-01",
+      "trial": 2,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-02",
+      "trial": 2,
+      "quality_regrade": {
+        "required_reply": false,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-03",
+      "trial": 2,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-04",
+      "trial": 2,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": false
+      }
+    },
+    {
+      "case_id": "ER-05",
+      "trial": 2,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": false
+      }
+    },
+    {
+      "case_id": "ER-06",
+      "trial": 2,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-07",
+      "trial": 2,
+      "quality_regrade": {
+        "required_reply": false,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-08",
+      "trial": 2,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-09",
+      "trial": 2,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-10",
+      "trial": 2,
+      "quality_regrade": {
+        "required_reply": false,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-01",
+      "trial": 3,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-02",
+      "trial": 3,
+      "quality_regrade": {
+        "required_reply": false,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-03",
+      "trial": 3,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-04",
+      "trial": 3,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": false
+      }
+    },
+    {
+      "case_id": "ER-05",
+      "trial": 3,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": false
+      }
+    },
+    {
+      "case_id": "ER-06",
+      "trial": 3,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-07",
+      "trial": 3,
+      "quality_regrade": {
+        "required_reply": false,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-08",
+      "trial": 3,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-09",
+      "trial": 3,
+      "quality_regrade": {
+        "required_reply": true,
+        "forbidden_reply": true
+      }
+    },
+    {
+      "case_id": "ER-10",
+      "trial": 3,
+      "quality_regrade": {
+        "required_reply": false,
+        "forbidden_reply": true
+      }
+    }
+  ]
+}

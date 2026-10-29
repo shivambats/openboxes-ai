@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import re
-
 from tools.model_web_search import OpenRouterWebSearchCapability
 from tools.web_search import host_allowed
 
@@ -26,11 +24,15 @@ class RecallServerWebAgent:
         if allow_no_notice and result["content"].strip().rstrip(".").upper() == "NONE":
             return {"notice": None, "tool_audit": {**result["audit"],
                     "cited_urls": result["cited_urls"], "selected_notice_url": None}}
-        match = re.search(r"https://[^\s<>\]\[\"']+", result["content"])
-        url = match.group(0).rstrip(".,);:") if match else ""
+        citations = result["cited_urls"]
+        # Select a URL supplied by the search capability; prose is never parsed
+        # for a link and cannot introduce an uncited notice.
+        url = next((candidate for candidate in citations
+                    if candidate in result["content"] and host_allowed(candidate, ("fda.gov",))), "")
+        if not url and not citations:
+            url = result["content"].strip().rstrip(".,);:")
         if not host_allowed(url, ("fda.gov",)):
             raise ValueError("Model did not return an FDA URL")
-        citations = result["cited_urls"]
         if citations and url not in citations:
             raise ValueError("Selected notice URL was absent from web-search citations")
         notice = self.web.read_primary({"url": url, "verification": "lead_only",

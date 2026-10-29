@@ -1,5 +1,4 @@
 import json
-import re
 import time
 import httpx
 from models import timestamp, iso
@@ -14,16 +13,14 @@ def inspect_history(history, now):
         return {'decision': 'stop', 'reason': 'Human takeover', 'future_eta': None}
     future = None
     for comment in sorted(comments, key=lambda c: c.get('timestamp', '')):
-        for value in re.findall(r'<!-- sidecar-eta:(.*?) -->', comment.get('comment', '')):
-            if timestamp(value) > now:
-                future = value
-        # Also understand the visible report format from a previous agent version.
-        match = re.search(r'\*\*Revised ETA:\*\*\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2} [AP]M)', comment.get('comment', ''))
-        if match:
-            from datetime import datetime, timezone
-            parsed = datetime.strptime(match[1], '%Y-%m-%d %I:%M %p').replace(tzinfo=timezone.utc)
-            if parsed > now:
-                future = iso(parsed)
+        # This marker is application-generated metadata, not natural-language extraction.
+        for part in comment.get('comment', '').split('<!-- sidecar-eta:')[1:]:
+            value = part.split('-->', 1)[0].strip()
+            try:
+                if timestamp(value) > now:
+                    future = value
+            except (TypeError, ValueError):
+                continue
     return {'decision': 'proceed', 'reason': 'No blocking history', 'future_eta': future}
 
 

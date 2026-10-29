@@ -19,7 +19,7 @@
     <tr>
         <td class="b-0">
             <label><warehouse:message code="deliveryNote.comments.label" default="Comments"/>: </label>
-            ${shipment?.additionalInformation ?: ''}
+            ${org.pih.warehouse.shipping.ShipmentSidecarService.displayInformation(shipment?.additionalInformation) ?: ''}
         </td>
     </tr>
 </table>

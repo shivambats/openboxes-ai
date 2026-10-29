@@ -122,4 +122,12 @@
                               WHERE e.name='CARRIER_EMAIL_DATE_REPORTED' AND e.event_code='CUSTOM');
         </sql>
     </changeSet>
+    <changeSet id="2026-10-13-1309-contact-follow-up-events" author="sidecar">
+        <sql>
+            INSERT INTO event_type (id,version,name,description,event_code,sort_order,active,date_created,last_updated)
+            SELECT name,0,name,'Agent email with a shipment contact','CUSTOM',100,1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP
+            FROM (SELECT 'Contact update requested' AS name UNION ALL SELECT 'Contact reply received') names
+            WHERE NOT EXISTS (SELECT 1 FROM event_type e WHERE e.name=names.name AND e.event_code='CUSTOM');
+        </sql>
+    </changeSet>
 </databaseChangeLog>

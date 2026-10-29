@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import re
 import time
 
 
@@ -38,7 +37,9 @@ class RecallToolCallingAgent:
     def research(self, query, *, category="drug", since=None, firm_hint=""):
         if category not in {"food", "drug", "device"} or not isinstance(query, str) or not 3 <= len(query) <= 100:
             raise ValueError("Invalid recall search request")
-        anchor = next((term.lower() for term in re.findall(r"[A-Za-z0-9]+", query) if len(term) >= 4), "")
+        words = ''.join(char if char.isascii() and char.isalnum() else ' '
+                        for char in query).split()
+        anchor = next((term.lower() for term in words if len(term) >= 4), "")
         if not anchor:
             raise ValueError("A specific product term is required")
         messages = [

@@ -1026,6 +1026,7 @@ openboxes {
                         state5 = ["first"]
                         state4 = ["second"]
                         state3 = ["third"]
+                        state2 = ["fourth"]
                     }
                 }
             }

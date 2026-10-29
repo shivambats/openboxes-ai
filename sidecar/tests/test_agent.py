@@ -104,6 +104,13 @@ def test_web_route(setup):
     assert wms.commit.call_args.args[1]['source'] == 'Web'
 
 
+def test_confirmed_delay_requests_contact_even_with_future_eta(setup):
+    agent, _, _, _ = setup
+    result = agent.sweep()
+    assert result[0]['payload']['outcome'] == 'success'
+    assert result[0]['contact_needed'] is True
+
+
 def test_uncertain_commit_is_replayed_even_after_eta_no_longer_overdue(setup):
     agent, wms, carrier, _ = setup
     wms.commit.side_effect = TimeoutError()

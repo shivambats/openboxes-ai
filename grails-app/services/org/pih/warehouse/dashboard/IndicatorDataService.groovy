@@ -14,6 +14,7 @@ import org.pih.warehouse.api.StockMovementDirection
 import org.pih.warehouse.core.ConfigService
 import org.pih.warehouse.core.Location
 import org.pih.warehouse.inventory.InventorySnapshot
+import org.pih.warehouse.inventory.InventoryItem
 import org.pih.warehouse.inventory.TransactionCode
 import org.pih.warehouse.product.ProductAvailability
 import org.pih.warehouse.receiving.ReceiptItem
@@ -735,46 +736,74 @@ class IndicatorDataService {
         return graphData;
     }
 
-    @Cacheable(value = "dashboardCache", key = { "getDelayedShipments-${location?.id}" })
-    GraphData getDelayedShipments(Location location) {
+    private List delayedShipmentAttentionRows(Location location) {
+        if (!location) { return [] }
+        Date now = new Date()
         Date oneWeekAgo = LocalDate.now().minusWeeks(1).toDate()
         Date oneMonthAgo = LocalDate.now().minusMonths(1).toDate()
         Date twoMonthsAgo = LocalDate.now().minusMonths(2).toDate()
 
-        ApplicationTagLib g = grailsApplication.mainContext.getBean('org.grails.plugins.web.taglib.ApplicationTagLib')
-        String urlContextPath = ConfigHelper.contextPath;
-
-        def results = Shipment.executeQuery("""
-            select s.shipmentType.id, s.shipmentType.name, s.shipmentNumber, s.name, s.id
-            from Shipment as s
+        Shipment.executeQuery("""
+            select s from Shipment as s
             inner join s.currentEvent as e
             where s.destination = :location
             and s.currentStatus in ('SHIPPED', 'PARTIALLY_RECEIVED')
             and (
-                (s.shipmentType.id = 1 and e.eventDate < :oneMonthAgo)
-                or (s.shipmentType.id = 2 and e.eventDate < :twoMonthsAgo)
-                or (s.shipmentType.id in (3, 4) and e.eventDate < :oneWeekAgo)
+                (s.expectedDeliveryDate is not null and s.expectedDeliveryDate < :now)
+                or (s.expectedDeliveryDate is null and (
+                    (s.shipmentType.id = 1 and e.eventDate < :oneMonthAgo)
+                    or (s.shipmentType.id = 2 and e.eventDate < :twoMonthsAgo)
+                    or (s.shipmentType.id in (3, 4) and e.eventDate < :oneWeekAgo)
+                ))
             )
-        """, [
-                'location'    : location,
-                'oneWeekAgo'  : oneWeekAgo,
-                'oneMonthAgo' : oneMonthAgo,
-                'twoMonthsAgo': twoMonthsAgo
-        ])
+        """, [location: location, now: now, oneWeekAgo: oneWeekAgo,
+               oneMonthAgo: oneMonthAgo, twoMonthsAgo: twoMonthsAgo])
+    }
+
+    Map getNeedsAttentionItems(Location location) {
+        List shipments = delayedShipmentAttentionRows(location).collect { Shipment shipment ->
+            [type: 'delayed_incoming_stock', id: shipment.id,
+             number: shipment.shipmentNumber, name: shipment.name,
+             origin: shipment.origin?.name, destination: shipment.destination?.name,
+             expectedArrival: shipment.expectedDeliveryDate?.toInstant()?.toString(),
+             status: shipment.currentStatus?.name(),
+             link: "${ConfigHelper.contextPath}/stockMovement/show/${shipment.id}"]
+        }
+        List lots = InventoryItem.findAllByRecallReviewState('NEEDS_ATTENTION',
+                [sort: 'id', order: 'asc']).collect { InventoryItem item ->
+            [type: 'stock_recall_review', id: item.id,
+             productCode: item.product?.productCode, productName: item.product?.name,
+             lotNumber: item.lotNumber, reason: item.recallReviewReason,
+             sourceUrl: item.recallReviewSourceUrl,
+             updatedAt: item.recallReviewUpdatedAt?.toInstant()?.toString()]
+        }
+        [locationId: location?.id, delayedShipments: shipments, recallLots: lots]
+    }
+
+    GraphData getDelayedShipments(Location location) {
+        ApplicationTagLib g = grailsApplication.mainContext.getBean('org.grails.plugins.web.taglib.ApplicationTagLib')
+        String urlContextPath = ConfigHelper.contextPath;
+
+        def results = delayedShipmentAttentionRows(location)
 
         def numberDelayed = [
                 air            : 0,
                 sea            : 0,
                 landAndSuitcase: 0,
+                other          : 0,
         ]
 
         results = results.collect {
-            if (it[0] == '1') numberDelayed['air'] += 1
-            else if (it[0] == '2') numberDelayed['sea'] += 1
-            else numberDelayed['landAndSuitcase'] += 1
-            def shipmentType = LocalizationUtil.getLocalizedString(it[1], new Locale("en"))
+            String typeId = it.shipmentType?.id?.toString()
+            if (typeId == '1') numberDelayed['air'] += 1
+            else if (typeId == '2') numberDelayed['sea'] += 1
+            else if (typeId in ['3', '4']) numberDelayed['landAndSuitcase'] += 1
+            else numberDelayed['other'] += 1
+            def shipmentType = LocalizationUtil.getLocalizedString(it.shipmentType?.name, new Locale("en"))
 
-            TableData tableData = new TableData(it[2], it[3], null, "${urlContextPath}/stockMovement/show/" + it[4], g.resource(dir: 'images/icons/shipmentType', file: "ShipmentType${shipmentType}.png"))
+            TableData tableData = new TableData(it.shipmentNumber, it.name, null,
+                    "${urlContextPath}/stockMovement/show/" + it.id,
+                    g.resource(dir: 'images/icons/shipmentType', file: "ShipmentType${shipmentType}.png"))
             return tableData
         }
 
@@ -783,8 +812,9 @@ class IndicatorDataService {
         ColorNumber delayedShipmentByAir = new ColorNumber(numberDelayed['air'], 'By air')
         ColorNumber delayedShipmentBySea = new ColorNumber(numberDelayed['sea'], 'By sea')
         ColorNumber delayedShipmentByLand = new ColorNumber(numberDelayed['landAndSuitcase'], 'By land')
+        ColorNumber delayedShipmentByOther = new ColorNumber(numberDelayed['other'], 'Other')
 
-        NumbersIndicator numbersIndicator = new NumbersIndicator(delayedShipmentByAir, delayedShipmentBySea, delayedShipmentByLand)
+        NumbersIndicator numbersIndicator = new NumbersIndicator(delayedShipmentByAir, delayedShipmentBySea, delayedShipmentByLand, delayedShipmentByOther)
 
         NumberTableData numberTableData = new NumberTableData(table, numbersIndicator)
 

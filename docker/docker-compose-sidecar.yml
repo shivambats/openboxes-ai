@@ -10,3 +10,5 @@ services:
     environment:
       SIDECAR_SANDBOX_ENABLED: "true"
       GRAILS_SERVER_URL: http://localhost/openboxes/
+      OPENBOXES_SIDECAR_URL: http://host.docker.internal:8091
+      OPENBOXES_SIDECAR_TOKEN: ${OPENBOXES_SIDECAR_TOKEN:-}

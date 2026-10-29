@@ -152,13 +152,13 @@
                             </td>
                         </tr>
                     </g:if>
-                    <g:if test="${shipmentInstance?.additionalInformation}">
+                    <g:if test="${org.pih.warehouse.shipping.ShipmentSidecarService.displayInformation(shipmentInstance?.additionalInformation)}">
                         <tr class="prop">
                             <td class="name">
                                 <label>${warehouse.message(code: 'shipping.additionalInformation.label') }</label>
                             </td>
                             <td class="value">
-                                ${shipmentInstance?.additionalInformation}
+                                ${org.pih.warehouse.shipping.ShipmentSidecarService.displayInformation(shipmentInstance?.additionalInformation)}
                             </td>
                         </tr>
                     </g:if>

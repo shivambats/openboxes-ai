@@ -1,5 +1,468 @@
 # Delayed shipment sidecar
 
+## Local workflow app
+
+From `sidecar/`, start the API and open <http://127.0.0.1:8091>:
+
+```sh
+.venv/bin/uvicorn workflow_api:app --host 0.0.0.0 --port 8091
+```
+
+The page searches read-only OpenBoxes shipments and lets you start a case for
+one of them. **Try sample** starts a synthetic case when OpenBoxes is offline.
+The host binding lets the Dockerized OpenBoxes app reach the chat proxy at
+`host.docker.internal:8091`; the console and its case APIs accept only local
+requests. The nonlocal `/api/operator-chat` route requires the shared token.
+Each driver chat update runs the checkpointed `IncidentWorkflow` LangGraph:
+Jev classifies the newest message, OpenRouter extracts quote-backed facts from
+the conversation, the accident or breakdown subgraph runs the existing sidecar
+handlers, and the fleet manager prepares a recovery plan. A scene photo also
+runs the existing image analysis graph; only its findings, hash, and review
+proposals enter shared state, never the raw image. The center panel is
+drawn from the compiled graph topology and streamed node starts and updates.
+The driver message appears immediately in chat; the sidecar streams each graph
+step over an HTTP event stream and then returns the saved checkpoint. The right
+panels show the persisted shared state and exact model request/response bodies.
+The state and event log persist in `SIDECAR_STATE_PATH.workflow-ui.sqlite3`
+and its checkpoint companion, so reopening a case preserves the conversation.
+Logistics model prompts share the strict Logistics Exception Resolution Agent
+principle. An unfamiliar driver report goes through open-ended investigation
+instead of being forced into accident or breakdown. Every driver update and
+carrier-review step records an iteration and repeat count in `agent_loop`.
+The carrier review graph can re-read after a follow-up, but stops when evidence
+repeats or it must wait for external input; this bounds cycles and avoids
+repeating consequential actions.
+
+The **Showing** menu in the execution graph can switch from the current driver
+chat to an email, shipment case, recovery quote, or OpenBoxes user chat run.
+The console checks `/api/executions` every two seconds and automatically selects
+a newly started email run. Started nodes pulse; completed graph nodes and
+invoked capabilities stay highlighted. The trace records run IDs, node names,
+timing, and error types in `SIDECAR_STATE_PATH.executions.sqlite3`. It does not
+copy email bodies, prompts, model responses, or credentials into this trace.
+The existing Shared Graph State and LLM panels continue to show the selected
+driver chat case.
+**Check carrier replies** stores each verified inbound email from a journal-verified
+carrier thread in `workflow_carrier_emails` before model extraction. The table
+keeps the source message and thread IDs, sender, received time, subject, bounded
+plain-text body, hash, attachment flag, and first/last retrieval times. Duplicate
+checks update the retrieval time without creating another email row; a changed
+body for an existing message ID stops review. The reply panel shows these saved
+emails and the loop counts. Unrelated mailbox messages are excluded.
+
+Instrumentation needs one entry decorator, such as
+`@observed_run('shipment_email', 'email')` or
+`@observed_service('operator_chat', 'openboxes_chat')`. Pass
+`config=graph_config(graph_id='shipment_email')` when invoking a LangGraph;
+its callback traces nodes and nested graphs. Add `@observed_capability('name')`
+to a non-graph operation that should appear in the console. Observer storage
+errors do not block the underlying workflow.
+
+The OpenBoxes dashboard has a left-side chat for the signed-in user. Grails
+derives the user ID, username, and current warehouse from the server session,
+then proxies `/api/operator-chat` to the sidecar with
+`OPENBOXES_SIDECAR_URL` and a shared `OPENBOXES_SIDECAR_TOKEN`. Set the same
+token in the app environment and `sidecar/.env`; do not expose it in browser
+code. Conversations are saved per user and warehouse in
+`SIDECAR_STATE_PATH.operator-chat.sqlite3`. If the user names a shipment, the
+proxy checks that its origin or destination is the current warehouse before
+sending a limited snapshot to the chat graph. After the model identifies the
+shipment and OpenBoxes verifies its ID and warehouse scope, the sidecar reads
+the latest incident, inspection, and recovery quote state from
+`shipment_case_state` in `SIDECAR_STATE_PATH.workflow-ui.sqlite3`. The table is
+rebuilt from saved graph checkpoints on startup and updated after workflow
+changes. The chat shows complete and partial quotes separately, with synthetic
+reliability priors clearly labelled as planning estimates because no verified
+carrier performance history is stored. The operator can choose a complete
+eligible quote in chat; that choice is saved with user and evidence in the case.
+It then starts two separately recorded steps for synthetic shipments: an email
+on the selected carrier's quote thread requesting dispatch confirmation,
+followed by a separate driver update email. Both go to the configured test
+recipient. The carrier is told to hold vehicle travel and cargo movement until
+inspection, scene clearance, and final fleet release. A repeat click reads the
+send journal and does not duplicate mail. The chat can be reset for the signed-in
+user and warehouse without clearing shipment cases or sent-mail records.
+The saved `load_transfer` state follows those emails: after carrier contact and
+the separate driver notice it is `awaiting_carrier_confirmation`, with vehicle
+travel and cargo transfer still `not_authorized`. A specific dispatch question
+checks the selected carrier's verified email thread before answering. A
+post-selection reply is saved as email evidence and a model extracts a vehicle
+report with an exact source quote. If the carrier reports dispatch, the case
+records `carrier_reports_dispatched` separately from fleet travel release and
+cargo clearance. The answer cites the received email and flags any conflict
+with the earlier hold instruction; it does not claim to know a vehicle's
+physical location without independent confirmation.
+Summary facts and carrier cards show their source and the received time when
+the evidence has one. Quote follow-ups remain separate, bounded actions.
+The dashboard polls a user-scoped progress record while a chat answer is being
+prepared. The record is updated when a graph node or observed capability starts,
+so the chat displays only the current activity for the path being executed.
+Activity text includes the model-identified request, actual action, shipment,
+carrier, and thread check where available. OpenBoxes shipment lookup reports
+its entry and resolved reference before the database read. The
+record also retains the actual OpenBoxes and saved-case sources checked.
+
+The local sidecar page at `http://127.0.0.1:8091/` has separate **Operator chat**
+and **Driver incident** modes. Operator chat accepts natural-language questions.
+It can list the dashboard's Needs Attention items without a shipment reference;
+this read-only queue covers delayed incoming shipments for the selected warehouse
+and globally flagged recall review lots. For shipment questions, it resolves a
+synthetic shipment from the conversation and uses the same case answer path as
+the OpenBoxes chat. It shows the current execution trace and model I/O.
+Specific questions use a short, source-backed answer path; the full case summary
+and carrier cards appear only for an overall update request. A sent email is
+reported as an outbound notification, without implying it was read.
+Its browser-local test identity is separate from authenticated OpenBoxes users;
+the console endpoints are restricted to loopback clients. Shipment recovery
+actions remain limited to synthetic shipments.
+Driver incident mode remains available to test the incident graph and its
+re-evaluation loop.
+
+### Operator chat decision loop
+
+`operator_capabilities.py` defines the chat as a registry of capabilities:
+reads, contact status requests, third-party outreach, writes, and dispatch.
+On each step, Jev 1.13 (OpenRouter's typed Decisions API) chooses one
+capability from those the user's role may run, or chooses to answer. DeepSeek
+writes the answer and extracts grounded arguments such as the named carrier.
+Jev's input is the newest message, the recent conversation, the shipment
+number, status, and SLA state, recent actions on the shipment, and the results
+of this request's earlier steps. It never receives account IDs or contact
+addresses. If Jev fails, or its confidence is below the capability's threshold,
+the loop runs the request reader's grounded suggestion once instead. The local
+console shows each step's `decided_by` value and the Jev request and response.
+
+Each capability enforces its own guardrails when invoked:
+
+- **Write permission:** a read-only user who explicitly asks for a write gets
+  a 403.
+- **Shipment and warehouse scope:** shipment data comes from the OpenBoxes
+  proxy, which has already checked that the user's warehouse can see it.
+- **Explicit requests:** quote outreach, writes, and dispatch run only when the
+  operator explicitly asked for them. Jev may start a contact status request
+  only at confidence 0.8 or higher.
+- **Repeat sends:** `send_contact_check` refuses a request while the contact
+  has not replied to an email sent less than 4 hours ago. It reads that send
+  time from the email itself. `send_vendor_followup` refuses the same question
+  to a carrier that has not replied for 2 hours. Set `CONTACT_FOLLOW_UP_HOURS`
+  and `CARRIER_FOLLOW_UP_HOURS` in `.env` to change these windows, then restart
+  the sidecar.
+- **Ledger:** every consequential call is recorded in
+  `operator_action_ledger`, with who or what decided it.
+
+The loop stops after 4 steps or when it chooses to answer. It also stops when a
+capability is chosen a second time, or when a step returns the same evidence
+as an earlier step. It allows one consequential action per request.
+
+### Contact follow-up monitor
+
+`contact_follow_up.py` runs in the background every
+`CONTACT_MONITOR_INTERVAL_MINUTES` (default 10). It checks each shipment with a
+contact email thread: the driver, sending warehouse, or shipment company.
+It reads the thread without sending and saves any verified reply. It sends a
+follow-up only when all of these hold:
+
+- the shipment is synthetic and still open;
+- no human review is open on the shipment;
+- the incident workflow does not own the thread;
+- the delivery date has passed or is within 24 hours;
+- the follow-up window has passed.
+
+Sends go through `send_contact_check` and its guardrails. After
+`CONTACT_AUTO_FOLLOW_UP_LIMIT` automatic follow-ups (default 2) with no reply,
+the monitor stops and opens a **Delivery update requires review** item so a
+person can take over. Set `CONTACT_AUTO_CHASE=false` to turn the monitor off.
+`/api/health` reports its settings and its last run.
+
+A reply does not end the work while OpenBoxes still shows a late shipment open.
+Every reply is recorded on the shipment as it arrives, even when a person or the
+incident workflow owns the next step. Jev then reads the reply as `arrived`,
+`new_estimate`, `problem`, or `no_status`; a reading below 0.7 confidence counts as
+`no_status`. This also runs for shipments the incident workflow owns.
+
+- **Arrived:** the monitor asks once for proof of delivery: place, time, receiver
+  or dock, and a photo. If the contact repeats the claim, or the follow-up window
+  passes with the record unchanged, it opens a review with reason
+  `ARRIVAL_REPORTED_NOT_RECEIVED`.
+- **Anything else:** after the follow-up window it asks for a firm status. After
+  twice `CONTACT_AUTO_FOLLOW_UP_LIMIT` rounds it opens a review with reason
+  `CONTACT_REPLIES_DO_NOT_RESOLVE`.
+
+The model drafts each question from the contact's latest reply and asks only what
+that reply left open. If the reply already answers everything, nothing is sent
+and the review is opened instead.
+
+Every outcome is written to the OpenBoxes shipment as a comment from the
+`vegath-agent` account, with contact addresses removed. Major outcomes are also
+shipment events:
+
+| Outcome | Event |
+| --- | --- |
+| A status request is sent from chat or by the monitor | Contact update requested |
+| A verified contact reply arrives | Contact reply received |
+| The monitor hands the contact to a person, or a send is uncertain | Delivery update requires review |
+
+A failed OpenBoxes write is queued and retried on the next run. Retries use the
+same idempotency keys, so nothing is recorded twice.
+
+For a synthetic shipment, when the driver reports damaged or unsecured cargo
+and gives a roadside position, the recovery node emails the configured test
+inspector for availability. If tow or transfer may be needed, it also emails
+the configured test shippers for conditional FTL/PTL capacity and indicative
+quotes. Every test email goes to `batra.shivam40@gmail.com`; the local journal
+prevents duplicate sends. The graph records actual send outcomes in shared
+state. These inquiries do not dispatch a vendor, book a carrier, clear cargo
+for transfer, or write to OpenBoxes. A case without the required facts records
+why outreach could not run.
+
+After a test carrier replies to a conditional inquiry, open the saved case and
+select **Check carrier replies**. The carrier reply graph verifies the thread
+and sender, uses OpenRouter to extract terms with exact quotes and source
+message IDs, and records them under `recovery_quotes` in Shared Graph State.
+Missing terms trigger one clarification email per reply in the same test
+thread. Ordinary ambiguities use labelled working assumptions: a dollar quote
+from a test carrier configured with USD is provisionally USD, and a duration given in
+direct answer to a roadside pickup question is treated as time to reach pickup
+when the model supports that reading. The carrier receives the assumptions and
+can correct them; the case retains the exact supporting quote and message ID.
+The same rule is in `nl_assumptions.py` and `AGENTS.md` for future language
+handlers. It never replaces proof of safety, cargo fitness, identity, exact
+location, consent, dispatch authority, or carrier acceptance.
+Relative phrases such as “tonight” are grounded in the source email
+timestamp; without a stated sender time zone, the date is labelled UTC.
+Indicative replies do not book a carrier or clear damaged cargo. A qualified
+inspection and fleet approval are still required for formal acceptance. Carrier
+terms and quote followups remain in the internal graph state; the driver chat
+only reports safety instructions, help status, and information the driver can
+provide safely.
+
+Conditional quote requests now state a **30-minute UTC cutoff**, stored in the
+case. The running sidecar checks saved deadlines every minute and closes due
+rounds; **Check carrier replies** also closes a due round immediately when used.
+This is an in-process scheduler, so the sidecar must be running. It catches up
+with overdue rounds when restarted. A round can close sooner when
+every contacted carrier has complete terms. Replies received after closure are
+recorded but excluded from that selection round. The graph ranks timely complete
+offers by price, or by configured reliability when the shipment's late fee is
+high. It shows the selected quote and blockers in the Reply review panel. For
+older cases whose original request had no cutoff, the monitor starts a fresh
+30-minute window on its first check; it is not imposed retroactively.
+
+After the window closes, a fleet reviewer can select **Review dispatch request**
+in the console. The test request requires a qualified inspection reference and
+cargo-fit attestation, scene clearance, safe roadside access, vehicle IDs, and
+approval of the exact selected price. It emails only the configured test inbox
+and asks the selected carrier to confirm final terms; it does not release a
+vehicle to travel or write to OpenBoxes. The request is idempotent. The carrier
+acceptance and final fleet release remain separate steps. The cutoff advances
+without the browser being open. The cutoff selects a quote but does not send a
+dispatch request until the inspection and fleet approval fields are supplied.
+`GET /api/health` reports whether the quote monitor is running and its last
+check result.
+
+The logged-in OpenBoxes chat can now answer “Check recovery quotes for
+SHIP-2026-API1” immediately from the saved quote round. It checks for newer
+carrier replies in the background; the operator can ask again for the result.
+It can also follow up with a named carrier or all carriers. The operator's
+message is classified by the model; the vendor ID is checked against the
+shipment's contacted carriers. Follow-ups use each vendor's configured
+communication preference in `fleet_config.py`: a configured HTTPS quote API,
+or email. The synthetic carriers currently prefer email, and all email goes
+to the configured test address. Email follow-ups reply in the verified active
+thread; an explicit request to start a new thread opens one. New threads are
+saved with the case so subsequent quote checks can read their replies. A
+closed quote selection stays fixed; later indications require fleet review.
+This chat action requests updated terms only. It never books or dispatches a
+carrier.
+
+Local endpoints: `GET /api/health`, `GET /api/shipments?q=…`,
+`GET /api/graphs`, `GET /api/executions`, `GET /api/executions/{id}`,
+`GET/POST /api/operator-chat` (server-to-server token required),
+`POST /api/sessions`, `POST /api/sessions/sample`,
+`GET /api/sessions/{id}`, `POST /api/sessions/{id}/recovery-replies`,
+`POST /api/sessions/{id}/messages`, and
+`POST /api/sessions/{id}/dispatch-request`,
+`POST /api/sessions/{id}/messages/stream` (server-sent events over the POST
+response). The non-streaming message endpoint remains available for scripts.
+
+### Interactive chat components
+
+Tools return data blocks rather than formatted text. A block has typed columns, each
+with an optional role such as `time`, `sender`, or `body`, plus its rows.
+`chat_components.py` works out which components can honestly show that shape:
+
+- **timeline**: dated events;
+- **email thread**: shown like a mail client;
+- **table**: sortable, searchable, and pageable;
+- **bar chart**: one number per category;
+- **stat cards**: headline figures;
+- **detail**: a single record.
+
+When more than one fits, a Jev decision chooses. Jev sees only the column layout, the
+row count, and two invented rows in the exact same format, never real values. Code
+then builds the card from the real rows, so no model writes interface markup,
+numbers, or email text. Email addresses are withheld.
+
+The cards appear in the console and in the OpenBoxes dashboard chat
+(`ChatComponents.jsx`). Today they show up in these places:
+
+- **Investigations:** a timeline and the emails behind it.
+- **Reply checks:** the contact thread.
+- **Contact requests:** the email that was sent.
+- **Data questions:** the query result.
+
+### Data agent
+
+Ask about this warehouse's records in plain language, for example "which bins hold
+the most stock" or "inbound shipments due this week". The agent can answer from
+shipments, shipment items, stock by product, lot and bin, lots and expiry, bins, and
+transfers. It never writes SQL. Its design follows production text-to-SQL practice:
+a semantic layer, with enforcement the model cannot reach.
+
+1. `data_agent.py` sends DeepSeek the question, the conversation, the message time,
+   and the catalog from `GET /api/sidecar/data-catalog`. DeepSeek returns a query
+   plan: dataset, fields, filters, grouping, aggregates, order, and limit.
+2. `POST /api/sidecar/data-query` in OpenBoxes (`SidecarDataQueryService`) checks
+   every name against the curated catalog and binds every value as a parameter. It
+   always scopes rows to the signed-in warehouse, caps rows at 200, and runs one
+   SELECT in a `START TRANSACTION READ ONLY` session with a 5-second statement limit.
+3. If OpenBoxes rejects the plan, its message names only catalog terms. The planner
+   gets one chance to correct the plan, and a question outside the catalog is
+   answered as unanswerable rather than guessed.
+4. The result becomes a chat component. The answer writer summarises at most 50 rows.
+
+The catalog leaves out people's names and contact details. The endpoint is open
+only to the sidecar bot role, and it refuses any warehouse other than the bot's
+signed-in one.
+
+
+
+`./trigger_delayed_shipments.sh` runs one overdue sweep in apply mode. For a
+local 30-minute loop, run `./watch_delayed_shipments.sh`; an external cron can
+instead invoke the trigger with `*/30 * * * *`. No recurring scheduler is
+installed by this repository. The existing state lock prevents overlapping
+sweeps.
+
+To create five local synthetic contact cases, run `./.venv/bin/python
+seed_outreach.py` from `sidecar/` with the configured OpenBoxes admin
+credentials. The admin-only sandbox endpoint adds
+`batra.shivam40@gmail.com` to three driver cases (`SHIP-2026-API1` accident,
+`SHIP-2026-TONER1` breakdown, `SHIP-2026-WEB1` protocol first contact), one sending-warehouse case
+(`SHIP-2026-BOX1`), and one shipment-company case (`SHIP-2026-BOX2`). It
+preserves shipment status, ETA, type, items, and history, and reruns safely.
+Preview the messages with `./.venv/bin/python send_outreach_fixtures.py`;
+add `--apply` to send them once through AgentMail. The SQLite outreach journal
+records each provider thread and prevents a duplicate send on rerun. Reply to
+the driver messages in Gmail, keeping each original thread, to exercise
+the accident and breakdown handlers through `./trigger_email_agent.sh`.
+Run `./.venv/bin/python verify_outreach_scenarios.py` for a no-send replay of
+both synthetic driver replies. It reads the saved real outbound threads,
+appends one synthetic incoming message to each in memory, calls Jev, and prints
+the accident and breakdown reply previews without writing WMS or email state.
+
+When tracking reports a delay or cannot establish a reliable future ETA, the sweep selects the
+first explicit contact in this order: `driver_email`,
+`sending_warehouse_email`, then `dispatch_email` in
+`Shipment.additionalInformation.sidecar`. These fields are returned by the
+scoped shipment API. Missing contacts require review. For the current test
+run, all three roles send only to `batra.shivam40@gmail.com`. The selected
+role and recorded source address remain in the local SQLite journal. Each
+shipment gets at most one outbound request; an uncertain send is held for
+operator reconciliation.
+
+The existing AgentMail reader polls the same inbox. A reply in the saved driver
+thread from the test recipient is passed to the model with every message in
+that thread, including the original outbound request and earlier replies.
+Jev 1.13 classifies accident, breakdown, or other through OpenRouter's typed
+Decisions API. It also judges whether the newest message explicitly establishes
+driver safety and cargo condition. A low-confidence incident or `other` goes to
+review. The accident handler composes driver-health, shipment-health, and
+insurance agents; the breakdown handler composes roadside and shipment-health
+agents. The response goes to the same verified thread. These agents do not
+file claims, arrange repairs, or change shipment dates. Warehouse and company
+replies are held for review by this new contact workflow; legacy carrier
+dispatch threads retain their existing ETA resolution path.
+
+The initial driver email asks for a shipment status update. The first same-thread
+response after the driver reports an accident checks safety and asks for scene
+protection, warning devices where applicable and safe, visible hazards,
+dispatch details, and photos or dashboard codes taken only from safety. Photo
+attachments are read by the image agent and held for fleet review; they do not prove that a
+protocol step was completed. A verified driver photo gets a same-thread safety and
+fact-check reply to the test inbox with `email_orchestrator.py --message-id ID --apply`.
+Without `--apply`, the result includes only an `email_reply` proposal. Repeat
+processing uses the outreach journal to avoid a second reply. For a verified
+synthetic shipment, the same `--apply` run also sends test cleanup and
+inspection vendors separate availability inquiries selected from photo evidence.
+They explicitly prohibit travel or scene entry and do not dispatch anyone.
+The vendor inquiries are idempotent. `fleet_manager_agent.py` supplies a local simulated
+vendor directory and approval-gated backup-shipper inquiry proposals.
+An inline image sent by the verified shipment-company contact is held for fleet
+review. The orchestrator can acknowledge the company's text and ask for driver
+safety, exact roadside pickup, vehicle IDs, repair estimate, and qualified cargo
+inspection before FTL/PTL quotes. It does not treat the image as a driver report
+or authorize a transfer from the attachment alone.
+Text-only follow-ups from that contact carry explicit facts forward in the same
+verified thread. Relative words such as “tomorrow” are grounded in the source
+message timestamp using `nl_time.py`; a reported calendar date does not acquire
+an invented hour. Future natural-language handlers should reuse
+`RELATIVE_TIME_INSTRUCTION` and keep the source message ID and timestamp with
+the resolved date.
+If an older photo reply was sent in a dense format, preview one concise
+same-thread correction with `send_readable_photo_followup.py --message-id ID`;
+add `--apply` to send it once to the verified test inbox.
+For a verified driver photo, the vision model can select three evidence-linked
+next steps: request a qualified cleanup team for a visible leak, request a
+vehicle and cargo inspection for visible collision or damage, and start an
+insurance intake. The output is a fleet review plan. It does not dispatch a
+vendor or file a claim. Cleanup requires scene clearance, material identification,
+an exact location, and confirmation of who is responsible for the spill.
+
+The synthetic cleanup, inspection, and FTL/PTL shipper contacts are in
+`fleet_config.py`. Every address is `batra.shivam40@gmail.com`; no vendor rows
+or schema migrations are needed. `contact_cleanup_vendors` can send test-only
+capability inquiries after an exact-payload approval. It does not dispatch a
+crew into an uncleared scene.
+
+```sh
+.venv/bin/python request_cleanup.py --shipment-id SHIPMENT_ID \
+  --incident-location 'I-80 mile 42, east shoulder'
+```
+
+Add `--apply` to send two cleanup capability requests to the test inbox.
+
+For an inspected, undamaged load and a truck repair of six hours or more, use
+`run_recovery_quotes.py` from `sidecar/`. Supply the original shipment ID, exact
+roadside pickup point, vehicle IDs, repair estimate, and known late-delivery fee:
+
+```sh
+.venv/bin/python run_recovery_quotes.py --shipment-id SHIPMENT_ID \
+  --pickup-point 'I-80 mile 42, east shoulder' --vehicle-ids 'tractor-1/trailer-2' \
+  --repair-hours 12 --late-fee-usd 10000 --driver-safe \
+  --cargo-inspected-undamaged --inspection-reference 'INSPECT-123'
+```
+
+The default is a preview. Add `--apply` to send quote requests to the test
+inbox. Run the same command after shippers reply with the requested `MODE`,
+`PRICE_USD`, `PICKUP_ETA_HOURS`, `DELIVERY_ETA_HOURS`, and
+`CAPACITY_CONFIRMED` fields. The workflow picks the lowest price for ordinary
+cases. For a late fee of at least USD 5,000, it selects the highest configured
+reliability before price. It sends an acceptance in the selected quote thread.
+After the shipper replies with the exact `QUOTE_ID` and `ACCEPTED: YES`, another
+`--apply` run creates one pending recovery shipment. The stored OpenBoxes origin
+remains the original warehouse; the exact roadside pickup point is in shipment
+metadata. No shipment event or inventory transaction is created at this stage.
+
+The US guidance behind the accident handler is [FMCSA's driver safety
+tips](https://www.fmcsa.dot.gov/ourroads/tips-truck-and-bus-drivers), [FMCSA's
+cargo securement rules](https://www.fmcsa.dot.gov/regulations/cargo-securement/cargo-securement-rules),
+[FMCSA's carrier accident-record guidance](https://csa.fmcsa.dot.gov/SafetyPlanner/MyFiles/SubSections.aspx?ch=21&eta=41714&sec=62&sub=127),
+and [NAIC's claim checklist](https://content.naic.org/article/what-you-should-know-about-filing-auto-claim).
+The mail response asks the driver to contact emergency services, fleet dispatch,
+and their actual insurer as appropriate; it never assumes policy coverage or
+declares cargo fit to continue. Agent boundaries and future extensions are in
+[`docs/delayed-shipment-agents.md`](../docs/delayed-shipment-agents.md).
+
 ## Graphs and entry points
 
 The [architecture inventory](../docs/orchestrator-architecture.md#graph-inventory-and-runtime-boundaries)
@@ -116,8 +579,8 @@ journal. A send interrupted after the provider accepted it remains
 `send_uncertain` and needs operator reconciliation; it is never sent twice
 automatically. `dispatch@carrier.com` is an example, not a configured contact.
 For synthetic sends, set `CARRIER_TEST_RECIPIENTS` to a comma-separated allowlist
-in the ignored `.env`. Synthetic BOL/PRO values beginning `SYN-` add a `[TEST]`
-subject prefix and a no-action disclaimer.
+in the ignored `.env`. Synthetic BOL/PRO values beginning `SYN-` add a no-action
+disclaimer to the body. Subjects carry no test prefix.
 
 The existing inbox poller handles replies. Run it on demand or from the same
 scheduler used for shipment email reading:
@@ -195,8 +658,8 @@ mime_type, source={...})`. The email poller fetches up to five JPEG, PNG, WebP,
 or GIF attachments, invokes this graph, and uses visible identifiers for a
 scoped OpenBoxes lookup. It returns the image findings alongside the matched
 shipment and its WMS status as a review candidate. No image-only observation
-changes a shipment or sends a reply automatically. Unsupported attachments
-remain in review.
+changes a shipment. The email adapter can send a same-thread request for
+verification with `--apply`. Unsupported attachments remain in review.
 
 ### Test the image agent
 
@@ -416,7 +879,7 @@ Alternatively set `BROWSER_EXECUTABLE_PATH` to an installed Chrome binary, or
 Set `OPENBOXES_URL=http://localhost/openboxes`. Run `.venv/bin/python seed.py`
 with a superuser login (`OPENBOXES_ADMIN_USERNAME`, `OPENBOXES_ADMIN_PASSWORD` or
 the interactive prompt). Supply a new 16+ character `OPENBOXES_PASSWORD` for
-`sidecar_bot`. The script prints the destination ID; use it as
+`vegath-agent`. The script prints the destination ID; use it as
 `OPENBOXES_LOCATION_ID`. It does not print or store the password.
 
 If using a local `.env`, load it explicitly before commands: `set -a; source
@@ -426,16 +889,16 @@ The seed transaction creates:
 
 | Record | Value |
 | --- | --- |
-| User | `sidecar_bot`, only `ROLE_SIDECAR_BOT` |
+| User | `vegath-agent`, only `ROLE_SIDECAR_BOT` |
 | Origin | Global Med Vendor, Supplier |
 | Destination | Chicago Distribution Center, Depot |
-| Product | MED-5501, Surgical Supplies |
+| Product | MED-5501, Laparoscopic Surgical Supply Kit |
 | API shipment | SHIP-2026-API1, ETA 2026-09-20T00:00:00Z, EasyPost / EZ2000000002 |
-| Web shipment | SHIP-2026-WEB1, ETA 2026-09-21T00:00:00Z, LocalLTL / LTL-998877, BOL SYN-BOL-WEB1, PRO SYN-PRO-WEB1 |
-| Paper from New Jersey | SHIP-2026-PAPER1, 20 Copy Paper Boxes, TEST-PAPER-001 |
-| Toner from New Jersey | SHIP-2026-TONER1, 12 Printer Toner Cartridges, TEST-TONER-001 |
-| Paper from Detroit | SHIP-2026-PAPER2, 20 Copy Paper Boxes, TEST-PAPER-002 |
-| Duplicate description pair | SHIP-2026-BOX1 and BOX2, 15 Archive Boxes from Ohio, TEST-BOX-001 and TEST-BOX-002 |
+| Web shipment | SHIP-2026-WEB1, ETA 2026-09-21T00:00:00Z, LocalLTL / LTL-998877, BOL BOL-26091802, PRO PRO-58830122 |
+| Paper from New Jersey | SHIP-2026-PAPER1, 20 cases of copy paper, RoadLink Logistics / RLL-260918-4471 |
+| Toner from New Jersey | SHIP-2026-TONER1, 12 toner cartridges, RLL-260918-4472 |
+| Paper from Detroit | SHIP-2026-PAPER2, 20 cases of copy paper, RLL-260918-4473 |
+| Duplicate description pair | SHIP-2026-BOX1 and BOX2, 15 archive box packs from Ohio, RLL-260918-4474 and RLL-260918-4475 |
 
 The original two shipments each have ten units; the added fixtures have the
 quantities shown above. Native OpenBoxes `SHIPPED` maps to `IN_TRANSIT` in
@@ -444,6 +907,44 @@ SHIPPED event, not set by assigning an unsupported `IN_TRANSIT` enum. Tracking
 attributes are JSON in `Shipment.additionalInformation.sidecar`. Repeated
 seeding never resets ETAs, logs, comments, or existing credentials. Conflicting
 master-data names cause the transaction to fail instead of modifying them.
+These synthetic shipments use the OpenBoxes `Land` shipment type; older local
+fixtures with the `Sidecar Sandbox` type are corrected when reseeded.
+
+### Warehouse fixture
+
+`.venv/bin/python load_fixture.py` (superuser login, local OpenBoxes only, after
+`seed.py`) loads the Lakeshore Health supply network through
+`POST /api/sidecar/sandbox/fixture`. `WarehouseFixtureService` gives every row a
+real-world name and replaces the test-style names earlier seeds left (`Test
+Community Clinic`, `Sidecar Sandbox`, `TEST-` products and tracking numbers,
+`LOT-`/`EXP-` lots, the "Clinical Supply N" catalogue). It then creates:
+
+| Area | Rows |
+| --- | --- |
+| Warehouses | Chicago Distribution Center, Milwaukee Regional Warehouse, Main Warehouse |
+| Customers | Evanston General Hospital Pharmacy, Oak Park Family Clinic, Hyde Park Medical Center Ward 3B, Lincoln Park Community Clinic |
+| Suppliers | Great Lakes Pharma Distributors, Prairie Surgical Products, Meridian Medical Supply |
+| Storage | Ambient, bulk, cold-chain and quarantine zones; bins such as `A-01-01`; receiving, staging and hold areas |
+| Catalogue | 180 MED-### items in 13 categories, three cold-chain biologics, lots with expiry dates |
+| Stock | Built from receipts and issues, so every bin quantity traces to a shipment |
+| Shipments | `CHI-IN-`, `CHI-OUT-`, `MKE-IN-`: pending, shipped, partially received, received |
+| Transfers | `TR-24301` to `TR-24307`: created, verifying, picking, checking, issued, canceled |
+| Receiving | `CHI-IN-24096` and `MKE-IN-24093` received into the receiving docks, waiting for putaway |
+| Putaways | `P-CHI-24501`, `P-CHI-24502`, `P-MKE-24511`, `P-MW-24521`, `P-MW-24522`: pending, receiving bin to storage bin |
+| Cycle counts | `CC-MW-2610-01`, `CC-CHI-2610-01` to `-03`, `CC-MKE-2610-01`: baseline plus adjustments for damaged, missing and found stock |
+| Stock requests | `REQ-24401` to `REQ-24421` and `TR-24304`/`TR-24305`, electronic requests from clinics and wards |
+| Purchase orders | `PO-LHS-000101` to `-000106`, `PO-MO-000104`/`-000105`: pending, approved, placed |
+| History, April to September 2026 | Per warehouse and month: a received purchase order and its shipment, a completed putaway, a cycle count, two issued stock-list or ad hoc requests (some lines cancelled for stockout) and an expiry write-off |
+| September backlog | `REQ-CHI-260911` to `REQ-MW-260912`: late-September requests still being picked or checked |
+
+The fixture is idempotent. A second run renames and creates nothing, then
+recomputes stock and clears the dashboard cache. Cycle counts are dated October
+2026, so "Items Inventoried this Month" reads zero from November on. History lots are
+used up by the 16th of their month, so history never changes current stock. Saving a
+purchase order refreshes the order summary, which commits the open transaction, so a
+failed load can stop part-way; each step finds its row first, and the next run finishes it. Its shipments carry no `synthetic` flag, so the sidecar can read
+them but never writes to them. The `RECALL-TEST-` products keep their codes,
+because that prefix is the recall check's access boundary.
 
 ## Repeatable metadata and tracking demos
 
@@ -480,7 +981,7 @@ Start the portal in another terminal:
 .venv/bin/uvicorn mock_server:app --host 127.0.0.1 --port 8080
 ```
 
-Configure the runtime with `OPENBOXES_USERNAME=sidecar_bot`, its password, and
+Configure the runtime with `OPENBOXES_USERNAME=vegath-agent`, its password, and
 the destination ID. Native authentication is `POST /api/login` plus a session
 cookie. `OPENBOXES_API_KEY` is only for deployments with an existing API-key
 authentication gateway; this patch does not invent native token authentication.
@@ -591,7 +1092,7 @@ production carrier or model accuracy.
 After deployment: seed, verify both shipments are overdue, run proposal-only,
 then `--apply`, and inspect each history for one business event plus one
 comment. A second sweep should make no changes. Also verify generic/user/inventory
-endpoints return 403 as `sidecar_bot`. Keep the existing
+endpoints return 403 as `vegath-agent`. Keep the existing
 `shipment-delayed-agent` account separate; see `../USER_MANAGEMENT_IN_OPENBOXES.md`.
 
 The repeatable live-app fixture check performs these assertions automatically:
@@ -603,7 +1104,7 @@ set -a; source .env; set +a
 .venv/bin/python main.py --apply        # normal single sweep; already updated fixtures are skipped
 ```
 
-`verify_live.py` requires the restricted `sidecar_bot`, fixture carriers, and
+`verify_live.py` requires the restricted `vegath-agent`, fixture carriers, and
 rules-only context. It checks denied routes, preview non-mutation, exact saved
 ETA, retained `IN_TRANSIT` status, one business event, one comment, replay
 idempotency, and a no-op second run. It preserves uncertain operations in the

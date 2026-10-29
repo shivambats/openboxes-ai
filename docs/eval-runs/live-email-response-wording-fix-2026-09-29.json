@@ -1,0 +1,763 @@
+{
+  "dataset_version": "synthetic-email-response-v1",
+  "started_utc": "2026-09-28T18:58:33.397465+00:00",
+  "finished_utc": "2026-09-28T19:00:00.827306+00:00",
+  "model": "deepseek/deepseek-v4.1-flash",
+  "review_status": "development labels; domain owner review pending",
+  "summary": {
+    "passed": 6,
+    "total": 6,
+    "provider_calls": 9,
+    "provider_cost_usd": 0.007941165,
+    "input_tokens": 6658,
+    "output_tokens": 12575,
+    "p50_agent_latency_ms": 13046.0,
+    "p95_agent_latency_ms": 26976
+  },
+  "trials": [
+    {
+      "case_id": "ER-04",
+      "catalog_id": "E2-07",
+      "trial": 1,
+      "expected_outcome": "hold_recorded",
+      "actual_outcome": "hold_recorded",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "handled_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. We recorded the reported shipping condition for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please provide an updated ETA when available.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-04-t1",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-04-t1",
+          "body": "Thank you for the update. We recorded the reported shipping condition for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please provide an updated ETA when available.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:24a0bf0ed9feaa39d990faa8392336d50a330dbb5299dbda3e6376180ac08a82",
+            "version": 1,
+            "source": "Email",
+            "outcome": "human",
+            "expectedDeliveryDate": null,
+            "comment": "Email report requires human review for shipment SHIP-2026-PAPER1. Evidence: held at customs. Confirm the condition, whether dispatch has occurred, and the delivery ETA.",
+            "metadata": {
+              "review_state": "OPEN",
+              "review_reason": "OTHER_HOLD",
+              "requested_action": "CONFIRM_HOLD_AND_SHIPPING_STATE",
+              "evidence_quote": "held at customs",
+              "agentmail_message_id": "ER-04-t1",
+              "email_timestamp": "2026-09-28T12:00:00Z"
+            }
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 17582,
+      "model_calls": [
+        {
+          "response_id": "gen-1790621913-7l1POC10aKHFUWukTlAa",
+          "http_status": 200,
+          "latency_ms": 9789,
+          "input_tokens": 746,
+          "output_tokens": 1600,
+          "provider_cost_usd": 0.00074898
+        },
+        {
+          "response_id": "gen-1790621923-rGK7q4LPoYRrAWtmBHsB",
+          "http_status": 200,
+          "latency_ms": 7769,
+          "input_tokens": 746,
+          "output_tokens": 1162,
+          "provider_cost_usd": 0.000549252
+        }
+      ],
+      "input_tokens": 1492,
+      "output_tokens": 2762,
+      "provider_cost_usd": 0.001298232
+    },
+    {
+      "case_id": "ER-05",
+      "catalog_id": "E2-08",
+      "trial": 1,
+      "expected_outcome": "damage_recorded",
+      "actual_outcome": "damage_recorded",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "handled_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for reporting this. We recorded the reported shipment damage for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please share photos if available and let us know the condition of the contents after inspection.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-05-t1",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-05-t1",
+          "body": "Thank you for reporting this. We recorded the reported shipment damage for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please share photos if available and let us know the condition of the contents after inspection.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:6048afb29c11872007d38a2f3347e2de906c6baf9642179d05e66057b2bcc564",
+            "version": 1,
+            "source": "Email",
+            "outcome": "human",
+            "expectedDeliveryDate": null,
+            "comment": "Email report requires human review for shipment SHIP-2026-PAPER1. Evidence: two outer cartons are crushed. Inspect the reported damage and record the disposition.",
+            "metadata": {
+              "review_state": "OPEN",
+              "review_reason": "DAMAGE_REPORTED",
+              "requested_action": "INSPECT_DAMAGE_AND_RECORD_DISPOSITION",
+              "evidence_quote": "two outer cartons are crushed.",
+              "agentmail_message_id": "ER-05-t1",
+              "email_timestamp": "2026-09-28T12:00:00Z"
+            }
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 7814,
+      "model_calls": [
+        {
+          "response_id": "gen-1790621931-h4bBrVoSwcAapzyxkhgS",
+          "http_status": 200,
+          "latency_ms": 7779,
+          "input_tokens": 743,
+          "output_tokens": 1278,
+          "provider_cost_usd": 0.000601806
+        }
+      ],
+      "input_tokens": 743,
+      "output_tokens": 1278,
+      "provider_cost_usd": 0.000601806
+    },
+    {
+      "case_id": "ER-04",
+      "catalog_id": "E2-07",
+      "trial": 2,
+      "expected_outcome": "hold_recorded",
+      "actual_outcome": "hold_recorded",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "handled_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. We recorded the reported shipping condition for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please provide an updated ETA when available.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-04-t2",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-04-t2",
+          "body": "Thank you for the update. We recorded the reported shipping condition for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please provide an updated ETA when available.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:6aec27475dda3cee44d39011aa1d184f5344a65947c06cfdaaf02055943bf853",
+            "version": 1,
+            "source": "Email",
+            "outcome": "human",
+            "expectedDeliveryDate": null,
+            "comment": "Email report requires human review for shipment SHIP-2026-PAPER1. Evidence: held at customs. Confirm the condition, whether dispatch has occurred, and the delivery ETA.",
+            "metadata": {
+              "review_state": "OPEN",
+              "review_reason": "OTHER_HOLD",
+              "requested_action": "CONFIRM_HOLD_AND_SHIPPING_STATE",
+              "evidence_quote": "held at customs",
+              "agentmail_message_id": "ER-04-t2",
+              "email_timestamp": "2026-09-28T12:00:00Z"
+            }
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 18628,
+      "model_calls": [
+        {
+          "response_id": "gen-1790621938-opfTdYKSkFiQ5W5DLKHn",
+          "http_status": 200,
+          "latency_ms": 10829,
+          "input_tokens": 746,
+          "output_tokens": 1600,
+          "provider_cost_usd": 0.00097782
+        },
+        {
+          "response_id": "gen-1790621949-RBhy1OAZW31Tm4coIKX6",
+          "http_status": 200,
+          "latency_ms": 7766,
+          "input_tokens": 746,
+          "output_tokens": 1213,
+          "provider_cost_usd": 0.00074562
+        }
+      ],
+      "input_tokens": 1492,
+      "output_tokens": 2813,
+      "provider_cost_usd": 0.00172344
+    },
+    {
+      "case_id": "ER-05",
+      "catalog_id": "E2-08",
+      "trial": 2,
+      "expected_outcome": "damage_recorded",
+      "actual_outcome": "damage_recorded",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "handled_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for reporting this. We recorded the reported shipment damage for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please share photos if available and let us know the condition of the contents after inspection.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-05-t2",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-05-t2",
+          "body": "Thank you for reporting this. We recorded the reported shipment damage for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please share photos if available and let us know the condition of the contents after inspection.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:b6362282d514c461dfb03c3bc13a27abcf37bb260d9860654e23fd17285710fd",
+            "version": 1,
+            "source": "Email",
+            "outcome": "human",
+            "expectedDeliveryDate": null,
+            "comment": "Email report requires human review for shipment SHIP-2026-PAPER1. Evidence: two outer cartons are crushed. Inspect the reported damage and record the disposition.",
+            "metadata": {
+              "review_state": "OPEN",
+              "review_reason": "DAMAGE_REPORTED",
+              "requested_action": "INSPECT_DAMAGE_AND_RECORD_DISPOSITION",
+              "evidence_quote": "two outer cartons are crushed",
+              "agentmail_message_id": "ER-05-t2",
+              "email_timestamp": "2026-09-28T12:00:00Z"
+            }
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 7909,
+      "model_calls": [
+        {
+          "response_id": "gen-1790621957-bkUawnGGdADD8WD84yGx",
+          "http_status": 200,
+          "latency_ms": 7875,
+          "input_tokens": 721,
+          "output_tokens": 1015,
+          "provider_cost_usd": 0.00124614
+        }
+      ],
+      "input_tokens": 721,
+      "output_tokens": 1015,
+      "provider_cost_usd": 0.00124614
+    },
+    {
+      "case_id": "ER-04",
+      "catalog_id": "E2-07",
+      "trial": 3,
+      "expected_outcome": "hold_recorded",
+      "actual_outcome": "hold_recorded",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "handled_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. We recorded the reported shipping condition for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please provide an updated ETA when available.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-04-t3",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-04-t3",
+          "body": "Thank you for the update. We recorded the reported shipping condition for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please provide an updated ETA when available.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:57b6101ff94652c7214dfd8b9c4acf89ccb22c8c9a539958e2625e1d06ddfbd8",
+            "version": 1,
+            "source": "Email",
+            "outcome": "human",
+            "expectedDeliveryDate": null,
+            "comment": "Email report requires human review for shipment SHIP-2026-PAPER1. Evidence: held at customs. Confirm the condition, whether dispatch has occurred, and the delivery ETA.",
+            "metadata": {
+              "review_state": "OPEN",
+              "review_reason": "OTHER_HOLD",
+              "requested_action": "CONFIRM_HOLD_AND_SHIPPING_STATE",
+              "evidence_quote": "held at customs",
+              "agentmail_message_id": "ER-04-t3",
+              "email_timestamp": "2026-09-28T12:00:00Z"
+            }
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 8510,
+      "model_calls": [
+        {
+          "response_id": "gen-1790621965-uepYxctzdwuhgDOQ2VlG",
+          "http_status": 200,
+          "latency_ms": 8478,
+          "input_tokens": 746,
+          "output_tokens": 1426,
+          "provider_cost_usd": 0.000669636
+        }
+      ],
+      "input_tokens": 746,
+      "output_tokens": 1426,
+      "provider_cost_usd": 0.000669636
+    },
+    {
+      "case_id": "ER-05",
+      "catalog_id": "E2-08",
+      "trial": 3,
+      "expected_outcome": "damage_recorded",
+      "actual_outcome": "damage_recorded",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "handled_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for reporting this. We recorded the reported shipment damage for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please share photos if available and let us know the condition of the contents after inspection.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-05-t3",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-05-t3",
+          "body": "Thank you for reporting this. We recorded the reported shipment damage for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please share photos if available and let us know the condition of the contents after inspection.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:a79583d8d3678176e63544ad498af76f1cadb8a8dcfa9bdcd1a52231a4dbbfdc",
+            "version": 1,
+            "source": "Email",
+            "outcome": "human",
+            "expectedDeliveryDate": null,
+            "comment": "Email report requires human review for shipment SHIP-2026-PAPER1. Evidence: two outer cartons are crushed. Contents have not been inspected. Inspect the reported damage and record the disposition.",
+            "metadata": {
+              "review_state": "OPEN",
+              "review_reason": "DAMAGE_REPORTED",
+              "requested_action": "INSPECT_DAMAGE_AND_RECORD_DISPOSITION",
+              "evidence_quote": "two outer cartons are crushed. Contents have not been inspected.",
+              "agentmail_message_id": "ER-05-t3",
+              "email_timestamp": "2026-09-28T12:00:00Z"
+            }
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 26976,
+      "model_calls": [
+        {
+          "response_id": "gen-1790621973-z21pEmm8A0tUAgfGS606",
+          "http_status": 200,
+          "latency_ms": 13176,
+          "input_tokens": 721,
+          "output_tokens": 1600,
+          "provider_cost_usd": 0.00106815
+        },
+        {
+          "response_id": "gen-1790621987-wsXeZWDmbOFCQRiO2DGk",
+          "http_status": 200,
+          "latency_ms": 13764,
+          "input_tokens": 743,
+          "output_tokens": 1681,
+          "provider_cost_usd": 0.001333761
+        }
+      ],
+      "input_tokens": 1464,
+      "output_tokens": 3281,
+      "provider_cost_usd": 0.002401911
+    }
+  ]
+}

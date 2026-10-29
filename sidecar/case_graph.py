@@ -18,6 +18,7 @@ from langgraph.graph import END, START, StateGraph
 from langgraph.types import Command, interrupt
 
 from models import timestamp
+from execution_observer import graph_config, observed_run
 
 
 TERMINAL = {'DELIVERED', 'RECEIVED', 'CANCELLED'}
@@ -26,7 +27,8 @@ MAX_CARRIER_AGE = timedelta(hours=72)
 
 
 def normalized_words(value):
-    return re.findall(r'[a-z0-9]+', str(value or '').lower())
+    return ''.join(char if char in 'abcdefghijklmnopqrstuvwxyz0123456789' else ' '
+                   for char in str(value or '').lower()).split()
 
 
 def shipment_clue_matches(shipment, clues):
@@ -344,6 +346,7 @@ class ShipmentCaseGraph:
         graph.add_edge('place_approved_call', END)
         return graph.compile()
 
+    @observed_run('shipment_case', 'case_event')
     def start(self, event):
         if not event.get('authenticated'):
             raise ValueError('Unauthenticated event')
@@ -386,12 +389,16 @@ class ShipmentCaseGraph:
                  'search_clues': {},
                  'prompt_versions': {}, 'model_audit': [],
                  'policy_version': 'shipment-case-v1'}
-        result = self.graph.invoke(state, config=config)
+        result = self.graph.invoke(state,
+                                   config=graph_config(config, 'shipment_case'))
         return result
 
+    @observed_run('shipment_case', 'case_resume')
     def resume(self, case_id, response):
         return self.graph.invoke(Command(resume=response),
-                                 config={'configurable': {'thread_id': case_id}})
+                                 config=graph_config(
+                                     {'configurable': {'thread_id': case_id}},
+                                     'shipment_case'))
 
     def ingest_event(self, state):
         trigger = state['trigger']
@@ -574,7 +581,8 @@ class ShipmentCaseGraph:
             'inbound_claim': state.get('inbound_claim'),
             'is_followup': state.get('intent') == 'follow_up',
             'voice_evidence_id': state.get('voice_evidence_id'),
-            'evidence_ids': state.get('evidence_ids', []), 'reads': 0, 'observations': []})
+            'evidence_ids': state.get('evidence_ids', []), 'reads': 0, 'observations': []},
+            config=graph_config(graph_id='shipment_investigator'))
         return {'resolution_brief': result['resolution_brief'],
                 'evidence_ids': result['evidence_ids'], 'shipment_phase': shipment['status']}
 
@@ -711,7 +719,8 @@ class ShipmentCaseGraph:
             return {'status': 'review'}
         result = self.voice.invoke({'case_id': state['case_id'],
                                     'shipment_id': state['shipment_id'],
-                                    'proposal_hash': state['call_proposal_hash']})
+                                    'proposal_hash': state['call_proposal_hash']},
+                                   config=graph_config(graph_id='shipment_voice'))
         if not result.get('call_result'):
             return {'status': 'review', 'error_code': 'voice_unresolved'}
         evidence_id = self.evidence.add(state['case_id'], 'voice', state['approval_id'],

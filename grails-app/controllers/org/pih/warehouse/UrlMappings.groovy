@@ -46,7 +46,29 @@ class UrlMappings {
         "/api/shipments/$id/comments"(controller: 'shipmentApi', action: 'comment', method: 'POST')
         "/api/shipments/$id/events"(controller: 'shipmentApi', action: 'event', method: 'POST')
         "/api/shipments/$id/sync"(controller: 'shipmentApi', action: 'sync', method: 'POST')
+        "/api/shipments/recovery"(controller: 'shipmentApi', action: 'recovery', method: 'POST')
+        "/api/sidecar/recall-context"(controller: 'sidecarRecallApi', action: 'context', method: 'GET')
+        "/api/sidecar/data-catalog"(controller: 'sidecarDataApi', action: 'catalog', method: 'GET')
+        "/api/sidecar/data-query"(controller: 'sidecarDataApi', action: 'query', method: 'POST')
+        "/api/sidecar/ops/snapshot"(controller: 'sidecarOpsApi', action: 'snapshot', method: 'POST')
+        "/api/sidecar/ops/entity-links"(controller: 'sidecarOpsApi', action: 'entityLinks', method: 'POST')
+        "/api/sidecar/ops/bin-moves"(controller: 'sidecarOpsApi', action: 'binMoves', method: 'POST')
+        "/api/sidecar/ops/purchase-order-delivery"(controller: 'sidecarOpsApi', action: 'purchaseOrderDelivery', method: 'POST')
+        "/api/sidecar/ops/draft-purchase-order"(controller: 'sidecarOpsApi', action: 'draftPurchaseOrder', method: 'POST')
         "/api/sidecar/sandbox/seed"(controller: 'shipmentSandboxApi', action: 'seed', method: 'POST')
+        "/api/sidecar/sandbox/seed-outreach"(controller: 'shipmentSandboxApi', action: 'seedOutreach', method: 'POST')
+        "/api/sidecar/sandbox/seed-demo-delays"(controller: 'shipmentSandboxApi', action: 'seedDemoDelays', method: 'POST')
+        "/api/sidecar/sandbox/fixture"(controller: 'shipmentSandboxApi', action: 'fixture', method: 'POST')
+        "/api/operator-chat"(parseRequest: true) {
+            controller = 'operatorChatApi'
+            action = [GET: 'history', POST: 'send', DELETE: 'reset']
+        }
+        "/api/operator-chat/progress/$requestId"(controller: 'operatorChatApi',
+                action: 'progress', method: 'GET')
+        "/api/operator-chat/progress-ticket/$requestId"(controller: 'operatorChatApi',
+                action: 'progressTicket', method: 'GET')
+        "/api/operator-chat/focus"(controller: 'operatorChatApi',
+                action: 'focus', method: 'POST')
 
         "/api/categories"(parseRequest: true) {
             controller = { "categoryApi" }
@@ -149,6 +171,11 @@ class UrlMappings {
         "/api/recallReviews/attention"(parseRequest: true) {
             controller = { "recallReviewApi" }
             action = [POST: "markAttention"]
+        }
+
+        "/api/recallReviews/summary"(parseRequest: true) {
+            controller = { "recallReviewApi" }
+            action = [GET: "summary"]
         }
 
         "/api/recallReviews/resolve"(parseRequest: true) {
@@ -869,6 +896,11 @@ class UrlMappings {
         "/api/dashboard/delayedShipments"(parseRequest: true) {
             controller = { "dashboardApi" }
             action = [GET: "getDelayedShipments"]
+        }
+
+        "/api/dashboard/needsAttentionItems"(parseRequest: true) {
+            controller = { "dashboardApi" }
+            action = [GET: "getNeedsAttentionItems"]
         }
 
         "/api/dashboard/productWithNegativeInventory"(parseRequest: true) {

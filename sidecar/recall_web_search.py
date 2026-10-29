@@ -6,7 +6,6 @@ import argparse
 import hashlib
 import json
 import os
-import re
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from urllib.parse import urlencode, urlsplit
@@ -50,7 +49,9 @@ class RecallDiscoveryCapability:
         return response.json()
 
     def _fda(self, query, category, since, limit):
-        terms = [word for word in re.findall(r"[\w-]+", query) if len(word) >= 3]
+        terms = [word for word in ''.join(
+            char if char.isalnum() or char in '_-' else ' ' for char in query
+        ).split() if len(word) >= 3]
         if not terms:
             return []
         # Search text, then retain the FDA's complete product and code fields for review.
@@ -96,7 +97,9 @@ class RecallDiscoveryCapability:
         if len(response.content) > 1_000_000:
             raise ValueError("FDA recall feed exceeded size limit")
         root = ElementTree.fromstring(response.content)
-        terms = [term.lower() for term in re.findall(r"[\w-]+", query) if len(term) >= 4]
+        terms = [term.lower() for term in ''.join(
+            char if char.isalnum() or char in '_-' else ' ' for char in query
+        ).split() if len(term) >= 4]
         results = []
         for item in root.findall("./channel/item"):
             title = clean_text(item.findtext("title"), 500)

@@ -281,34 +281,45 @@ class NumberDataService {
         return new NumberData(inventoryValue[0])
     }
 
-    @Cacheable(value = "dashboardCache", key = { "getOpenPurchaseOrdersCount-${params?.value}" })
+    /**
+     * Open purchase orders from the selected suppliers. With no supplier selected, counts the
+     * open purchase orders bound for the current location from any supplier.
+     */
+    @Cacheable(value = "dashboardCache", key = { "getOpenPurchaseOrdersCount-${params?.value}-${params?.locationId}" })
     NumberData getOpenPurchaseOrdersCount(Map params) {
-        def openPurchaseOrdersCount = 0
-
-        if (params.value) {
-            def supplierIds = params.list('value').toList().collect { "'$it'" }.join(',')
-            def pendingShipmentStatues = ShipmentStatusCode.listPending().collect { "'$it'" }.join(',')
-            def pendingOrderStatuses = OrderStatus.listPending().collect { "'$it'" }.join(',')
-            def openPurchaseOrders = dataService.executeQuery("""
-                SELECT 
-                    COUNT(DISTINCT o.id) AS openPurchaseOrdersCount
-                FROM `order` AS o
-                    LEFT OUTER JOIN order_item ON o.id = order_item.order_id
-                    LEFT OUTER JOIN order_shipment ON order_item.id = order_shipment.order_item_id
-                    LEFT OUTER JOIN shipment_item ON shipment_item.id = order_shipment.shipment_item_id
-                    LEFT OUTER JOIN shipment ON shipment.id = shipment_item.shipment_id
-                WHERE 
-                    o.order_type_id = '${OrderTypeCode.PURCHASE_ORDER.name()}' AND 
-                    o.origin_id in (${supplierIds}) AND 
-                    (
-                        (shipment.id IS NOT NULL AND shipment.current_status IN (${pendingShipmentStatues})) OR 
-                        (shipment.id IS NULL AND o.status IN (${pendingOrderStatuses}))
-                    )
-            """)
-
-            openPurchaseOrdersCount = openPurchaseOrders?.size() ? openPurchaseOrders[0].openPurchaseOrdersCount : 0
+        List<String> supplierIds = [params.value].flatten().findAll { it }*.toString()
+        if (!supplierIds && !params.locationId) {
+            return new NumberData(0)
         }
+        Map queryParams = [:]
+        String scope
+        if (supplierIds) {
+            supplierIds.eachWithIndex { String id, int index -> queryParams["supplier${index}".toString()] = id }
+            scope = "o.origin_id in (${queryParams.keySet().collect { ':' + it }.join(',')})"
+        } else {
+            queryParams.destination = params.locationId
+            scope = 'o.destination_id = :destination'
+        }
+        def pendingShipmentStatues = ShipmentStatusCode.listPending().collect { "'$it'" }.join(',')
+        def pendingOrderStatuses = OrderStatus.listPending().collect { "'$it'" }.join(',')
+        def openPurchaseOrders = dataService.executeQuery("""
+            SELECT 
+                COUNT(DISTINCT o.id) AS openPurchaseOrdersCount
+            FROM `order` AS o
+                LEFT OUTER JOIN order_item ON o.id = order_item.order_id
+                LEFT OUTER JOIN order_shipment ON order_item.id = order_shipment.order_item_id
+                LEFT OUTER JOIN shipment_item ON shipment_item.id = order_shipment.shipment_item_id
+                LEFT OUTER JOIN shipment ON shipment.id = shipment_item.shipment_id
+            WHERE 
+                o.order_type_id = '${OrderTypeCode.PURCHASE_ORDER.name()}' AND 
+                ${scope} AND 
+                (
+                    (shipment.id IS NOT NULL AND shipment.current_status IN (${pendingShipmentStatues})) OR 
+                    (shipment.id IS NULL AND o.status IN (${pendingOrderStatuses}))
+                )
+        """, queryParams)
 
+        def openPurchaseOrdersCount = openPurchaseOrders?.size() ? openPurchaseOrders[0].openPurchaseOrdersCount : 0
         return new NumberData(openPurchaseOrdersCount)
     }
 }

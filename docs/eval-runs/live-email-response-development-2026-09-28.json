@@ -1,0 +1,3424 @@
+{
+  "dataset_version": "synthetic-email-response-v1",
+  "started_utc": "2026-09-28T14:26:57.901026+00:00",
+  "finished_utc": "2026-09-28T17:32:49.764573+00:00",
+  "model": "deepseek/deepseek-v4.1-flash",
+  "review_status": "development labels; domain owner review pending",
+  "summary": {
+    "passed": 18,
+    "total": 30,
+    "provider_calls": 33,
+    "provider_cost_usd": 0.02498681,
+    "input_tokens": 23880,
+    "output_tokens": 32679,
+    "p50_agent_latency_ms": 10930.5,
+    "p95_agent_latency_ms": 211482
+  },
+  "trials": [
+    {
+      "case_id": "ER-01",
+      "catalog_id": "E2-01",
+      "trial": 1,
+      "expected_outcome": "committed",
+      "actual_outcome": "committed",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the shipment update. We matched the shipment and recorded your reported status as delayed in OpenBoxes. The delivery ETA was not changed. If you have a confirmed ETA, please reply with the date, time, and time zone.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-01-t1",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-01-t1",
+          "body": "Thank you for the shipment update. We matched the shipment and recorded your reported status as delayed in OpenBoxes. The delivery ETA was not changed. If you have a confirmed ETA, please reply with the date, time, and time zone.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:97b7404b5a80d260a0877bb509be6c735b8157f1d22fe0160ed30dfbbc54fb47",
+            "version": 1,
+            "source": "Email",
+            "outcome": "success",
+            "expectedDeliveryDate": null,
+            "metadata": {
+              "reported_status": "DELAYED",
+              "agentmail_message_id": "ER-01-t1",
+              "email_timestamp": "2026-09-28T12:00:00Z",
+              "evidence_quote": "SHIP-2026-PAPER1 is delayed due to weather.",
+              "model_audit": [
+                {
+                  "model": "deepseek/deepseek-v4.1-flash",
+                  "usage": {
+                    "prompt_tokens": 710,
+                    "completion_tokens": 443,
+                    "total_tokens": 1153,
+                    "cost": 0.00028546,
+                    "is_byok": false,
+                    "prompt_tokens_details": {
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "audio_tokens": 0,
+                      "video_tokens": 0
+                    },
+                    "cost_details": {
+                      "upstream_inference_cost": 0.00028546,
+                      "upstream_inference_prompt_cost": 9.94e-05,
+                      "upstream_inference_completions_cost": 0.00018606
+                    },
+                    "completion_tokens_details": {
+                      "reasoning_tokens": 285,
+                      "image_tokens": 0,
+                      "audio_tokens": 0
+                    }
+                  },
+                  "response_id": "gen-1790605618-sWKSq21T7Vrv7EqpWmOg",
+                  "latency_ms": 7516
+                }
+              ]
+            },
+            "comment": "Email update for shipment SHIP-2026-PAPER1: Delayed. Evidence: SHIP-2026-PAPER1 is delayed due to weather.."
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "DELAYED",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 7534,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605618-sWKSq21T7Vrv7EqpWmOg",
+          "http_status": 200,
+          "latency_ms": 7516,
+          "input_tokens": 710,
+          "output_tokens": 443,
+          "provider_cost_usd": 0.00028546
+        }
+      ],
+      "input_tokens": 710,
+      "output_tokens": 443,
+      "provider_cost_usd": 0.00028546
+    },
+    {
+      "case_id": "ER-02",
+      "catalog_id": "E2-02",
+      "trial": 1,
+      "expected_outcome": "committed",
+      "actual_outcome": null,
+      "reason": null,
+      "checks": {
+        "outcome": false,
+        "commit_count": false,
+        "reply_count": false,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": false,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": false
+      },
+      "passed": false,
+      "error_type": "ValueError",
+      "response_body": null,
+      "reply_records": [],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 11027,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605625-b0z4hoHgHG9ZCdzBLJIl",
+          "http_status": 200,
+          "latency_ms": 11009,
+          "input_tokens": 727,
+          "output_tokens": 1260,
+          "provider_cost_usd": 0.0007847165
+        }
+      ],
+      "input_tokens": 727,
+      "output_tokens": 1260,
+      "provider_cost_usd": 0.000784717
+    },
+    {
+      "case_id": "ER-03",
+      "catalog_id": "E2-03",
+      "trial": 1,
+      "expected_outcome": "review",
+      "actual_outcome": null,
+      "reason": null,
+      "checks": {
+        "outcome": false,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": false
+      },
+      "passed": false,
+      "error_type": "ValueError",
+      "response_body": null,
+      "reply_records": [],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 10834,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605636-quhZnbuy3bAP6jZvGKjc",
+          "http_status": 200,
+          "latency_ms": 10820,
+          "input_tokens": 720,
+          "output_tokens": 1228,
+          "provider_cost_usd": 0.000764984
+        }
+      ],
+      "input_tokens": 720,
+      "output_tokens": 1228,
+      "provider_cost_usd": 0.000764984
+    },
+    {
+      "case_id": "ER-04",
+      "catalog_id": "E2-07",
+      "trial": 1,
+      "expected_outcome": "hold_recorded",
+      "actual_outcome": "hold_recorded",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. We recorded the reported shipping condition for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please confirm whether the shipment has left its origin and provide an updated ETA when available.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-04-t1",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-04-t1",
+          "body": "Thank you for the update. We recorded the reported shipping condition for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please confirm whether the shipment has left its origin and provide an updated ETA when available.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:24a0bf0ed9feaa39d990faa8392336d50a330dbb5299dbda3e6376180ac08a82",
+            "version": 1,
+            "source": "Email",
+            "outcome": "human",
+            "expectedDeliveryDate": null,
+            "comment": "Email report requires human review for shipment SHIP-2026-PAPER1. Evidence: held at customs. Confirm the condition, whether dispatch has occurred, and the delivery ETA.",
+            "metadata": {
+              "review_state": "OPEN",
+              "review_reason": "OTHER_HOLD",
+              "requested_action": "CONFIRM_HOLD_AND_SHIPPING_STATE",
+              "evidence_quote": "held at customs",
+              "agentmail_message_id": "ER-04-t1",
+              "email_timestamp": "2026-09-28T12:00:00Z"
+            }
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 13604,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605647-QRVuH9YsT2WlyxcSIqOA",
+          "http_status": 200,
+          "latency_ms": 13593,
+          "input_tokens": 724,
+          "output_tokens": 676,
+          "provider_cost_usd": 0.000298368
+        }
+      ],
+      "input_tokens": 724,
+      "output_tokens": 676,
+      "provider_cost_usd": 0.000298368
+    },
+    {
+      "case_id": "ER-05",
+      "catalog_id": "E2-08",
+      "trial": 1,
+      "expected_outcome": "damage_recorded",
+      "actual_outcome": "damage_recorded",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for reporting this. We recorded the reported shipment damage for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please share the affected quantity and photos if available.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-05-t1",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-05-t1",
+          "body": "Thank you for reporting this. We recorded the reported shipment damage for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please share the affected quantity and photos if available.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:6048afb29c11872007d38a2f3347e2de906c6baf9642179d05e66057b2bcc564",
+            "version": 1,
+            "source": "Email",
+            "outcome": "human",
+            "expectedDeliveryDate": null,
+            "comment": "Email report requires human review for shipment SHIP-2026-PAPER1. Evidence: two outer cartons are crushed. Inspect the reported damage and record the disposition.",
+            "metadata": {
+              "review_state": "OPEN",
+              "review_reason": "DAMAGE_REPORTED",
+              "requested_action": "INSPECT_DAMAGE_AND_RECORD_DISPOSITION",
+              "evidence_quote": "two outer cartons are crushed.",
+              "agentmail_message_id": "ER-05-t1",
+              "email_timestamp": "2026-09-28T12:00:00Z"
+            }
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 11394,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605660-j72JJOc0Im0QmSLtZOj0",
+          "http_status": 200,
+          "latency_ms": 11380,
+          "input_tokens": 721,
+          "output_tokens": 1124,
+          "provider_cost_usd": 0.0007026235
+        }
+      ],
+      "input_tokens": 721,
+      "output_tokens": 1124,
+      "provider_cost_usd": 0.000702624
+    },
+    {
+      "case_id": "ER-06",
+      "catalog_id": "E1-04",
+      "trial": 1,
+      "expected_outcome": "review",
+      "actual_outcome": "review",
+      "reason": "ambiguous_shipment_reference",
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. The details in your message match more than one shipment, so no shipment was updated. Please reply with the shipment number or tracking number to identify the correct one.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-06-t1",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-06-t1",
+          "body": "Thank you for the update. The details in your message match more than one shipment, so no shipment was updated. Please reply with the shipment number or tracking number to identify the correct one.\n"
+        }
+      ],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 16634,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605672-invJY1Eg6XXaproYJBKG",
+          "http_status": 200,
+          "latency_ms": 16605,
+          "input_tokens": 724,
+          "output_tokens": 844,
+          "provider_cost_usd": 0.00039552
+        }
+      ],
+      "input_tokens": 724,
+      "output_tokens": 844,
+      "provider_cost_usd": 0.00039552
+    },
+    {
+      "case_id": "ER-07",
+      "catalog_id": "E1-09",
+      "trial": 1,
+      "expected_outcome": "review",
+      "actual_outcome": null,
+      "reason": null,
+      "checks": {
+        "outcome": false,
+        "commit_count": true,
+        "reply_count": false,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": false,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": false
+      },
+      "passed": false,
+      "error_type": "ValueError",
+      "response_body": null,
+      "reply_records": [],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 15319,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605688-KUFwOLXWNZcafYZEpZbo",
+          "http_status": 200,
+          "latency_ms": 15305,
+          "input_tokens": 706,
+          "output_tokens": 1018,
+          "provider_cost_usd": 0.0005264
+        }
+      ],
+      "input_tokens": 706,
+      "output_tokens": 1018,
+      "provider_cost_usd": 0.0005264
+    },
+    {
+      "case_id": "ER-08",
+      "catalog_id": "E1-05",
+      "trial": 1,
+      "expected_outcome": "review",
+      "actual_outcome": "review",
+      "reason": "shipment_details_conflict",
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. The shipment number or tracking number does not agree with the route or product details in your message, so no shipment was updated. Please confirm the correct reference and details.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-08-t1",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-08-t1",
+          "body": "Thank you for the update. The shipment number or tracking number does not agree with the route or product details in your message, so no shipment was updated. Please confirm the correct reference and details.\n"
+        }
+      ],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 1735,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605704-oNUgzdgqSw7couLS6BPi",
+          "http_status": 200,
+          "latency_ms": 1726,
+          "input_tokens": 726,
+          "output_tokens": 557,
+          "provider_cost_usd": 0.0008862
+        }
+      ],
+      "input_tokens": 726,
+      "output_tokens": 557,
+      "provider_cost_usd": 0.0008862
+    },
+    {
+      "case_id": "ER-09",
+      "catalog_id": "E1-10",
+      "trial": 1,
+      "expected_outcome": "committed",
+      "actual_outcome": "committed",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the shipment update. We matched the shipment and recorded your reported status as delayed in OpenBoxes. The delivery ETA was not changed. If you have a confirmed ETA, please reply with the date, time, and time zone.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-09-t1",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-09-t1",
+          "body": "Thank you for the shipment update. We matched the shipment and recorded your reported status as delayed in OpenBoxes. The delivery ETA was not changed. If you have a confirmed ETA, please reply with the date, time, and time zone.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:6a528fe6b466f856d29730c5f38b599d5c71830f15bc0b568664debfbc850952",
+            "version": 1,
+            "source": "Email",
+            "outcome": "success",
+            "expectedDeliveryDate": null,
+            "metadata": {
+              "reported_status": "DELAYED",
+              "agentmail_message_id": "ER-09-t1",
+              "email_timestamp": "2026-09-28T12:00:00Z",
+              "evidence_quote": "SHIP-2026-PAPER1 is delayed.",
+              "model_audit": [
+                {
+                  "model": "deepseek/deepseek-v4.1-flash",
+                  "usage": {
+                    "prompt_tokens": 724,
+                    "completion_tokens": 405,
+                    "total_tokens": 1129,
+                    "cost": 0.000184548,
+                    "is_byok": false,
+                    "prompt_tokens_details": {
+                      "cached_tokens": 640,
+                      "cache_write_tokens": 0,
+                      "audio_tokens": 0,
+                      "video_tokens": 0
+                    },
+                    "cost_details": {
+                      "upstream_inference_cost": 0.000184548,
+                      "upstream_inference_prompt_cost": 1.4448e-05,
+                      "upstream_inference_completions_cost": 0.0001701
+                    },
+                    "completion_tokens_details": {
+                      "reasoning_tokens": 250,
+                      "image_tokens": 0,
+                      "audio_tokens": 0
+                    }
+                  },
+                  "response_id": "gen-1790605706-AMoDc3ev99c6ZebRjYB9",
+                  "latency_ms": 4701
+                }
+              ]
+            },
+            "comment": "Email update for shipment SHIP-2026-PAPER1: Delayed. Evidence: SHIP-2026-PAPER1 is delayed.."
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "DELAYED",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 4712,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605706-AMoDc3ev99c6ZebRjYB9",
+          "http_status": 200,
+          "latency_ms": 4701,
+          "input_tokens": 724,
+          "output_tokens": 405,
+          "provider_cost_usd": 0.000184548
+        }
+      ],
+      "input_tokens": 724,
+      "output_tokens": 405,
+      "provider_cost_usd": 0.000184548
+    },
+    {
+      "case_id": "ER-10",
+      "catalog_id": "E2-06",
+      "trial": 1,
+      "expected_outcome": "review",
+      "actual_outcome": "committed",
+      "reason": null,
+      "checks": {
+        "outcome": false,
+        "commit_count": false,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": false,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": false,
+      "error_type": null,
+      "response_body": "Thank you for the shipment update. We recorded your reported status as in transit and 2026-10-02 as the reported delivery day in OpenBoxes. The exact delivery ETA was not changed because no arrival time and time zone were provided. Please reply with those details when available.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-10-t1",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-10-t1",
+          "body": "Thank you for the shipment update. We recorded your reported status as in transit and 2026-10-02 as the reported delivery day in OpenBoxes. The exact delivery ETA was not changed because no arrival time and time zone were provided. Please reply with those details when available.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:7aafe155b92d1044cf6f9e8427714f559c55afe6617dfa40797fc319fadf1fee",
+            "version": 1,
+            "source": "Email",
+            "outcome": "success",
+            "expectedDeliveryDate": null,
+            "metadata": {
+              "reported_status": "IN_TRANSIT",
+              "agentmail_message_id": "ER-10-t1",
+              "email_timestamp": "2026-09-28T12:00:00Z",
+              "evidence_quote": "reaches Columbus at 09:00 on 2026-10-02",
+              "model_audit": [
+                {
+                  "model": "deepseek/deepseek-v4.1-flash",
+                  "usage": {
+                    "prompt_tokens": 726,
+                    "completion_tokens": 1298,
+                    "total_tokens": 2024,
+                    "cost": 0.00158724,
+                    "is_byok": false,
+                    "prompt_tokens_details": {
+                      "cached_tokens": 640,
+                      "cache_write_tokens": 0,
+                      "audio_tokens": 0,
+                      "video_tokens": 0
+                    },
+                    "cost_details": {
+                      "upstream_inference_cost": 0.00158724,
+                      "upstream_inference_prompt_cost": 2.964e-05,
+                      "upstream_inference_completions_cost": 0.0015576
+                    },
+                    "completion_tokens_details": {
+                      "reasoning_tokens": 1139,
+                      "image_tokens": 0,
+                      "audio_tokens": 0
+                    }
+                  },
+                  "response_id": "gen-1790605717-fF9XOaRjx1bq9ReQSpZh",
+                  "latency_ms": 11481
+                }
+              ],
+              "reported_delivery_date": "2026-10-02",
+              "date_quote": "2026-10-02",
+              "date_basis": "2026-09-28T12:00:00Z"
+            },
+            "comment": "Email update for shipment SHIP-2026-PAPER1: In Transit. Evidence: reaches Columbus at 09:00 on 2026-10-02. Reported delivery day: 2026-10-02 (exact arrival time not provided; timestamp ETA unchanged)."
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 11509,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605710-GOZ3Mo9niHoHLnZrn4rr",
+          "http_status": 200,
+          "latency_ms": 6407,
+          "input_tokens": 726,
+          "output_tokens": 1600,
+          "provider_cost_usd": 0.00194964
+        },
+        {
+          "response_id": "gen-1790605717-fF9XOaRjx1bq9ReQSpZh",
+          "http_status": 200,
+          "latency_ms": 5073,
+          "input_tokens": 726,
+          "output_tokens": 1298,
+          "provider_cost_usd": 0.00158724
+        }
+      ],
+      "input_tokens": 1452,
+      "output_tokens": 2898,
+      "provider_cost_usd": 0.00353688
+    },
+    {
+      "case_id": "ER-01",
+      "catalog_id": "E2-01",
+      "trial": 2,
+      "expected_outcome": "committed",
+      "actual_outcome": "committed",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the shipment update. We matched the shipment and recorded your reported status as delayed in OpenBoxes. The delivery ETA was not changed. If you have a confirmed ETA, please reply with the date, time, and time zone.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-01-t2",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-01-t2",
+          "body": "Thank you for the shipment update. We matched the shipment and recorded your reported status as delayed in OpenBoxes. The delivery ETA was not changed. If you have a confirmed ETA, please reply with the date, time, and time zone.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:0477e4c29d2c2952097d203c678e6354334197b2292fdcc14f3018fdcf832c55",
+            "version": 1,
+            "source": "Email",
+            "outcome": "success",
+            "expectedDeliveryDate": null,
+            "metadata": {
+              "reported_status": "DELAYED",
+              "agentmail_message_id": "ER-01-t2",
+              "email_timestamp": "2026-09-28T12:00:00Z",
+              "evidence_quote": "SHIP-2026-PAPER1 is delayed due to weather.",
+              "model_audit": [
+                {
+                  "model": "deepseek/deepseek-v4.1-flash",
+                  "usage": {
+                    "prompt_tokens": 710,
+                    "completion_tokens": 533,
+                    "total_tokens": 1243,
+                    "cost": 0.0008526,
+                    "is_byok": false,
+                    "prompt_tokens_details": {
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "audio_tokens": 0,
+                      "video_tokens": 0
+                    },
+                    "cost_details": {
+                      "upstream_inference_cost": 0.0008526,
+                      "upstream_inference_prompt_cost": 0.000213,
+                      "upstream_inference_completions_cost": 0.0006396
+                    },
+                    "completion_tokens_details": {
+                      "reasoning_tokens": 397,
+                      "image_tokens": 0,
+                      "audio_tokens": 0
+                    }
+                  },
+                  "response_id": "gen-1790605722-ZLqegudrnsywtSsS6PCA",
+                  "latency_ms": 2873
+                }
+              ]
+            },
+            "comment": "Email update for shipment SHIP-2026-PAPER1: Delayed. Evidence: SHIP-2026-PAPER1 is delayed due to weather.."
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "DELAYED",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 2889,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605722-ZLqegudrnsywtSsS6PCA",
+          "http_status": 200,
+          "latency_ms": 2873,
+          "input_tokens": 710,
+          "output_tokens": 533,
+          "provider_cost_usd": 0.0008526
+        }
+      ],
+      "input_tokens": 710,
+      "output_tokens": 533,
+      "provider_cost_usd": 0.0008526
+    },
+    {
+      "case_id": "ER-02",
+      "catalog_id": "E2-02",
+      "trial": 2,
+      "expected_outcome": "committed",
+      "actual_outcome": null,
+      "reason": null,
+      "checks": {
+        "outcome": false,
+        "commit_count": false,
+        "reply_count": false,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": false,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": false
+      },
+      "passed": false,
+      "error_type": "ValueError",
+      "response_body": null,
+      "reply_records": [],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 8736,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605725-7S4vug6AGhNVx9UQxWcs",
+          "http_status": 200,
+          "latency_ms": 8721,
+          "input_tokens": 727,
+          "output_tokens": 1064,
+          "provider_cost_usd": 0.0006668605
+        }
+      ],
+      "input_tokens": 727,
+      "output_tokens": 1064,
+      "provider_cost_usd": 0.00066686
+    },
+    {
+      "case_id": "ER-03",
+      "catalog_id": "E2-03",
+      "trial": 2,
+      "expected_outcome": "review",
+      "actual_outcome": null,
+      "reason": null,
+      "checks": {
+        "outcome": false,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": false
+      },
+      "passed": false,
+      "error_type": "ValueError",
+      "response_body": null,
+      "reply_records": [],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 9620,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605733-JcNQ4Yqu63iJp680ry2O",
+          "http_status": 200,
+          "latency_ms": 9603,
+          "input_tokens": 720,
+          "output_tokens": 970,
+          "provider_cost_usd": 0.000421288
+        }
+      ],
+      "input_tokens": 720,
+      "output_tokens": 970,
+      "provider_cost_usd": 0.000421288
+    },
+    {
+      "case_id": "ER-04",
+      "catalog_id": "E2-07",
+      "trial": 2,
+      "expected_outcome": "hold_recorded",
+      "actual_outcome": "hold_recorded",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. We recorded the reported shipping condition for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please confirm whether the shipment has left its origin and provide an updated ETA when available.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-04-t2",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-04-t2",
+          "body": "Thank you for the update. We recorded the reported shipping condition for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please confirm whether the shipment has left its origin and provide an updated ETA when available.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:6aec27475dda3cee44d39011aa1d184f5344a65947c06cfdaaf02055943bf853",
+            "version": 1,
+            "source": "Email",
+            "outcome": "human",
+            "expectedDeliveryDate": null,
+            "comment": "Email report requires human review for shipment SHIP-2026-PAPER1. Evidence: held at customs. Confirm the condition, whether dispatch has occurred, and the delivery ETA.",
+            "metadata": {
+              "review_state": "OPEN",
+              "review_reason": "OTHER_HOLD",
+              "requested_action": "CONFIRM_HOLD_AND_SHIPPING_STATE",
+              "evidence_quote": "held at customs",
+              "agentmail_message_id": "ER-04-t2",
+              "email_timestamp": "2026-09-28T12:00:00Z"
+            }
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 20921,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605743-uALxzJQgyb9zTJCHOPO0",
+          "http_status": 200,
+          "latency_ms": 14267,
+          "input_tokens": 724,
+          "output_tokens": 1600,
+          "provider_cost_usd": 0.000988342
+        },
+        {
+          "response_id": "gen-1790605757-3LAQCAJrqAzRl0RxDC1X",
+          "http_status": 200,
+          "latency_ms": 6633,
+          "input_tokens": 724,
+          "output_tokens": 732,
+          "provider_cost_usd": 0.000467542
+        }
+      ],
+      "input_tokens": 1448,
+      "output_tokens": 2332,
+      "provider_cost_usd": 0.001455884
+    },
+    {
+      "case_id": "ER-05",
+      "catalog_id": "E2-08",
+      "trial": 2,
+      "expected_outcome": "damage_recorded",
+      "actual_outcome": "damage_recorded",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for reporting this. We recorded the reported shipment damage for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please share the affected quantity and photos if available.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-05-t2",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-05-t2",
+          "body": "Thank you for reporting this. We recorded the reported shipment damage for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please share the affected quantity and photos if available.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:b6362282d514c461dfb03c3bc13a27abcf37bb260d9860654e23fd17285710fd",
+            "version": 1,
+            "source": "Email",
+            "outcome": "human",
+            "expectedDeliveryDate": null,
+            "comment": "Email report requires human review for shipment SHIP-2026-PAPER1. Evidence: two outer cartons are crushed. Inspect the reported damage and record the disposition.",
+            "metadata": {
+              "review_state": "OPEN",
+              "review_reason": "DAMAGE_REPORTED",
+              "requested_action": "INSPECT_DAMAGE_AND_RECORD_DISPOSITION",
+              "evidence_quote": "two outer cartons are crushed.",
+              "agentmail_message_id": "ER-05-t2",
+              "email_timestamp": "2026-09-28T12:00:00Z"
+            }
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 9522,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605764-VZozTNWRPvTrQEh23D8o",
+          "http_status": 200,
+          "latency_ms": 9494,
+          "input_tokens": 721,
+          "output_tokens": 1256,
+          "provider_cost_usd": 0.0007818235
+        }
+      ],
+      "input_tokens": 721,
+      "output_tokens": 1256,
+      "provider_cost_usd": 0.000781824
+    },
+    {
+      "case_id": "ER-06",
+      "catalog_id": "E1-04",
+      "trial": 2,
+      "expected_outcome": "review",
+      "actual_outcome": "review",
+      "reason": "ambiguous_shipment_reference",
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. The details in your message match more than one shipment, so no shipment was updated. Please reply with the shipment number or tracking number to identify the correct one.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-06-t2",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-06-t2",
+          "body": "Thank you for the update. The details in your message match more than one shipment, so no shipment was updated. Please reply with the shipment number or tracking number to identify the correct one.\n"
+        }
+      ],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 4265,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605773-Q4ImPvIjHPfiRDYyb3gE",
+          "http_status": 200,
+          "latency_ms": 4253,
+          "input_tokens": 702,
+          "output_tokens": 826,
+          "provider_cost_usd": 0.00101364
+        }
+      ],
+      "input_tokens": 702,
+      "output_tokens": 826,
+      "provider_cost_usd": 0.00101364
+    },
+    {
+      "case_id": "ER-07",
+      "catalog_id": "E1-09",
+      "trial": 2,
+      "expected_outcome": "review",
+      "actual_outcome": null,
+      "reason": null,
+      "checks": {
+        "outcome": false,
+        "commit_count": true,
+        "reply_count": false,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": false,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": false
+      },
+      "passed": false,
+      "error_type": "ValueError",
+      "response_body": null,
+      "reply_records": [],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 19868,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605778-nixut83IWg4e7jSTl47F",
+          "http_status": 200,
+          "latency_ms": 19848,
+          "input_tokens": 706,
+          "output_tokens": 1575,
+          "provider_cost_usd": 0.000673428
+        }
+      ],
+      "input_tokens": 706,
+      "output_tokens": 1575,
+      "provider_cost_usd": 0.000673428
+    },
+    {
+      "case_id": "ER-08",
+      "catalog_id": "E1-05",
+      "trial": 2,
+      "expected_outcome": "review",
+      "actual_outcome": "review",
+      "reason": "shipment_details_conflict",
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. The shipment number or tracking number does not agree with the route or product details in your message, so no shipment was updated. Please confirm the correct reference and details.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-08-t2",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-08-t2",
+          "body": "Thank you for the update. The shipment number or tracking number does not agree with the route or product details in your message, so no shipment was updated. Please confirm the correct reference and details.\n"
+        }
+      ],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 211482,
+      "model_calls": [
+        {
+          "response_id": "gen-1790605798-U6OZzvFLaV0T287lhDnF",
+          "http_status": 200,
+          "latency_ms": 121700,
+          "input_tokens": 767,
+          "output_tokens": 1,
+          "provider_cost_usd": 0
+        },
+        {
+          "response_id": "gen-1790605920-rd1MNNsAHOHSGCe1qtog",
+          "http_status": 200,
+          "latency_ms": 89753,
+          "input_tokens": 726,
+          "output_tokens": 721,
+          "provider_cost_usd": 0.00037424
+        }
+      ],
+      "input_tokens": 1493,
+      "output_tokens": 722,
+      "provider_cost_usd": 0.00037424
+    },
+    {
+      "case_id": "ER-09",
+      "catalog_id": "E1-10",
+      "trial": 2,
+      "expected_outcome": "committed",
+      "actual_outcome": "committed",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the shipment update. We matched the shipment and recorded your reported status as delayed in OpenBoxes. The delivery ETA was not changed. If you have a confirmed ETA, please reply with the date, time, and time zone.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-09-t2",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-09-t2",
+          "body": "Thank you for the shipment update. We matched the shipment and recorded your reported status as delayed in OpenBoxes. The delivery ETA was not changed. If you have a confirmed ETA, please reply with the date, time, and time zone.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:b6160b7eabf344dd6a4eb1154774696911c3bb0503a23e7129c2e0c3d2f880ca",
+            "version": 1,
+            "source": "Email",
+            "outcome": "success",
+            "expectedDeliveryDate": null,
+            "metadata": {
+              "reported_status": "DELAYED",
+              "agentmail_message_id": "ER-09-t2",
+              "email_timestamp": "2026-09-28T12:00:00Z",
+              "evidence_quote": "SHIP-2026-PAPER1 is delayed.",
+              "model_audit": [
+                {
+                  "model": "deepseek/deepseek-v4.1-flash",
+                  "usage": {
+                    "prompt_tokens": 746,
+                    "completion_tokens": 784,
+                    "total_tokens": 1530,
+                    "cost": 0.0006588,
+                    "is_byok": false,
+                    "prompt_tokens_details": {
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "audio_tokens": 0,
+                      "video_tokens": 0
+                    },
+                    "cost_details": {
+                      "upstream_inference_cost": 0.0006588,
+                      "upstream_inference_prompt_cost": 0.0001492,
+                      "upstream_inference_completions_cost": 0.0005096
+                    },
+                    "completion_tokens_details": {
+                      "reasoning_tokens": 653,
+                      "image_tokens": 0,
+                      "audio_tokens": 0
+                    }
+                  },
+                  "response_id": "gen-1790606009-eb0pwVIzN2QUrb2dExa9",
+                  "latency_ms": 8682
+                }
+              ]
+            },
+            "comment": "Email update for shipment SHIP-2026-PAPER1: Delayed. Evidence: SHIP-2026-PAPER1 is delayed.."
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "DELAYED",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 8695,
+      "model_calls": [
+        {
+          "response_id": "gen-1790606009-eb0pwVIzN2QUrb2dExa9",
+          "http_status": 200,
+          "latency_ms": 8682,
+          "input_tokens": 746,
+          "output_tokens": 784,
+          "provider_cost_usd": 0.0006588
+        }
+      ],
+      "input_tokens": 746,
+      "output_tokens": 784,
+      "provider_cost_usd": 0.0006588
+    },
+    {
+      "case_id": "ER-10",
+      "catalog_id": "E2-06",
+      "trial": 2,
+      "expected_outcome": "review",
+      "actual_outcome": null,
+      "reason": null,
+      "checks": {
+        "outcome": false,
+        "commit_count": true,
+        "reply_count": false,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": false,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": false
+      },
+      "passed": false,
+      "error_type": "ValueError",
+      "response_body": null,
+      "reply_records": [],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 22302,
+      "model_calls": [
+        {
+          "response_id": "gen-1790606018-f32eW3PbL65Dfw6I3HR2",
+          "http_status": 200,
+          "latency_ms": 11741,
+          "input_tokens": 748,
+          "output_tokens": 1600,
+          "provider_cost_usd": 0.0011896
+        },
+        {
+          "response_id": "gen-1790606030-yBf5utZ4qSd4klIENMdi",
+          "http_status": 200,
+          "latency_ms": 10550,
+          "input_tokens": 726,
+          "output_tokens": 3288,
+          "provider_cost_usd": 0.00397524
+        }
+      ],
+      "input_tokens": 1474,
+      "output_tokens": 4888,
+      "provider_cost_usd": 0.00516484
+    },
+    {
+      "case_id": "ER-01",
+      "catalog_id": "E2-01",
+      "trial": 3,
+      "expected_outcome": "committed",
+      "actual_outcome": "committed",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the shipment update. We matched the shipment and recorded your reported status as delayed in OpenBoxes. The delivery ETA was not changed. If you have a confirmed ETA, please reply with the date, time, and time zone.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-01-t3",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-01-t3",
+          "body": "Thank you for the shipment update. We matched the shipment and recorded your reported status as delayed in OpenBoxes. The delivery ETA was not changed. If you have a confirmed ETA, please reply with the date, time, and time zone.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:77e7d810d351304bffe90594a24ef43f496796221860a013e7dcfaac1cac8b11",
+            "version": 1,
+            "source": "Email",
+            "outcome": "success",
+            "expectedDeliveryDate": null,
+            "metadata": {
+              "reported_status": "DELAYED",
+              "agentmail_message_id": "ER-01-t3",
+              "email_timestamp": "2026-09-28T12:00:00Z",
+              "evidence_quote": "SHIP-2026-PAPER1 is delayed due to weather.",
+              "model_audit": [
+                {
+                  "model": "deepseek/deepseek-v4.1-flash",
+                  "usage": {
+                    "prompt_tokens": 710,
+                    "completion_tokens": 404,
+                    "total_tokens": 1114,
+                    "cost": 0.00050964,
+                    "is_byok": false,
+                    "prompt_tokens_details": {
+                      "cached_tokens": 640,
+                      "cache_write_tokens": 0,
+                      "audio_tokens": 0,
+                      "video_tokens": 0
+                    },
+                    "cost_details": {
+                      "upstream_inference_cost": 0.00050964,
+                      "upstream_inference_prompt_cost": 2.484e-05,
+                      "upstream_inference_completions_cost": 0.0004848
+                    },
+                    "completion_tokens_details": {
+                      "reasoning_tokens": 280,
+                      "image_tokens": 0,
+                      "audio_tokens": 0
+                    }
+                  },
+                  "response_id": "gen-1790606040-wNx9c65IPHIzvPXCEUBp",
+                  "latency_ms": 1539
+                }
+              ]
+            },
+            "comment": "Email update for shipment SHIP-2026-PAPER1: Delayed. Evidence: SHIP-2026-PAPER1 is delayed due to weather.."
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "DELAYED",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 1551,
+      "model_calls": [
+        {
+          "response_id": "gen-1790606040-wNx9c65IPHIzvPXCEUBp",
+          "http_status": 200,
+          "latency_ms": 1539,
+          "input_tokens": 710,
+          "output_tokens": 404,
+          "provider_cost_usd": 0.00050964
+        }
+      ],
+      "input_tokens": 710,
+      "output_tokens": 404,
+      "provider_cost_usd": 0.00050964
+    },
+    {
+      "case_id": "ER-02",
+      "catalog_id": "E2-02",
+      "trial": 3,
+      "expected_outcome": "committed",
+      "actual_outcome": null,
+      "reason": null,
+      "checks": {
+        "outcome": false,
+        "commit_count": false,
+        "reply_count": false,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": false,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": false
+      },
+      "passed": false,
+      "error_type": "ValueError",
+      "response_body": null,
+      "reply_records": [],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 2636,
+      "model_calls": [
+        {
+          "response_id": "gen-1790606042-MKteVFZifZMbdiebuDbb",
+          "http_status": 200,
+          "latency_ms": 2629,
+          "input_tokens": 724,
+          "output_tokens": 155,
+          "provider_cost_usd": 0.00010637904
+        }
+      ],
+      "input_tokens": 724,
+      "output_tokens": 155,
+      "provider_cost_usd": 0.000106379
+    },
+    {
+      "case_id": "ER-03",
+      "catalog_id": "E2-03",
+      "trial": 3,
+      "expected_outcome": "review",
+      "actual_outcome": null,
+      "reason": null,
+      "checks": {
+        "outcome": false,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": false
+      },
+      "passed": false,
+      "error_type": "ValueError",
+      "response_body": null,
+      "reply_records": [],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 9071,
+      "model_calls": [
+        {
+          "response_id": "gen-1790606044-NN8DaafmI4a3p0Ubvdyc",
+          "http_status": 200,
+          "latency_ms": 9058,
+          "input_tokens": 742,
+          "output_tokens": 1437,
+          "provider_cost_usd": 0.00108245
+        }
+      ],
+      "input_tokens": 742,
+      "output_tokens": 1437,
+      "provider_cost_usd": 0.00108245
+    },
+    {
+      "case_id": "ER-04",
+      "catalog_id": "E2-07",
+      "trial": 3,
+      "expected_outcome": "hold_recorded",
+      "actual_outcome": "hold_recorded",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. We recorded the reported shipping condition for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please confirm whether the shipment has left its origin and provide an updated ETA when available.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-04-t3",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-04-t3",
+          "body": "Thank you for the update. We recorded the reported shipping condition for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please confirm whether the shipment has left its origin and provide an updated ETA when available.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:57b6101ff94652c7214dfd8b9c4acf89ccb22c8c9a539958e2625e1d06ddfbd8",
+            "version": 1,
+            "source": "Email",
+            "outcome": "human",
+            "expectedDeliveryDate": null,
+            "comment": "Email report requires human review for shipment SHIP-2026-PAPER1. Evidence: held at customs. Confirm the condition, whether dispatch has occurred, and the delivery ETA.",
+            "metadata": {
+              "review_state": "OPEN",
+              "review_reason": "OTHER_HOLD",
+              "requested_action": "CONFIRM_HOLD_AND_SHIPPING_STATE",
+              "evidence_quote": "held at customs",
+              "agentmail_message_id": "ER-04-t3",
+              "email_timestamp": "2026-09-28T12:00:00Z"
+            }
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 124998,
+      "model_calls": [
+        {
+          "response_id": "gen-1790606479-fNgRqcX42zy47un3JhwN",
+          "http_status": 200,
+          "latency_ms": 15978,
+          "input_tokens": 724,
+          "output_tokens": 681,
+          "provider_cost_usd": 0.00022283
+        }
+      ],
+      "input_tokens": 724,
+      "output_tokens": 681,
+      "provider_cost_usd": 0.00022283
+    },
+    {
+      "case_id": "ER-05",
+      "catalog_id": "E2-08",
+      "trial": 3,
+      "expected_outcome": "damage_recorded",
+      "actual_outcome": "damage_recorded",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for reporting this. We recorded the reported shipment damage for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please share the affected quantity and photos if available.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-05-t3",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-05-t3",
+          "body": "Thank you for reporting this. We recorded the reported shipment damage for human review in OpenBoxes. The shipment status and delivery ETA were not changed. Please share the affected quantity and photos if available.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:a79583d8d3678176e63544ad498af76f1cadb8a8dcfa9bdcd1a52231a4dbbfdc",
+            "version": 1,
+            "source": "Email",
+            "outcome": "human",
+            "expectedDeliveryDate": null,
+            "comment": "Email report requires human review for shipment SHIP-2026-PAPER1. Evidence: two outer cartons are crushed. Inspect the reported damage and record the disposition.",
+            "metadata": {
+              "review_state": "OPEN",
+              "review_reason": "DAMAGE_REPORTED",
+              "requested_action": "INSPECT_DAMAGE_AND_RECORD_DISPOSITION",
+              "evidence_quote": "two outer cartons are crushed",
+              "agentmail_message_id": "ER-05-t3",
+              "email_timestamp": "2026-09-28T12:00:00Z"
+            }
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 7976,
+      "model_calls": [
+        {
+          "response_id": "gen-1790606495-cgDEboKkjXOMwZlBke2y",
+          "http_status": 200,
+          "latency_ms": 7965,
+          "input_tokens": 721,
+          "output_tokens": 545,
+          "provider_cost_usd": 0.000242928
+        }
+      ],
+      "input_tokens": 721,
+      "output_tokens": 545,
+      "provider_cost_usd": 0.000242928
+    },
+    {
+      "case_id": "ER-06",
+      "catalog_id": "E1-04",
+      "trial": 3,
+      "expected_outcome": "review",
+      "actual_outcome": "review",
+      "reason": "ambiguous_shipment_reference",
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. The details in your message match more than one shipment, so no shipment was updated. Please reply with the shipment number or tracking number to identify the correct one.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-06-t3",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-06-t3",
+          "body": "Thank you for the update. The details in your message match more than one shipment, so no shipment was updated. Please reply with the shipment number or tracking number to identify the correct one.\n"
+        }
+      ],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 14770,
+      "model_calls": [
+        {
+          "response_id": "gen-1790606503-vc4hqEKg6WxwdgnElRJN",
+          "http_status": 200,
+          "latency_ms": 14754,
+          "input_tokens": 702,
+          "output_tokens": 880,
+          "provider_cost_usd": 0.000380968
+        }
+      ],
+      "input_tokens": 702,
+      "output_tokens": 880,
+      "provider_cost_usd": 0.000380968
+    },
+    {
+      "case_id": "ER-07",
+      "catalog_id": "E1-09",
+      "trial": 3,
+      "expected_outcome": "review",
+      "actual_outcome": null,
+      "reason": null,
+      "checks": {
+        "outcome": false,
+        "commit_count": true,
+        "reply_count": false,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": false,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": false
+      },
+      "passed": false,
+      "error_type": "ReadTimeout",
+      "response_body": null,
+      "reply_records": [],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 138667,
+      "model_calls": [],
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "provider_cost_usd": 0
+    },
+    {
+      "case_id": "ER-08",
+      "catalog_id": "E1-05",
+      "trial": 3,
+      "expected_outcome": "review",
+      "actual_outcome": "review",
+      "reason": "shipment_details_conflict",
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. The shipment number or tracking number does not agree with the route or product details in your message, so no shipment was updated. Please confirm the correct reference and details.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-08-t3",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-08-t3",
+          "body": "Thank you for the update. The shipment number or tracking number does not agree with the route or product details in your message, so no shipment was updated. Please confirm the correct reference and details.\n"
+        }
+      ],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 74906,
+      "model_calls": [
+        {
+          "response_id": "gen-1790611023-tzA6xzZiNUUaYZqoorHM",
+          "http_status": 200,
+          "latency_ms": 14249,
+          "input_tokens": 726,
+          "output_tokens": 1153,
+          "provider_cost_usd": 0.0008007
+        }
+      ],
+      "input_tokens": 726,
+      "output_tokens": 1153,
+      "provider_cost_usd": 0.0008007
+    },
+    {
+      "case_id": "ER-09",
+      "catalog_id": "E1-10",
+      "trial": 3,
+      "expected_outcome": "committed",
+      "actual_outcome": "committed",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the shipment update. We matched the shipment and recorded your reported status as delayed in OpenBoxes. The delivery ETA was not changed. If you have a confirmed ETA, please reply with the date, time, and time zone.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-09-t3",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-09-t3",
+          "body": "Thank you for the shipment update. We matched the shipment and recorded your reported status as delayed in OpenBoxes. The delivery ETA was not changed. If you have a confirmed ETA, please reply with the date, time, and time zone.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:d1c5f0991849d439752597c47d808b73ad3790fabdce088f316394cd7fb87019",
+            "version": 1,
+            "source": "Email",
+            "outcome": "success",
+            "expectedDeliveryDate": null,
+            "metadata": {
+              "reported_status": "DELAYED",
+              "agentmail_message_id": "ER-09-t3",
+              "email_timestamp": "2026-09-28T12:00:00Z",
+              "evidence_quote": "SHIP-2026-PAPER1 is delayed.",
+              "model_audit": [
+                {
+                  "model": "deepseek/deepseek-v4.1-flash",
+                  "usage": {
+                    "prompt_tokens": 724,
+                    "completion_tokens": 421,
+                    "total_tokens": 1145,
+                    "cost": 0.0007224,
+                    "is_byok": false,
+                    "prompt_tokens_details": {
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "audio_tokens": 0,
+                      "video_tokens": 0
+                    },
+                    "cost_details": {
+                      "upstream_inference_cost": 0.0007224,
+                      "upstream_inference_prompt_cost": 0.0002172,
+                      "upstream_inference_completions_cost": 0.0005052
+                    },
+                    "completion_tokens_details": {
+                      "reasoning_tokens": 300,
+                      "image_tokens": 0,
+                      "audio_tokens": 0
+                    }
+                  },
+                  "response_id": "gen-1790611062-JS9kJve9II3bXrotPUF5",
+                  "latency_ms": 1261
+                }
+              ]
+            },
+            "comment": "Email update for shipment SHIP-2026-PAPER1: Delayed. Evidence: SHIP-2026-PAPER1 is delayed.."
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "DELAYED",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 1272,
+      "model_calls": [
+        {
+          "response_id": "gen-1790611062-JS9kJve9II3bXrotPUF5",
+          "http_status": 200,
+          "latency_ms": 1261,
+          "input_tokens": 724,
+          "output_tokens": 421,
+          "provider_cost_usd": 0.0007224
+        }
+      ],
+      "input_tokens": 724,
+      "output_tokens": 421,
+      "provider_cost_usd": 0.0007224
+    },
+    {
+      "case_id": "ER-10",
+      "catalog_id": "E2-06",
+      "trial": 3,
+      "expected_outcome": "review",
+      "actual_outcome": null,
+      "reason": null,
+      "checks": {
+        "outcome": false,
+        "commit_count": true,
+        "reply_count": false,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": false,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "no_error": false
+      },
+      "passed": false,
+      "error_type": "ReadTimeout",
+      "response_body": null,
+      "reply_records": [],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 273000,
+      "model_calls": [
+        {
+          "response_id": "gen-1790613170-24kMBZtP0VHxTheMQskO",
+          "http_status": 200,
+          "latency_ms": 47814,
+          "input_tokens": 726,
+          "output_tokens": 1600,
+          "provider_cost_usd": 0.00048941
+        }
+      ],
+      "input_tokens": 726,
+      "output_tokens": 1600,
+      "provider_cost_usd": 0.00048941
+    }
+  ]
+}

@@ -6,6 +6,14 @@ import httpx
 from models import timestamp
 
 
+class DataQueryRejected(ValueError):
+    """OpenBoxes refused a query plan; the message names only catalog terms."""
+
+
+class OpsTaskRejected(ValueError):
+    """OpenBoxes refused a warehouse task; the message names the rule that failed."""
+
+
 class OpenBoxesTool:
     def __init__(self, config, client=None):
         self.config = config
@@ -33,6 +41,74 @@ class OpenBoxesTool:
         response.raise_for_status()
         result = response.json()
         return result.get('data', result)
+
+    def get_data_catalog(self, location_id=None, ticket=None):
+        params = {'locationId': location_id} if location_id else None
+        headers = {'X-OpenBoxes-Data-Ticket': ticket} if ticket else None
+        return self.request('GET', 'api/sidecar/data-catalog', params=params, headers=headers)
+
+    def run_data_query(self, plan, location_id=None, ticket=None):
+        """Run a validated query plan; a rejected plan raises DataQueryRejected.
+
+        ticket is OpenBoxes' signature for the asking user's warehouse; without it the
+        query reads only the sidecar's own signed-in warehouse.
+        """
+        response = self.client.post('api/sidecar/data-query', json={
+            'plan': plan, 'locationId': location_id, 'ticket': ticket})
+        if response.status_code == 400:
+            try:
+                message = response.json().get('error')
+            except ValueError:
+                message = None
+            raise DataQueryRejected(str(message or 'The query plan was rejected')[:300])
+        if 300 <= response.status_code < 400:
+            raise RuntimeError('OpenBoxes redirected: verify login, location and scoped role deployment')
+        response.raise_for_status()
+        result = response.json()
+        return result.get('data', result)
+
+    def _ops(self, path, body):
+        response = self.client.post('api/sidecar/ops/' + path, json=body)
+        if response.status_code in (400, 403):
+            try:
+                message = response.json().get('error')
+            except ValueError:
+                message = None
+            error = OpsTaskRejected if response.status_code == 400 else PermissionError
+            raise error(str(message or 'OpenBoxes refused the request')[:300])
+        if 300 <= response.status_code < 400:
+            raise RuntimeError('OpenBoxes redirected: verify login, location and scoped role deployment')
+        response.raise_for_status()
+        result = response.json()
+        return result.get('data', result)
+
+    def ops_snapshot(self, parts, location_id=None, ticket=None):
+        """Read-only warehouse facts for the asking user's warehouse."""
+        return self._ops('snapshot', {'parts': list(parts), 'locationId': location_id,
+                                      'ticket': ticket})
+
+    def entity_ids(self, labels, location_id=None, ticket=None):
+        """Ids for record labels shown in a chat reply, for links to their pages."""
+        return self._ops('entity-links', {'labels': labels, 'locationId': location_id,
+                                          'ticket': ticket})
+
+    def create_bin_moves(self, reason, moves, key, location_id=None, ticket=None):
+        """A pending putaway or quarantine task; OpenBoxes re-checks every move."""
+        return self._ops('bin-moves', {'reason': reason, 'moves': moves, 'key': key,
+                                       'locationId': location_id, 'ticket': ticket})
+
+    def create_draft_purchase_order(self, supplier_id, lines, key, location_id=None, ticket=None):
+        """A pending purchase order for a buyer to review; nothing is sent to the supplier."""
+        return self._ops('draft-purchase-order', {'supplierId': supplier_id, 'lines': lines,
+                                                  'key': key, 'locationId': location_id,
+                                                  'ticket': ticket})
+
+    def update_po_delivery(self, order_number, delivery_date, evidence, location_id=None,
+                           ticket=None):
+        """Set an open purchase order's expected delivery from a cited supplier reply."""
+        return self._ops('purchase-order-delivery', {
+            'orderNumber': order_number, 'deliveryDate': delivery_date,
+            'evidence': evidence, 'locationId': location_id, 'ticket': ticket})
 
     @staticmethod
     def path(shipment_id, suffix=''):
@@ -65,9 +141,19 @@ class OpenBoxesTool:
         return self.request('POST', self.path(shipment_id, '/comments'), json={
             'comment': comment_markdown, 'idempotency_key': key or str(uuid.uuid4())})
 
-    def log_event(self, shipment_id, event_type, metadata, *, key=None):
-        return self.request('POST', self.path(shipment_id, '/events'), json={
-            'event_type': event_type, 'metadata': metadata, 'idempotency_key': key or str(uuid.uuid4())})
+    def log_event(self, shipment_id, event_type, metadata, *, key=None, event_date=None):
+        body = {'event_type': event_type, 'metadata': metadata,
+                'idempotency_key': key or str(uuid.uuid4())}
+        if event_date:
+            body['event_date'] = event_date
+        return self.request('POST', self.path(shipment_id, '/events'), json=body)
+
+    def get_recall_context(self, product_reference, lot_reference=None):
+        """Product and stocked lots for one synthetic recall test product."""
+        params = {'product': product_reference}
+        if lot_reference:
+            params['lot'] = lot_reference
+        return self.request('GET', 'api/sidecar/recall-context', params=params)
 
     def commit(self, shipment_id, payload):
         # One transaction for ETA + all events + comment; safe to retry unchanged.

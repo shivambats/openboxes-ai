@@ -12,9 +12,9 @@ def main():
     config = Config(username=os.environ.get('OPENBOXES_ADMIN_USERNAME', 'admin'),
                     password=os.environ.get('OPENBOXES_ADMIN_PASSWORD') or getpass.getpass('OpenBoxes admin password: '),
                     api_key='')
-    password = os.environ.get('OPENBOXES_PASSWORD') or getpass.getpass('New sidecar_bot password (16+ characters): ')
+    password = os.environ.get('OPENBOXES_PASSWORD') or getpass.getpass('New vegath-agent password (16+ characters): ')
     if len(password) < 16:
-        raise ValueError('sidecar_bot password must contain at least 16 characters')
+        raise ValueError('vegath-agent password must contain at least 16 characters')
     tool = OpenBoxesTool(config)
     try:
         tool.login()

@@ -8,19 +8,18 @@ The dashboard widget is named **Delayed Incoming Stock Movements**. A shipment a
 
 - its destination is the warehouse selected by the dashboard;
 - its current status is `SHIPPED` or `PARTIALLY_RECEIVED`;
-- its transport mode is Air, Sea, Land, or Suitcase; and
-- the date of its current `SHIPPED` event is older than the mode's threshold.
+- it has an expected delivery date in the past, or, when no expected delivery date is set, its current shipped-event date is older than the transport-mode threshold below.
 
-| Transport mode | Widget wording | Implemented comparison |
+| Transport mode | Fallback when no expected delivery date is set |
 | --- | --- | --- |
-| Air | Not received 30 days after ship date | Shipped event is strictly before `today - 1 calendar month` |
-| Sea | Not received 60 days after ship date | Shipped event is strictly before `today - 2 calendar months` |
-| Land | Not received 7 days after ship date | Shipped event is strictly before `today - 1 week` |
-| Suitcase | Grouped with Land | Shipped event is strictly before `today - 1 week` |
+| Air | Shipped event is strictly before `today - 1 calendar month` |
+| Sea | Shipped event is strictly before `today - 2 calendar months` |
+| Land | Shipped event is strictly before `today - 1 week` |
+| Suitcase | Shipped event is strictly before `today - 1 week` |
 
 The code uses calendar-month subtraction for Air and Sea, so the implemented boundary is not always exactly 30 or 60 days. The comparison is strict (`<`), so test data should be comfortably older than the boundary.
 
-The expected delivery date does not determine whether the widget considers a shipment delayed. The current shipped-event date does.
+An expected delivery date takes precedence over the transport window. An overdue expected date can therefore flag a shipment of any type, including Sidecar Sandbox. The dashboard groups types other than Air, Sea, Land, and Suitcase under **Other**.
 
 ## Shipment data model
 

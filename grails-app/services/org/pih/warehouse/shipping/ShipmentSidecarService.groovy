@@ -18,9 +18,24 @@ class ShipmentSidecarService {
                                     'Delivery update requires review', 'Shipment note added',
                                     'CARRIER_EMAIL_RESOLVED', 'CARRIER_EMAIL_NEEDS_CLARIFICATION',
                                     'CARRIER_EMAIL_DATE_REPORTED',
-                                    'Dock reappointment required'] as Set
+                                    'Dock reappointment required',
+                                    'Contact update requested', 'Contact reply received'] as Set
 
     private static String iso(Date value) { value?.toInstant()?.toString() }
+
+    /** What people see: carrier and tracking, never the agent's integration JSON. */
+    static String displayInformation(String text) {
+        if (!text?.trim()?.startsWith('{')) { return text }
+        def parsed
+        try { parsed = new JsonSlurper().parseText(text) }
+        catch (groovy.json.JsonException ignored) { return text }
+        Map tracking = parsed instanceof Map && parsed.sidecar instanceof Map ? parsed.sidecar : [:]
+        List parts = []
+        if (tracking.carrier_name) { parts << "Carrier: ${tracking.carrier_name}".toString() }
+        if (tracking.tracking_number) { parts << "Tracking: ${tracking.tracking_number}".toString() }
+        if (tracking.roadside_pickup_point) { parts << "Roadside pickup: ${tracking.roadside_pickup_point}".toString() }
+        parts ? parts.join(' · ') : null
+    }
 
     static String integrationStatus(ShipmentStatusCode nativeStatus, Collection<EventCode> eventCodes) {
         // Legacy shipment.currentStatus has no CANCELLED/DELIVERED values.
@@ -42,10 +57,18 @@ class ShipmentSidecarService {
         body.expectedDeliveryDate ? 'Expected delivery date revised' : 'Delivery status confirmed'
     }
 
+    /** Every event row; shipment.events is a sorted set that merges same-second events. */
+    static List<Event> allEvents(Shipment shipment) {
+        shipment?.id ? Event.executeQuery(
+                'select e from Shipment s join s.events e where s.id = :id', [id: shipment.id]) :
+                (shipment?.events ?: []).toList()
+    }
+
     private static List openReviewEvents(Shipment shipment) {
-        def resolved = shipment.events.findAll { it.eventType?.name == 'Shipment note added' }
+        List<Event> events = allEvents(shipment)
+        def resolved = events.findAll { it.eventType?.name == 'Shipment note added' }
                 .collect { eventData(it).metadata?.resolved_review_event_id }.findAll { it } as Set
-        shipment.events.findAll { it.eventType?.name == 'Delivery update requires review' &&
+        events.findAll { it.eventType?.name == 'Delivery update requires review' &&
                 !(it.id in resolved) }.toList()
     }
 
@@ -82,9 +105,11 @@ class ShipmentSidecarService {
 
     static Map snapshot(Shipment shipment) {
         Map tracking = [:]
+        boolean synthetic = false
         try {
             def parsed = new JsonSlurper().parseText(shipment.additionalInformation ?: '{}')
             if (parsed instanceof Map && parsed.sidecar instanceof Map) { tracking = parsed.sidecar }
+            synthetic = parsed instanceof Map && parsed.synthetic == true
         } catch (groovy.json.JsonException ignored) { /* Legacy free text has no tracking contract. */ }
         String status = integrationStatus(shipment.currentStatus, shipment.events.collect { it.eventType?.eventCode })
         if (status == 'IN_TRANSIT') {
@@ -96,6 +121,7 @@ class ShipmentSidecarService {
             if (reported in ['DELAYED', 'IN_TRANSIT', 'OUT_FOR_DELIVERY']) { status = reported }
         }
         [id: shipment.id, version: shipment.version, shipmentNumber: shipment.shipmentNumber,
+         synthetic: synthetic,
          status: status,
          humanReviewState: openReviewEvents(shipment) ? 'OPEN' : 'NONE',
          expectedDeliveryDate: iso(shipment.expectedDeliveryDate), origin: shipment.origin.name,
@@ -103,6 +129,14 @@ class ShipmentSidecarService {
          tracking_number: tracking.tracking_number, tracking_url: tracking.tracking_url,
          bol_number: tracking.bol_number, pro_number: tracking.pro_number,
          dispatch_email: tracking.dispatch_email,
+         driver_email: tracking.driver_email,
+         sending_warehouse_email: tracking.sending_warehouse_email ?: shipment.origin?.manager?.email,
+         outreach_scenario: tracking.outreach_scenario,
+         backup_shippers: tracking.backup_shippers instanceof List ? tracking.backup_shippers : [],
+         late_delivery_fee_usd: tracking.late_delivery_fee_usd,
+         roadside_pickup_point: tracking.roadside_pickup_point,
+         recovery_of: tracking.recovery_of,
+         recovery_handoff_state: tracking.handoff_state,
          items: shipment.shipmentItems.collect { item ->
              [product_name: item.product?.name, product_code: item.product?.productCode,
               quantity: item.quantity]
@@ -120,6 +154,91 @@ class ShipmentSidecarService {
 
     Map readShipment(User user, String id) { snapshot(scoped(user, id)) }
 
+    /** Create a pending recovery draft, with roadside pickup kept as metadata. */
+    Map createRecoveryShipment(User user, Map body) {
+        String sourceId = body.source_shipment_id?.toString()
+        String key = body.idempotency_key?.toString()
+        String quoteId = body.quote_id?.toString()
+        String pickup = body.pickup_point?.toString()?.trim()
+        // Inspection gates cargo release, not the trip record; it may follow later.
+        String inspection = body.inspection_reference instanceof String ?
+                body.inspection_reference.trim() ?: null : null
+        String acceptedMessage = body.accepted_message_id?.toString()?.trim()
+        String shipperId = body.shipper_id?.toString()
+        String mode = body.mode?.toString()
+        BigDecimal price
+        try { price = new BigDecimal(body.price_usd?.toString()) }
+        catch (Exception ignored) { throw new IllegalArgumentException('Invalid recovery price') }
+        if (!sourceId || !(key ==~ /[0-9a-f]{64}/) || !(quoteId ==~ /[0-9a-f]{20}/) ||
+                !pickup || pickup.size() > 500 || inspection?.size() > 255 ||
+                !acceptedMessage || acceptedMessage.size() > 255 ||
+                !(shipperId in ['sandbox-shipper-a', 'sandbox-shipper-b', 'sandbox-shipper-c']) ||
+                !(mode in ['FTL', 'PTL']) || !price || price <= 0 || price > 1000000) {
+            throw new IllegalArgumentException('Invalid recovery shipment request')
+        }
+        Shipment source = scoped(user, sourceId, true)
+        Map sourceInfo
+        try { sourceInfo = new JsonSlurper().parseText(source.additionalInformation ?: '{}') as Map }
+        catch (Exception ignored) { throw new IllegalStateException('Source metadata unavailable') }
+        if (sourceInfo.synthetic != true || !source.shipmentNumber ||
+                integrationStatus(source.currentStatus,
+                source.events.collect { it.eventType?.eventCode }) in ['RECEIVED', 'DELIVERED', 'CANCELLED']) {
+            throw new IllegalStateException('Source shipment is not eligible for recovery')
+        }
+        String number = "REC-${source.shipmentNumber.take(160)}-${key.take(16)}"
+        Shipment existing = Shipment.findByShipmentNumber(number)
+        if (existing) {
+            Map info = new JsonSlurper().parseText(existing.additionalInformation ?: '{}') as Map
+            if (info.sidecar?.recovery_key != key || info.sidecar?.recovery_of != source.id ||
+                    info.sidecar?.roadside_pickup_point != pickup ||
+                    info.sidecar?.accepted_quote_id != quoteId ||
+                    info.sidecar?.accepted_message_id != acceptedMessage ||
+                    info.sidecar?.inspection_reference != inspection ||
+                    info.sidecar?.selected_shipper_id != shipperId ||
+                    info.sidecar?.mode != mode ||
+                    info.sidecar?.price_usd?.toString() != price.toString()) {
+                throw new IllegalStateException('Recovery shipment number collision')
+            }
+            return snapshot(existing)
+        }
+        String prefix = "REC-${source.shipmentNumber.take(160)}-"
+        boolean openRecoveryExists = Shipment.findAllByShipmentNumberLike(prefix + '%').any {
+            Shipment candidate ->
+            Map info = new JsonSlurper().parseText(candidate.additionalInformation ?: '{}') as Map
+            info.sidecar?.recovery_of == source.id &&
+                    !(integrationStatus(candidate.currentStatus,
+                            candidate.events.collect { it.eventType?.eventCode }) in
+                    ['RECEIVED', 'DELIVERED', 'CANCELLED'])
+        }
+        if (openRecoveryExists) {
+            throw new IllegalStateException('Open recovery shipment already exists')
+        }
+        Map recovery = [recovery_of: source.id, recovery_key: key,
+                roadside_pickup_point: pickup, inspection_reference: inspection,
+                accepted_quote_id: quoteId, accepted_message_id: acceptedMessage,
+                selected_shipper_id: shipperId, mode: mode, price_usd: price,
+                handoff_state: inspection ? 'AWAITING_FLEET_HANDOFF' : 'AWAITING_INSPECTION']
+        Shipment draft = new Shipment(shipmentNumber: number,
+                name: "Recovery for ${source.shipmentNumber}".take(255),
+                origin: source.origin, destination: source.destination,
+                shipmentType: source.shipmentType, expectedShippingDate: new Date(),
+                additionalInformation: JsonOutput.toJson([synthetic: true, sidecar: recovery]))
+        source.allShipmentItems.each { ShipmentItem item ->
+            draft.addToShipmentItems(new ShipmentItem(product: item.product,
+                    quantity: item.quantity, lotNumber: item.lotNumber,
+                    expirationDate: item.expirationDate))
+        }
+        draft.save(failOnError: true, flush: true)
+        // The delayed shipment's history names the trip that now carries its load.
+        addEvent(source, user, 'Shipment note added',
+                [description: "Load transfer: recovery shipment ${number} created".toString(),
+                 source: 'LoadTransfer', idempotency_key: key,
+                 metadata: [recovery_shipment_id: draft.id, recovery_shipment_number: number,
+                            accepted_quote_id: quoteId, accepted_message_id: acceptedMessage]])
+        source.save(failOnError: true, flush: true)
+        snapshot(draft)
+    }
+
     private static Map eventData(Event event) {
         Map payload = [:]
         try {
@@ -136,7 +255,7 @@ class ShipmentSidecarService {
 
     Map history(User user, String id) {
         Shipment shipment = scoped(user, id)
-        [shipment: snapshot(shipment), events: shipment.events.collect { eventData(it) },
+        [shipment: snapshot(shipment), events: allEvents(shipment).collect { eventData(it) },
          comments: shipment.comments.collect {
              [id: it.id, timestamp: iso(it.dateCreated), comment: it.comment]
          }, status_updates: shipment.eventLogs.collect {
@@ -157,14 +276,36 @@ class ShipmentSidecarService {
         }
     }
 
-    private static void addEvent(Shipment shipment, User user, String type, Map payload) {
+    /** Contact events are dated when the email happened, so each one stays distinct. */
+    static final Set FACT_DATED_EVENT_TYPES = ['Contact update requested', 'Contact reply received'] as Set
+
+    static Date factDate(String type, Object value) {
+        if (value == null) { return new Date() }
+        if (!FACT_DATED_EVENT_TYPES.contains(type)) {
+            throw new IllegalArgumentException('Event date is not accepted for this event')
+        }
+        Instant instant
+        try {
+            instant = Instant.parse(value.toString())
+        } catch (java.time.format.DateTimeParseException ignored) {
+            throw new IllegalArgumentException('Event date must be an ISO-8601 instant')
+        }
+        Instant now = Instant.now()
+        if (instant.isAfter(now.plusSeconds(300)) || instant.isBefore(now.minusSeconds(366L * 86400))) {
+            throw new IllegalArgumentException('Event date is outside the allowed range')
+        }
+        Date.from(instant)
+    }
+
+    private static void addEvent(Shipment shipment, User user, String type, Map payload,
+                                 Date eventDate = new Date()) {
         if (!EVENT_TYPES.contains(type)) { throw new IllegalArgumentException('Unsupported event') }
         EventType eventType = EventType.findByNameAndEventCode(type, EventCode.CUSTOM)
         if (!eventType) { throw new IllegalStateException('Install sidecar event migration') }
         String encoded = JsonOutput.toJson(payload + [sidecar: 1])
         if (encoded.getBytes('UTF-8').length > 60000) { throw new IllegalArgumentException('Event too large') }
         Comment comment = new Comment(comment: encoded, sender: user, dateSent: new Date()).save(failOnError: true)
-        Event event = new Event(eventType: eventType, eventDate: new Date(),
+        Event event = new Event(eventType: eventType, eventDate: eventDate,
                 eventLocation: user.warehouse, createdBy: user, comment: comment).save(failOnError: true)
         shipment.addToEvents(event)
         ensureEventLog(shipment, event)
@@ -188,7 +329,7 @@ class ShipmentSidecarService {
         // Canonical tree makes hashes stable across JSON object key ordering.
         String hash = java.security.MessageDigest.getInstance('SHA-256')
                 .digest(JsonOutput.toJson(canonical(body + [operation: operation])).getBytes('UTF-8')).encodeHex().toString()
-        def prior = shipment.events.collect { eventData(it) }.find { it.idempotency_key == key }
+        def prior = allEvents(shipment).collect { eventData(it) }.find { it.idempotency_key == key }
         if (prior) {
             if (prior.request_hash != hash) { throw new IllegalStateException('Idempotency key reused') }
             return [replayed: true, shipment: snapshot(shipment)]
@@ -310,7 +451,8 @@ class ShipmentSidecarService {
         } else {
             String businessEvent = operation == 'event' ? body.event_type?.toString() :
                     operation == 'eta' ? 'Expected delivery date revised' : 'Shipment note added'
-            addEvent(shipment, user, businessEvent, audit)
+            addEvent(shipment, user, businessEvent, audit,
+                    operation == 'event' ? factDate(businessEvent, body.event_date) : new Date())
         }
         shipment.save(failOnError: true, flush: true)
         [replayed: false, shipment: snapshot(shipment)]

@@ -15,11 +15,13 @@ import {
   reorderIndicators,
   resetIndicators,
 } from 'actions';
-import AgentActivityPanel from 'components/dashboard/AgentActivityPanel';
+import DashboardAttentionPanel from 'components/dashboard/DashboardAttentionPanel';
 import Filter from 'components/dashboard/Filter';
 import GraphCard from 'components/dashboard/GraphCard';
 import LoadingNumbers from 'components/dashboard/LoadingNumbers';
 import NumberCard from 'components/dashboard/NumberCard';
+import OperatorChatPanel from 'components/dashboard/OperatorChatPanel';
+import RecordPane from 'components/dashboard/RecordPane';
 import UnarchiveIndicators from 'components/dashboard/UnarchiveIndicators';
 import apiClient from 'utils/apiClient';
 import Translate from 'utils/Translate';
@@ -103,6 +105,24 @@ const ArchiveIndicator = ({ hideArchive }) => (
   </div>
 );
 
+const NAV_COLLAPSED_KEY = 'dashboardNavCollapsed';
+
+function navCollapsedByUser() {
+  try {
+    return window.localStorage.getItem(NAV_COLLAPSED_KEY) === 'true';
+  } catch (error) {
+    return false;
+  }
+}
+
+function rememberNavCollapsed(collapsed) {
+  try {
+    window.localStorage.setItem(NAV_COLLAPSED_KEY, String(collapsed));
+  } catch (error) {
+    // Storage may be blocked; the menu still toggles for this visit.
+  }
+}
+
 const ConfigurationsList = ({
   configs, activeConfig, loadConfigData, showNav, toggleNav, configModified, updateConfig,
 }) => {
@@ -111,17 +131,26 @@ const ConfigurationsList = ({
   }
   return (
     <div className={`configs-left-nav ${!showNav ? 'hidden' : ''}`}>
-      <button type="button" className="toggle-nav" onClick={toggleNav}>
+      <button
+        type="button"
+        className="toggle-nav"
+        onClick={toggleNav}
+        aria-expanded={showNav}
+        aria-label={showNav ? 'Collapse dashboards menu' : 'Expand dashboards menu'}
+        title={showNav ? 'Collapse menu' : 'Expand menu'}
+      >
         {showNav
-          ? <i className="fa fa-chevron-left" aria-hidden="true" />
-          : <i className="fa fa-chevron-right" aria-hidden="true" />}
+          ? <i className="fa fa-angle-double-left" aria-hidden="true" />
+          : <i className="fa fa-angle-double-right" aria-hidden="true" />}
       </button>
       <ul className="configs-list">
         {Object.entries(configs).map(([key, value]) => (
           <li className={`configs-list-item ${activeConfig === key ? 'active' : ''}`} key={key}>
-            <button type="button" onClick={() => loadConfigData(key)}>
+            <button type="button" onClick={() => loadConfigData(key)} title={value.name}>
               <i className="fa fa-bar-chart" aria-hidden="true" />
-              <Translate id={`react.dashboard.${key}.label`} defaultMessage={value.name} />
+              <span className="configs-list-label">
+                <Translate id={`react.dashboard.${key}.label`} defaultMessage={value.name} />
+              </span>
             </button>
           </li>
         ))}
@@ -159,20 +188,33 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
 
+    this.dashboardRef = React.createRef();
+
     this.state = {
       isDragging: false,
       showPopout: false,
-      // Not showing if screen too small
-      showNav: window.innerWidth > 1115,
+      // Not showing if screen too small; a wide screen keeps the user's last choice.
+      showNav: window.innerWidth > 1115 && !navCollapsedByUser(),
       configModified: false,
       allLocations: [],
       pageFilters: [],
       subdashboardKeys: [],
+      recordHref: null,
     };
+    this.openRecord = (href) => this.setState({ recordHref: href });
+    this.closeRecord = () => this.setState({ recordHref: null });
     this.fetchLocations();
   }
 
   componentDidMount() {
+    this.updateViewportHeight();
+    window.addEventListener('resize', this.updateViewportHeight);
+    // The header and footer can change size after the dashboard mounts.
+    if (window.ResizeObserver) {
+      this.layoutObserver = new ResizeObserver(this.updateViewportHeight);
+      document.querySelectorAll('.page-layout > header, .page-layout > footer, .page-layout > :first-child, .page-layout > :last-child')
+        .forEach((element) => this.layoutObserver.observe(element));
+    }
     if (this.props.currentLocation !== '') {
       this.getSubdashboardKeys().then(() => this.fetchData(this.determineActiveConfig()));
     }
@@ -189,6 +231,25 @@ class Dashboard extends Component {
       this.loadPageFilters(this.props.activeConfig);
     }
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateViewportHeight);
+    this.layoutObserver?.disconnect();
+  }
+
+  // The dashboard fills the window between the header and the footer, so the page
+  // itself never scrolls: only the cards column does, and the menu and chat stay put.
+  updateViewportHeight = () => {
+    const dashboard = this.dashboardRef.current;
+    if (!dashboard) return;
+    const top = dashboard.getBoundingClientRect().top + window.scrollY;
+    const layout = dashboard.closest('.page-layout');
+    const footer = layout && layout.lastElementChild !== dashboard.closest('.page-layout__main')
+      ? layout.lastElementChild : null;
+    const footerHeight = footer ? footer.getBoundingClientRect().height : 0;
+    const available = window.innerHeight - Math.max(0, top) - footerHeight;
+    dashboard.style.setProperty('--dashboard-viewport-height', `${Math.max(320, available)}px`);
+  };
 
   getDashboardIdFromParams() {
     const dashboardId = this.props.match.params.configId;
@@ -319,7 +380,10 @@ class Dashboard extends Component {
   };
 
   toggleNav = () => {
-    this.setState((prev) => ({ showNav: !prev.showNav }));
+    this.setState((prev) => {
+      if (window.innerWidth > 1115) rememberNavCollapsed(prev.showNav);
+      return { showNav: !prev.showNav };
+    });
   };
 
   sortStartHandle = () => {
@@ -406,7 +470,7 @@ class Dashboard extends Component {
     }
 
     return (
-      <div className="dashboard-container">
+      <div className="dashboard-container" ref={this.dashboardRef}>
         <ConfigurationsList
           configs={this.props.dashboardConfig.dashboard || {}}
           loadConfigData={this.fetchData}
@@ -424,18 +488,28 @@ class Dashboard extends Component {
           onClick={this.toggleNav}
           onKeyPress={this.toggleNav}
         />
-        <div className="filter-and-cards-container">
+        <OperatorChatPanel
+          userId={this.props.currentUser}
+          username={this.props.currentUsername}
+          locationId={this.props.currentLocation}
+          onOpenRecord={this.openRecord}
+        />
+        {this.state.recordHref && (
+          <RecordPane
+            key={this.state.recordHref}
+            href={this.state.recordHref}
+            onClose={this.closeRecord}
+          />
+        )}
+        <div className={`filter-and-cards-container ${this.state.recordHref ? 'behind-record' : ''}`}>
           <Filter
             configs={this.props.dashboardConfig.dashboard || {}}
             activeConfig={this.props.activeConfig}
             fetchData={this.fetchData}
             pageFilters={this.state.pageFilters}
           />
+          <DashboardAttentionPanel locationId={this.props.currentLocation} />
           <div className="cards-container">
-            <AgentActivityPanel
-              locationId={this.props.currentLocation}
-              currentUser={this.props.currentUser}
-            />
             {numberCards}
             <SortableCards
               allLocations={this.state.allLocations}
@@ -474,6 +548,7 @@ const mapStateToProps = (state) => ({
   activeConfig: state.indicators.activeConfig,
   currentLocation: state.session.currentLocation.id,
   currentUser: state.session.user.id,
+  currentUsername: state.session.user.username,
 });
 
 export default connect(mapStateToProps, {
@@ -489,6 +564,7 @@ export default connect(mapStateToProps, {
 Dashboard.defaultProps = {
   currentLocation: '',
   currentUser: '',
+  currentUsername: '',
   indicatorsData: null,
   numberData: [],
   match: {
@@ -512,6 +588,7 @@ Dashboard.propTypes = {
   activeConfig: PropTypes.string.isRequired,
   currentLocation: PropTypes.string,
   currentUser: PropTypes.string,
+  currentUsername: PropTypes.string,
   addToIndicators: PropTypes.func.isRequired,
   reloadIndicator: PropTypes.func.isRequired,
   resetIndicators: PropTypes.func.isRequired,

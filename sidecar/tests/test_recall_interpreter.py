@@ -12,6 +12,7 @@ NOTICE = {"verification": "primary_page_read", "url": "https://www.fda.gov/recal
 ANSWER = {"brand": "Par Pharmaceutical",
           "product": "Dexmedetomidine HCl in 0.9% Sodium Chloride Injection 400 mcg/100 mL",
           "ndc": "42023-187-01", "lots": ["87558", "88802"],
+          "lot_scope": "exact_list", "scope_quote": "Lots 87558 and 88802",
           "action_quote": "Wholesale distributors should immediately discontinue use and stop distribution."}
 
 
@@ -32,6 +33,21 @@ def test_extracts_only_grounded_primary_notice_identifiers():
     assert result["lots"] == ["87558", "88802"]
     assert result["model_audit"]["model"] == "mock-recall"
     assert model.calls[0][1]["notice_text"] == NOTICE["source_excerpt"]
+
+
+@pytest.mark.parametrize("scope_text", [
+    "all lots", "lot range A100 through A120", "lots A100 to A120",
+    "lots A100–A120",
+])
+def test_non_enumerated_lot_scope_requires_review_after_model_extraction(scope_text):
+    model = FakeModel(ANSWER | {'lot_scope': 'range' if 'range' in scope_text or
+                               'to' in scope_text or 'through' in scope_text or
+                               '–' in scope_text else 'all_lots',
+                               'scope_quote': scope_text})
+    notice = NOTICE | {"source_excerpt": NOTICE["source_excerpt"] + " " + scope_text}
+    with pytest.raises(ValueError, match="requires human review"):
+        RecallNoticeInterpreter(model).interpret(notice)
+    assert len(model.calls) == 1
 
 
 @pytest.mark.parametrize("notice,answer", [

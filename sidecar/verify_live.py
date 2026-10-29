@@ -35,8 +35,8 @@ def main():
     parser.add_argument('--apply', action='store_true')
     args = parser.parse_args()
     config = Config()
-    if not config.fixtures or config.context_mode != 'rules' or config.username != 'sidecar_bot':
-        raise RuntimeError('Verification requires sidecar_bot, CARRIER_FIXTURES=true and CONTEXT_MODE=rules')
+    if not config.fixtures or config.context_mode != 'rules' or config.username != 'vegath-agent':
+        raise RuntimeError('Verification requires vegath-agent, CARRIER_FIXTURES=true and CONTEXT_MODE=rules')
     with open(config.state_path + '.lock', 'a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         verify(config, args.apply)

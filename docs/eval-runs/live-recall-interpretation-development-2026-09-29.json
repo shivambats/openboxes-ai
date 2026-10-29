@@ -1,0 +1,2138 @@
+{
+  "dataset_version": "synthetic-recall-interpretation-v1",
+  "review_status": "development labels; recall domain owner review pending",
+  "started_utc": "2026-09-28T18:35:35.633331+00:00",
+  "finished_utc": "2026-09-28T18:36:39.919980+00:00",
+  "model": "deepseek/deepseek-v4.1-flash",
+  "prompt_version": "recall-notice-v1",
+  "summary": {
+    "passed": 25,
+    "total": 30,
+    "provider_calls": 27,
+    "provider_cost_usd": 0.004054286,
+    "input_tokens": 7152,
+    "output_tokens": 5939,
+    "p50_latency_ms": 2117.5,
+    "p95_latency_ms": 4115
+  },
+  "trials": [
+    {
+      "case_id": "R2-01",
+      "trial": 1,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": true,
+      "actual_affected": true,
+      "expected_lots": [
+        "87558",
+        "88802"
+      ],
+      "actual_lots": [
+        "87558",
+        "88802"
+      ],
+      "source_sha256": "c2fc1b388084e330b22c9a25f31ca06558c3606e5ebca0a525e0ea3848b98232",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-01",
+        "source_sha256": "c2fc1b388084e330b22c9a25f31ca06558c3606e5ebca0a525e0ea3848b98232",
+        "brand": "Par Pharmaceutical",
+        "product": "Dexmedetomidine HCl Injection 400 mcg/100 mL",
+        "ndc": "42023-187-01",
+        "lots": [
+          "87558",
+          "88802"
+        ],
+        "action_quote": "Wholesale distributors should immediately stop distribution.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 251,
+            "completion_tokens": 225,
+            "total_tokens": 476,
+            "cost": 0.0003453,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0003453,
+              "upstream_inference_prompt_cost": 7.53e-05,
+              "upstream_inference_completions_cost": 0.00027
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 166,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620536-ANLhyEgUyDaeoVE2mxUu",
+          "latency_ms": 1613,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 1613,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620536-ANLhyEgUyDaeoVE2mxUu",
+          "http_status": 200,
+          "latency_ms": 1612,
+          "input_tokens": 251,
+          "output_tokens": 225,
+          "provider_cost_usd": 0.0003453
+        }
+      ],
+      "input_tokens": 251,
+      "output_tokens": 225,
+      "provider_cost_usd": 0.0003453
+    },
+    {
+      "case_id": "R2-02",
+      "trial": 1,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": false,
+      "actual_affected": false,
+      "expected_lots": [
+        "87558",
+        "88802"
+      ],
+      "actual_lots": [
+        "87558",
+        "88802"
+      ],
+      "source_sha256": "c2fc1b388084e330b22c9a25f31ca06558c3606e5ebca0a525e0ea3848b98232",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-02",
+        "source_sha256": "c2fc1b388084e330b22c9a25f31ca06558c3606e5ebca0a525e0ea3848b98232",
+        "brand": "Par Pharmaceutical",
+        "product": "Dexmedetomidine HCl Injection 400 mcg/100 mL",
+        "ndc": "42023-187-01",
+        "lots": [
+          "87558",
+          "88802"
+        ],
+        "action_quote": "Wholesale distributors should immediately stop distribution.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 273,
+            "completion_tokens": 229,
+            "total_tokens": 502,
+            "cost": 0.000135546,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.000135546,
+              "upstream_inference_prompt_cost": 3.1122e-05,
+              "upstream_inference_completions_cost": 0.000104424
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 171,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620537-PyoWaXFsupuJiYSx5pkh",
+          "latency_ms": 1908,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 1908,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620537-PyoWaXFsupuJiYSx5pkh",
+          "http_status": 200,
+          "latency_ms": 1908,
+          "input_tokens": 273,
+          "output_tokens": 229,
+          "provider_cost_usd": 0.000135546
+        }
+      ],
+      "input_tokens": 273,
+      "output_tokens": 229,
+      "provider_cost_usd": 0.000135546
+    },
+    {
+      "case_id": "R2-03",
+      "trial": 1,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": false,
+      "actual_affected": false,
+      "expected_lots": [
+        "87558"
+      ],
+      "actual_lots": [
+        "87558"
+      ],
+      "source_sha256": "0c4d24d1edaed957a08262a25b0052470852854c59026906f98fd6bb30ce8a88",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-03",
+        "source_sha256": "0c4d24d1edaed957a08262a25b0052470852854c59026906f98fd6bb30ce8a88",
+        "brand": "Par Pharmaceutical",
+        "product": "Dexmedetomidine HCl Injection 400 mcg/100 mL",
+        "ndc": "42023-187-01",
+        "lots": [
+          "87558"
+        ],
+        "action_quote": "Wholesale distributors should immediately stop distribution.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 266,
+            "completion_tokens": 221,
+            "total_tokens": 487,
+            "cost": 0.0001311,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0001311,
+              "upstream_inference_prompt_cost": 3.0324e-05,
+              "upstream_inference_completions_cost": 0.000100776
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 166,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620539-2o5oLiSD8c1p5dOCNklF",
+          "latency_ms": 1989,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 1989,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620539-2o5oLiSD8c1p5dOCNklF",
+          "http_status": 200,
+          "latency_ms": 1989,
+          "input_tokens": 266,
+          "output_tokens": 221,
+          "provider_cost_usd": 0.0001311
+        }
+      ],
+      "input_tokens": 266,
+      "output_tokens": 221,
+      "provider_cost_usd": 0.0001311
+    },
+    {
+      "case_id": "R2-04",
+      "trial": 1,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": true,
+      "actual_affected": true,
+      "expected_lots": [
+        "SF100"
+      ],
+      "actual_lots": [
+        "SF100"
+      ],
+      "source_sha256": "29305e7f88acc0112dd34babb06ad39ebf01ae59efba05db7efdba0cd273f0be",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-04",
+        "source_sha256": "29305e7f88acc0112dd34babb06ad39ebf01ae59efba05db7efdba0cd273f0be",
+        "brand": "Harbor Medical",
+        "product": "Saline Flush Syringe 10 mL",
+        "ndc": "12345-678-90",
+        "lots": [
+          "SF100"
+        ],
+        "action_quote": "Wholesale distributors should quarantine the recalled lot.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 264,
+            "completion_tokens": 213,
+            "total_tokens": 477,
+            "cost": 0.000127224,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.000127224,
+              "upstream_inference_prompt_cost": 3.0096e-05,
+              "upstream_inference_completions_cost": 9.7128e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 160,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620541-snECq1SnITfecHpBxmWr",
+          "latency_ms": 2112,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 2113,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620541-snECq1SnITfecHpBxmWr",
+          "http_status": 200,
+          "latency_ms": 2112,
+          "input_tokens": 264,
+          "output_tokens": 213,
+          "provider_cost_usd": 0.000127224
+        }
+      ],
+      "input_tokens": 264,
+      "output_tokens": 213,
+      "provider_cost_usd": 0.000127224
+    },
+    {
+      "case_id": "R2-05",
+      "trial": 1,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": false,
+      "actual_affected": false,
+      "expected_lots": [
+        "087558"
+      ],
+      "actual_lots": [
+        "087558"
+      ],
+      "source_sha256": "b4f7bbb567d97c21e80bf165f49753d97883fb3b45521450c6be26a5fc0524aa",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-05",
+        "source_sha256": "b4f7bbb567d97c21e80bf165f49753d97883fb3b45521450c6be26a5fc0524aa",
+        "brand": "Harbor Medical",
+        "product": "Saline Flush Syringe 10 mL",
+        "ndc": "12345-678-90",
+        "lots": [
+          "087558"
+        ],
+        "action_quote": "Wholesale distributors should quarantine the recalled lot.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 244,
+            "completion_tokens": 158,
+            "total_tokens": 402,
+            "cost": 0.0002628,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0002628,
+              "upstream_inference_prompt_cost": 7.32e-05,
+              "upstream_inference_completions_cost": 0.0001896
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 104,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620543-1UuP1u0PCbRrAiSUUKyC",
+          "latency_ms": 880,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 880,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620543-1UuP1u0PCbRrAiSUUKyC",
+          "http_status": 200,
+          "latency_ms": 880,
+          "input_tokens": 244,
+          "output_tokens": 158,
+          "provider_cost_usd": 0.0002628
+        }
+      ],
+      "input_tokens": 244,
+      "output_tokens": 158,
+      "provider_cost_usd": 0.0002628
+    },
+    {
+      "case_id": "R2-06",
+      "trial": 1,
+      "passed": false,
+      "checks": {
+        "unsupported_rejected": false,
+        "no_affected_conclusion": false
+      },
+      "error_type": null,
+      "expected_error": true,
+      "expected_affected": null,
+      "actual_affected": false,
+      "expected_lots": null,
+      "actual_lots": [
+        "A100 THROUGH A120"
+      ],
+      "source_sha256": "cf96c2999184c63af686118bb8cbe807f22b62fdfd63365acc0d402a4759c096",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-06",
+        "source_sha256": "cf96c2999184c63af686118bb8cbe807f22b62fdfd63365acc0d402a4759c096",
+        "brand": "Harbor Medical",
+        "product": "Saline Flush Syringe 10 mL",
+        "ndc": "12345-678-90",
+        "lots": [
+          "A100 THROUGH A120"
+        ],
+        "action_quote": "Wholesale distributors should quarantine affected units.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 241,
+            "completion_tokens": 62,
+            "total_tokens": 303,
+            "cost": 3.8637615e-05,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 3.8637615e-05,
+              "upstream_inference_prompt_cost": 1.9408935e-05,
+              "upstream_inference_completions_cost": 1.922868e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620544-1PgXmyDXYneS6mcPsxSe",
+          "latency_ms": 2671,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 2672,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620544-1PgXmyDXYneS6mcPsxSe",
+          "http_status": 200,
+          "latency_ms": 2671,
+          "input_tokens": 241,
+          "output_tokens": 62,
+          "provider_cost_usd": 3.8637615e-05
+        }
+      ],
+      "input_tokens": 241,
+      "output_tokens": 62,
+      "provider_cost_usd": 3.8638e-05
+    },
+    {
+      "case_id": "R2-07",
+      "trial": 1,
+      "passed": true,
+      "checks": {
+        "unsupported_rejected": true,
+        "no_affected_conclusion": true
+      },
+      "error_type": "ValueError",
+      "expected_error": true,
+      "expected_affected": null,
+      "actual_affected": null,
+      "expected_lots": null,
+      "actual_lots": null,
+      "source_sha256": "8a413a635023581cc45b8adf8b928dd8f37ab1e8d7b0d35fc5332b62e93d1929",
+      "scope": null,
+      "agent_latency_ms": 4115,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620546-UvY1fNd22j4lJLZsoBDP",
+          "http_status": 200,
+          "latency_ms": 4115,
+          "input_tokens": 242,
+          "output_tokens": 55,
+          "provider_cost_usd": 9.702e-05
+        }
+      ],
+      "input_tokens": 242,
+      "output_tokens": 55,
+      "provider_cost_usd": 9.702e-05
+    },
+    {
+      "case_id": "R2-08",
+      "trial": 1,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": false,
+      "actual_affected": false,
+      "expected_lots": [
+        "875S8"
+      ],
+      "actual_lots": [
+        "875S8"
+      ],
+      "source_sha256": "56f5994b126ac13e819a0210279b5428eaa95cd81e966bf862ca849e366abf86",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-08",
+        "source_sha256": "56f5994b126ac13e819a0210279b5428eaa95cd81e966bf862ca849e366abf86",
+        "brand": "Harbor Medical",
+        "product": "Saline Flush Syringe 10 mL",
+        "ndc": "12345-678-90",
+        "lots": [
+          "875S8"
+        ],
+        "action_quote": "Wholesale distributors should quarantine affected units.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 263,
+            "completion_tokens": 201,
+            "total_tokens": 464,
+            "cost": 0.000121638,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.000121638,
+              "upstream_inference_prompt_cost": 2.9982e-05,
+              "upstream_inference_completions_cost": 9.1656e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 148,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620550-XZYD6sIy2Aa3rfI2vIOR",
+          "latency_ms": 1978,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 1978,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620550-XZYD6sIy2Aa3rfI2vIOR",
+          "http_status": 200,
+          "latency_ms": 1977,
+          "input_tokens": 263,
+          "output_tokens": 201,
+          "provider_cost_usd": 0.000121638
+        }
+      ],
+      "input_tokens": 263,
+      "output_tokens": 201,
+      "provider_cost_usd": 0.000121638
+    },
+    {
+      "case_id": "R2-09",
+      "trial": 1,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": false,
+      "actual_affected": false,
+      "expected_lots": [
+        "SF100"
+      ],
+      "actual_lots": [
+        "SF100"
+      ],
+      "source_sha256": "a6191a2afbca7d2084d03aed22e0e7be31d9e6d9dd9d15a4bf29bd306d4e67df",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-09",
+        "source_sha256": "a6191a2afbca7d2084d03aed22e0e7be31d9e6d9dd9d15a4bf29bd306d4e67df",
+        "brand": "Harbor Medical",
+        "product": "Saline Flush Syringe 10 mL",
+        "ndc": "12345-678-90",
+        "lots": [
+          "SF100"
+        ],
+        "action_quote": "Wholesale distributors should quarantine SF100.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 292,
+            "completion_tokens": 188,
+            "total_tokens": 480,
+            "cost": 0.000119016,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.000119016,
+              "upstream_inference_prompt_cost": 3.3288e-05,
+              "upstream_inference_completions_cost": 8.5728e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 136,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620552-jAHabzG6It5yD3QXT78Y",
+          "latency_ms": 2345,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 2345,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620552-jAHabzG6It5yD3QXT78Y",
+          "http_status": 200,
+          "latency_ms": 2345,
+          "input_tokens": 292,
+          "output_tokens": 188,
+          "provider_cost_usd": 0.000119016
+        }
+      ],
+      "input_tokens": 292,
+      "output_tokens": 188,
+      "provider_cost_usd": 0.000119016
+    },
+    {
+      "case_id": "R2-10",
+      "trial": 1,
+      "passed": true,
+      "checks": {
+        "unsupported_rejected": true,
+        "no_affected_conclusion": true
+      },
+      "error_type": "ValueError",
+      "expected_error": true,
+      "expected_affected": null,
+      "actual_affected": null,
+      "expected_lots": null,
+      "actual_lots": null,
+      "source_sha256": "3bd4fd6dd21ec826bb95489fc0eb2f993a89a7befa404a069ea388bdf48e6d92",
+      "scope": null,
+      "agent_latency_ms": 0,
+      "model_calls": [],
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "provider_cost_usd": 0
+    },
+    {
+      "case_id": "R2-01",
+      "trial": 2,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": true,
+      "actual_affected": true,
+      "expected_lots": [
+        "87558",
+        "88802"
+      ],
+      "actual_lots": [
+        "87558",
+        "88802"
+      ],
+      "source_sha256": "c2fc1b388084e330b22c9a25f31ca06558c3606e5ebca0a525e0ea3848b98232",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-01",
+        "source_sha256": "c2fc1b388084e330b22c9a25f31ca06558c3606e5ebca0a525e0ea3848b98232",
+        "brand": "Par Pharmaceutical",
+        "product": "Dexmedetomidine HCl Injection 400 mcg/100 mL",
+        "ndc": "42023-187-01",
+        "lots": [
+          "87558",
+          "88802"
+        ],
+        "action_quote": "Wholesale distributors should immediately stop distribution.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 273,
+            "completion_tokens": 208,
+            "total_tokens": 481,
+            "cost": 0.00012597,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00012597,
+              "upstream_inference_prompt_cost": 3.1122e-05,
+              "upstream_inference_completions_cost": 9.4848e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 150,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620555-x0y3PfXBtX9VIgNIIvge",
+          "latency_ms": 1966,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 1966,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620555-x0y3PfXBtX9VIgNIIvge",
+          "http_status": 200,
+          "latency_ms": 1966,
+          "input_tokens": 273,
+          "output_tokens": 208,
+          "provider_cost_usd": 0.00012597
+        }
+      ],
+      "input_tokens": 273,
+      "output_tokens": 208,
+      "provider_cost_usd": 0.00012597
+    },
+    {
+      "case_id": "R2-02",
+      "trial": 2,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": false,
+      "actual_affected": false,
+      "expected_lots": [
+        "87558",
+        "88802"
+      ],
+      "actual_lots": [
+        "87558",
+        "88802"
+      ],
+      "source_sha256": "c2fc1b388084e330b22c9a25f31ca06558c3606e5ebca0a525e0ea3848b98232",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-02",
+        "source_sha256": "c2fc1b388084e330b22c9a25f31ca06558c3606e5ebca0a525e0ea3848b98232",
+        "brand": "Par Pharmaceutical",
+        "product": "Dexmedetomidine HCl Injection 400 mcg/100 mL",
+        "ndc": "42023-187-01",
+        "lots": [
+          "87558",
+          "88802"
+        ],
+        "action_quote": "Wholesale distributors should immediately stop distribution.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 273,
+            "completion_tokens": 209,
+            "total_tokens": 482,
+            "cost": 0.0001001604,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 256,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0001001604,
+              "upstream_inference_prompt_cost": 4.8564e-06,
+              "upstream_inference_completions_cost": 9.5304e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 151,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620557-AuKQeeqIqgHlDIdbvAfZ",
+          "latency_ms": 2132,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 2132,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620557-AuKQeeqIqgHlDIdbvAfZ",
+          "http_status": 200,
+          "latency_ms": 2132,
+          "input_tokens": 273,
+          "output_tokens": 209,
+          "provider_cost_usd": 0.0001001604
+        }
+      ],
+      "input_tokens": 273,
+      "output_tokens": 209,
+      "provider_cost_usd": 0.00010016
+    },
+    {
+      "case_id": "R2-03",
+      "trial": 2,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": false,
+      "actual_affected": false,
+      "expected_lots": [
+        "87558"
+      ],
+      "actual_lots": [
+        "87558"
+      ],
+      "source_sha256": "0c4d24d1edaed957a08262a25b0052470852854c59026906f98fd6bb30ce8a88",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-03",
+        "source_sha256": "0c4d24d1edaed957a08262a25b0052470852854c59026906f98fd6bb30ce8a88",
+        "brand": "Par Pharmaceutical",
+        "product": "Dexmedetomidine HCl Injection 400 mcg/100 mL",
+        "ndc": "42023-187-01",
+        "lots": [
+          "87558"
+        ],
+        "action_quote": "Wholesale distributors should immediately stop distribution.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 266,
+            "completion_tokens": 192,
+            "total_tokens": 458,
+            "cost": 9.16104e-05,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 256,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 9.16104e-05,
+              "upstream_inference_prompt_cost": 4.0584e-06,
+              "upstream_inference_completions_cost": 8.7552e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 137,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620559-tYK9jnYyzUWADX9PqgfZ",
+          "latency_ms": 2122,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 2122,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620559-tYK9jnYyzUWADX9PqgfZ",
+          "http_status": 200,
+          "latency_ms": 2122,
+          "input_tokens": 266,
+          "output_tokens": 192,
+          "provider_cost_usd": 9.16104e-05
+        }
+      ],
+      "input_tokens": 266,
+      "output_tokens": 192,
+      "provider_cost_usd": 9.161e-05
+    },
+    {
+      "case_id": "R2-04",
+      "trial": 2,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": true,
+      "actual_affected": true,
+      "expected_lots": [
+        "SF100"
+      ],
+      "actual_lots": [
+        "SF100"
+      ],
+      "source_sha256": "29305e7f88acc0112dd34babb06ad39ebf01ae59efba05db7efdba0cd273f0be",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-04",
+        "source_sha256": "29305e7f88acc0112dd34babb06ad39ebf01ae59efba05db7efdba0cd273f0be",
+        "brand": "Harbor Medical",
+        "product": "Saline Flush Syringe 10 mL",
+        "ndc": "12345-678-90",
+        "lots": [
+          "SF100"
+        ],
+        "action_quote": "Wholesale distributors should quarantine the recalled lot.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 264,
+            "completion_tokens": 183,
+            "total_tokens": 447,
+            "cost": 8.72784e-05,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 256,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 8.72784e-05,
+              "upstream_inference_prompt_cost": 3.8304e-06,
+              "upstream_inference_completions_cost": 8.3448e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 130,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620561-HyoszhYUftmA3tgl8OYf",
+          "latency_ms": 2173,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 2173,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620561-HyoszhYUftmA3tgl8OYf",
+          "http_status": 200,
+          "latency_ms": 2173,
+          "input_tokens": 264,
+          "output_tokens": 183,
+          "provider_cost_usd": 8.72784e-05
+        }
+      ],
+      "input_tokens": 264,
+      "output_tokens": 183,
+      "provider_cost_usd": 8.7278e-05
+    },
+    {
+      "case_id": "R2-05",
+      "trial": 2,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": false,
+      "actual_affected": false,
+      "expected_lots": [
+        "087558"
+      ],
+      "actual_lots": [
+        "087558"
+      ],
+      "source_sha256": "b4f7bbb567d97c21e80bf165f49753d97883fb3b45521450c6be26a5fc0524aa",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-05",
+        "source_sha256": "b4f7bbb567d97c21e80bf165f49753d97883fb3b45521450c6be26a5fc0524aa",
+        "brand": "Harbor Medical",
+        "product": "Saline Flush Syringe 10 mL",
+        "ndc": "12345-678-90",
+        "lots": [
+          "087558"
+        ],
+        "action_quote": "Wholesale distributors should quarantine the recalled lot.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 266,
+            "completion_tokens": 194,
+            "total_tokens": 460,
+            "cost": 0.000118788,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.000118788,
+              "upstream_inference_prompt_cost": 3.0324e-05,
+              "upstream_inference_completions_cost": 8.8464e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 141,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620563-MyYWJIniOzWMqJFqPDel",
+          "latency_ms": 2142,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 2142,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620563-MyYWJIniOzWMqJFqPDel",
+          "http_status": 200,
+          "latency_ms": 2142,
+          "input_tokens": 266,
+          "output_tokens": 194,
+          "provider_cost_usd": 0.000118788
+        }
+      ],
+      "input_tokens": 266,
+      "output_tokens": 194,
+      "provider_cost_usd": 0.000118788
+    },
+    {
+      "case_id": "R2-06",
+      "trial": 2,
+      "passed": false,
+      "checks": {
+        "unsupported_rejected": false,
+        "no_affected_conclusion": false
+      },
+      "error_type": null,
+      "expected_error": true,
+      "expected_affected": null,
+      "actual_affected": false,
+      "expected_lots": null,
+      "actual_lots": [
+        "A100 THROUGH A120"
+      ],
+      "source_sha256": "cf96c2999184c63af686118bb8cbe807f22b62fdfd63365acc0d402a4759c096",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-06",
+        "source_sha256": "cf96c2999184c63af686118bb8cbe807f22b62fdfd63365acc0d402a4759c096",
+        "brand": "Harbor Medical",
+        "product": "Saline Flush Syringe 10 mL",
+        "ndc": "12345-678-90",
+        "lots": [
+          "A100 THROUGH A120"
+        ],
+        "action_quote": "Wholesale distributors should quarantine affected units.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 244,
+            "completion_tokens": 667,
+            "total_tokens": 911,
+            "cost": 0.0004368,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0004368,
+              "upstream_inference_prompt_cost": 3.66e-05,
+              "upstream_inference_completions_cost": 0.0004002
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 612,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620565-uoa6uAEfJjNoKLrXj0cn",
+          "latency_ms": 6581,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 6583,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620565-uoa6uAEfJjNoKLrXj0cn",
+          "http_status": 200,
+          "latency_ms": 6580,
+          "input_tokens": 244,
+          "output_tokens": 667,
+          "provider_cost_usd": 0.0004368
+        }
+      ],
+      "input_tokens": 244,
+      "output_tokens": 667,
+      "provider_cost_usd": 0.0004368
+    },
+    {
+      "case_id": "R2-07",
+      "trial": 2,
+      "passed": false,
+      "checks": {
+        "unsupported_rejected": false,
+        "no_affected_conclusion": false
+      },
+      "error_type": null,
+      "expected_error": true,
+      "expected_affected": null,
+      "actual_affected": false,
+      "expected_lots": null,
+      "actual_lots": [
+        "ALL LOTS"
+      ],
+      "source_sha256": "8a413a635023581cc45b8adf8b928dd8f37ab1e8d7b0d35fc5332b62e93d1929",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-07",
+        "source_sha256": "8a413a635023581cc45b8adf8b928dd8f37ab1e8d7b0d35fc5332b62e93d1929",
+        "brand": "Harbor Medical",
+        "product": "Saline Flush Syringe 10 mL",
+        "ndc": "12345-678-90",
+        "lots": [
+          "ALL LOTS"
+        ],
+        "action_quote": "Wholesale distributors should quarantine affected units.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 267,
+            "completion_tokens": 215,
+            "total_tokens": 482,
+            "cost": 0.00020286,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00020286,
+              "upstream_inference_prompt_cost": 4.806e-05,
+              "upstream_inference_completions_cost": 0.0001548
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 163,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620572-n50lS9RqsKKLJ32Fzj20",
+          "latency_ms": 3359,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 3360,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620572-n50lS9RqsKKLJ32Fzj20",
+          "http_status": 200,
+          "latency_ms": 3359,
+          "input_tokens": 267,
+          "output_tokens": 215,
+          "provider_cost_usd": 0.00020286
+        }
+      ],
+      "input_tokens": 267,
+      "output_tokens": 215,
+      "provider_cost_usd": 0.00020286
+    },
+    {
+      "case_id": "R2-08",
+      "trial": 2,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": false,
+      "actual_affected": false,
+      "expected_lots": [
+        "875S8"
+      ],
+      "actual_lots": [
+        "875S8"
+      ],
+      "source_sha256": "56f5994b126ac13e819a0210279b5428eaa95cd81e966bf862ca849e366abf86",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-08",
+        "source_sha256": "56f5994b126ac13e819a0210279b5428eaa95cd81e966bf862ca849e366abf86",
+        "brand": "Harbor Medical",
+        "product": "Saline Flush Syringe 10 mL",
+        "ndc": "12345-678-90",
+        "lots": [
+          "875S8"
+        ],
+        "action_quote": "Wholesale distributors should quarantine affected units.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 263,
+            "completion_tokens": 172,
+            "total_tokens": 435,
+            "cost": 8.21484e-05,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 256,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 8.21484e-05,
+              "upstream_inference_prompt_cost": 3.7164e-06,
+              "upstream_inference_completions_cost": 7.8432e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 119,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620575-EJHEr8sz4bu0ITJu8qrW",
+          "latency_ms": 1946,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 1946,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620575-EJHEr8sz4bu0ITJu8qrW",
+          "http_status": 200,
+          "latency_ms": 1946,
+          "input_tokens": 263,
+          "output_tokens": 172,
+          "provider_cost_usd": 8.21484e-05
+        }
+      ],
+      "input_tokens": 263,
+      "output_tokens": 172,
+      "provider_cost_usd": 8.2148e-05
+    },
+    {
+      "case_id": "R2-09",
+      "trial": 2,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": false,
+      "actual_affected": false,
+      "expected_lots": [
+        "SF100"
+      ],
+      "actual_lots": [
+        "SF100"
+      ],
+      "source_sha256": "a6191a2afbca7d2084d03aed22e0e7be31d9e6d9dd9d15a4bf29bd306d4e67df",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-09",
+        "source_sha256": "a6191a2afbca7d2084d03aed22e0e7be31d9e6d9dd9d15a4bf29bd306d4e67df",
+        "brand": "Harbor Medical",
+        "product": "Saline Flush Syringe 10 mL",
+        "ndc": "12345-678-90",
+        "lots": [
+          "SF100"
+        ],
+        "action_quote": "Wholesale distributors should quarantine SF100.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 292,
+            "completion_tokens": 159,
+            "total_tokens": 451,
+            "cost": 7.95264e-05,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 256,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 7.95264e-05,
+              "upstream_inference_prompt_cost": 7.0224e-06,
+              "upstream_inference_completions_cost": 7.2504e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 107,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620577-dGakXIvccQdePyK6kEso",
+          "latency_ms": 2035,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 2035,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620577-dGakXIvccQdePyK6kEso",
+          "http_status": 200,
+          "latency_ms": 2034,
+          "input_tokens": 292,
+          "output_tokens": 159,
+          "provider_cost_usd": 7.95264e-05
+        }
+      ],
+      "input_tokens": 292,
+      "output_tokens": 159,
+      "provider_cost_usd": 7.9526e-05
+    },
+    {
+      "case_id": "R2-10",
+      "trial": 2,
+      "passed": true,
+      "checks": {
+        "unsupported_rejected": true,
+        "no_affected_conclusion": true
+      },
+      "error_type": "ValueError",
+      "expected_error": true,
+      "expected_affected": null,
+      "actual_affected": null,
+      "expected_lots": null,
+      "actual_lots": null,
+      "source_sha256": "3bd4fd6dd21ec826bb95489fc0eb2f993a89a7befa404a069ea388bdf48e6d92",
+      "scope": null,
+      "agent_latency_ms": 0,
+      "model_calls": [],
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "provider_cost_usd": 0
+    },
+    {
+      "case_id": "R2-01",
+      "trial": 3,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": true,
+      "actual_affected": true,
+      "expected_lots": [
+        "87558",
+        "88802"
+      ],
+      "actual_lots": [
+        "87558",
+        "88802"
+      ],
+      "source_sha256": "c2fc1b388084e330b22c9a25f31ca06558c3606e5ebca0a525e0ea3848b98232",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-01",
+        "source_sha256": "c2fc1b388084e330b22c9a25f31ca06558c3606e5ebca0a525e0ea3848b98232",
+        "brand": "Par Pharmaceutical",
+        "product": "Dexmedetomidine HCl Injection 400 mcg/100 mL",
+        "ndc": "42023-187-01",
+        "lots": [
+          "87558",
+          "88802"
+        ],
+        "action_quote": "Wholesale distributors should immediately stop distribution.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 273,
+            "completion_tokens": 344,
+            "total_tokens": 617,
+            "cost": 0.0001617204,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 256,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0001617204,
+              "upstream_inference_prompt_cost": 4.8564e-06,
+              "upstream_inference_completions_cost": 0.000156864
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 286,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620579-duSr9cigqQGtc9LS27QR",
+          "latency_ms": 2888,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 2888,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620579-duSr9cigqQGtc9LS27QR",
+          "http_status": 200,
+          "latency_ms": 2888,
+          "input_tokens": 273,
+          "output_tokens": 344,
+          "provider_cost_usd": 0.0001617204
+        }
+      ],
+      "input_tokens": 273,
+      "output_tokens": 344,
+      "provider_cost_usd": 0.00016172
+    },
+    {
+      "case_id": "R2-02",
+      "trial": 3,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": false,
+      "actual_affected": false,
+      "expected_lots": [
+        "87558",
+        "88802"
+      ],
+      "actual_lots": [
+        "87558",
+        "88802"
+      ],
+      "source_sha256": "c2fc1b388084e330b22c9a25f31ca06558c3606e5ebca0a525e0ea3848b98232",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-02",
+        "source_sha256": "c2fc1b388084e330b22c9a25f31ca06558c3606e5ebca0a525e0ea3848b98232",
+        "brand": "Par Pharmaceutical",
+        "product": "Dexmedetomidine HCl Injection 400 mcg/100 mL",
+        "ndc": "42023-187-01",
+        "lots": [
+          "87558",
+          "88802"
+        ],
+        "action_quote": "Wholesale distributors should immediately stop distribution.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 273,
+            "completion_tokens": 237,
+            "total_tokens": 510,
+            "cost": 0.0001129284,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 256,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0001129284,
+              "upstream_inference_prompt_cost": 4.8564e-06,
+              "upstream_inference_completions_cost": 0.000108072
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 179,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620582-JNWcbf0FPwumGYibrPBF",
+          "latency_ms": 2559,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 2559,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620582-JNWcbf0FPwumGYibrPBF",
+          "http_status": 200,
+          "latency_ms": 2559,
+          "input_tokens": 273,
+          "output_tokens": 237,
+          "provider_cost_usd": 0.0001129284
+        }
+      ],
+      "input_tokens": 273,
+      "output_tokens": 237,
+      "provider_cost_usd": 0.000112928
+    },
+    {
+      "case_id": "R2-03",
+      "trial": 3,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": false,
+      "actual_affected": false,
+      "expected_lots": [
+        "87558"
+      ],
+      "actual_lots": [
+        "87558"
+      ],
+      "source_sha256": "0c4d24d1edaed957a08262a25b0052470852854c59026906f98fd6bb30ce8a88",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-03",
+        "source_sha256": "0c4d24d1edaed957a08262a25b0052470852854c59026906f98fd6bb30ce8a88",
+        "brand": "Par Pharmaceutical",
+        "product": "Dexmedetomidine HCl Injection 400 mcg/100 mL",
+        "ndc": "42023-187-01",
+        "lots": [
+          "87558"
+        ],
+        "action_quote": "Wholesale distributors should immediately stop distribution.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 266,
+            "completion_tokens": 211,
+            "total_tokens": 477,
+            "cost": 0.0001002744,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 256,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0001002744,
+              "upstream_inference_prompt_cost": 4.0584e-06,
+              "upstream_inference_completions_cost": 9.6216e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 156,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620585-qI1Lm4e58fHgnDugCra1",
+          "latency_ms": 2103,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 2103,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620585-qI1Lm4e58fHgnDugCra1",
+          "http_status": 200,
+          "latency_ms": 2103,
+          "input_tokens": 266,
+          "output_tokens": 211,
+          "provider_cost_usd": 0.0001002744
+        }
+      ],
+      "input_tokens": 266,
+      "output_tokens": 211,
+      "provider_cost_usd": 0.000100274
+    },
+    {
+      "case_id": "R2-04",
+      "trial": 3,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": true,
+      "actual_affected": true,
+      "expected_lots": [
+        "SF100"
+      ],
+      "actual_lots": [
+        "SF100"
+      ],
+      "source_sha256": "29305e7f88acc0112dd34babb06ad39ebf01ae59efba05db7efdba0cd273f0be",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-04",
+        "source_sha256": "29305e7f88acc0112dd34babb06ad39ebf01ae59efba05db7efdba0cd273f0be",
+        "brand": "Harbor Medical",
+        "product": "Saline Flush Syringe 10 mL",
+        "ndc": "12345-678-90",
+        "lots": [
+          "SF100"
+        ],
+        "action_quote": "Wholesale distributors should quarantine the recalled lot.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 264,
+            "completion_tokens": 196,
+            "total_tokens": 460,
+            "cost": 9.32064e-05,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 256,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 9.32064e-05,
+              "upstream_inference_prompt_cost": 3.8304e-06,
+              "upstream_inference_completions_cost": 8.9376e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 143,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620587-lVuj1lG2JL340GosFSYJ",
+          "latency_ms": 1924,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 1924,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620587-lVuj1lG2JL340GosFSYJ",
+          "http_status": 200,
+          "latency_ms": 1924,
+          "input_tokens": 264,
+          "output_tokens": 196,
+          "provider_cost_usd": 9.32064e-05
+        }
+      ],
+      "input_tokens": 264,
+      "output_tokens": 196,
+      "provider_cost_usd": 9.3206e-05
+    },
+    {
+      "case_id": "R2-05",
+      "trial": 3,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": false,
+      "actual_affected": false,
+      "expected_lots": [
+        "087558"
+      ],
+      "actual_lots": [
+        "087558"
+      ],
+      "source_sha256": "b4f7bbb567d97c21e80bf165f49753d97883fb3b45521450c6be26a5fc0524aa",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-05",
+        "source_sha256": "b4f7bbb567d97c21e80bf165f49753d97883fb3b45521450c6be26a5fc0524aa",
+        "brand": "Harbor Medical",
+        "product": "Saline Flush Syringe 10 mL",
+        "ndc": "12345-678-90",
+        "lots": [
+          "087558"
+        ],
+        "action_quote": "Wholesale distributors should quarantine the recalled lot.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 244,
+            "completion_tokens": 158,
+            "total_tokens": 402,
+            "cost": 0.0002628,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0002628,
+              "upstream_inference_prompt_cost": 7.32e-05,
+              "upstream_inference_completions_cost": 0.0001896
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 104,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620589-60sdLRG9FShTFyG8QsU3",
+          "latency_ms": 924,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 924,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620589-60sdLRG9FShTFyG8QsU3",
+          "http_status": 200,
+          "latency_ms": 924,
+          "input_tokens": 244,
+          "output_tokens": 158,
+          "provider_cost_usd": 0.0002628
+        }
+      ],
+      "input_tokens": 244,
+      "output_tokens": 158,
+      "provider_cost_usd": 0.0002628
+    },
+    {
+      "case_id": "R2-06",
+      "trial": 3,
+      "passed": false,
+      "checks": {
+        "unsupported_rejected": false,
+        "no_affected_conclusion": false
+      },
+      "error_type": null,
+      "expected_error": true,
+      "expected_affected": null,
+      "actual_affected": false,
+      "expected_lots": null,
+      "actual_lots": [
+        "A100 THROUGH A120"
+      ],
+      "source_sha256": "cf96c2999184c63af686118bb8cbe807f22b62fdfd63365acc0d402a4759c096",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-06",
+        "source_sha256": "cf96c2999184c63af686118bb8cbe807f22b62fdfd63365acc0d402a4759c096",
+        "brand": "Harbor Medical",
+        "product": "Saline Flush Syringe 10 mL",
+        "ndc": "12345-678-90",
+        "lots": [
+          "A100 THROUGH A120"
+        ],
+        "action_quote": "Wholesale distributors should quarantine affected units.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 266,
+            "completion_tokens": 350,
+            "total_tokens": 616,
+            "cost": 0.0002499,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0002499,
+              "upstream_inference_prompt_cost": 3.99e-05,
+              "upstream_inference_completions_cost": 0.00021
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 295,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620590-YDX2iuqICex35XO2BJbQ",
+          "latency_ms": 2698,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 2698,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620590-YDX2iuqICex35XO2BJbQ",
+          "http_status": 200,
+          "latency_ms": 2698,
+          "input_tokens": 266,
+          "output_tokens": 350,
+          "provider_cost_usd": 0.0002499
+        }
+      ],
+      "input_tokens": 266,
+      "output_tokens": 350,
+      "provider_cost_usd": 0.0002499
+    },
+    {
+      "case_id": "R2-07",
+      "trial": 3,
+      "passed": false,
+      "checks": {
+        "unsupported_rejected": false,
+        "no_affected_conclusion": false
+      },
+      "error_type": null,
+      "expected_error": true,
+      "expected_affected": null,
+      "actual_affected": false,
+      "expected_lots": null,
+      "actual_lots": [
+        "ALL LOTS"
+      ],
+      "source_sha256": "8a413a635023581cc45b8adf8b928dd8f37ab1e8d7b0d35fc5332b62e93d1929",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-07",
+        "source_sha256": "8a413a635023581cc45b8adf8b928dd8f37ab1e8d7b0d35fc5332b62e93d1929",
+        "brand": "Harbor Medical",
+        "product": "Saline Flush Syringe 10 mL",
+        "ndc": "12345-678-90",
+        "lots": [
+          "ALL LOTS"
+        ],
+        "action_quote": "Wholesale distributors should quarantine affected units.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 267,
+            "completion_tokens": 287,
+            "total_tokens": 554,
+            "cost": 0.000174618,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 256,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.000174618,
+              "upstream_inference_prompt_cost": 2.418e-06,
+              "upstream_inference_completions_cost": 0.0001722
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 235,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620592-Oupt1pDRKGdbuxFcXx0g",
+          "latency_ms": 2514,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 2514,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620592-Oupt1pDRKGdbuxFcXx0g",
+          "http_status": 200,
+          "latency_ms": 2514,
+          "input_tokens": 267,
+          "output_tokens": 287,
+          "provider_cost_usd": 0.000174618
+        }
+      ],
+      "input_tokens": 267,
+      "output_tokens": 287,
+      "provider_cost_usd": 0.000174618
+    },
+    {
+      "case_id": "R2-08",
+      "trial": 3,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": false,
+      "actual_affected": false,
+      "expected_lots": [
+        "875S8"
+      ],
+      "actual_lots": [
+        "875S8"
+      ],
+      "source_sha256": "56f5994b126ac13e819a0210279b5428eaa95cd81e966bf862ca849e366abf86",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-08",
+        "source_sha256": "56f5994b126ac13e819a0210279b5428eaa95cd81e966bf862ca849e366abf86",
+        "brand": "Harbor Medical",
+        "product": "Saline Flush Syringe 10 mL",
+        "ndc": "12345-678-90",
+        "lots": [
+          "875S8"
+        ],
+        "action_quote": "Wholesale distributors should quarantine affected units.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 263,
+            "completion_tokens": 204,
+            "total_tokens": 467,
+            "cost": 9.67404e-05,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 256,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 9.67404e-05,
+              "upstream_inference_prompt_cost": 3.7164e-06,
+              "upstream_inference_completions_cost": 9.3024e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 151,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620595-Y0IAshZPsqlqOWSv6Ujy",
+          "latency_ms": 2143,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 2143,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620595-Y0IAshZPsqlqOWSv6Ujy",
+          "http_status": 200,
+          "latency_ms": 2143,
+          "input_tokens": 263,
+          "output_tokens": 204,
+          "provider_cost_usd": 9.67404e-05
+        }
+      ],
+      "input_tokens": 263,
+      "output_tokens": 204,
+      "provider_cost_usd": 9.674e-05
+    },
+    {
+      "case_id": "R2-09",
+      "trial": 3,
+      "passed": true,
+      "checks": {
+        "extraction_succeeded": true,
+        "exact_lots": true,
+        "affected": true,
+        "source": true,
+        "action_quote_grounded": true
+      },
+      "error_type": null,
+      "expected_error": false,
+      "expected_affected": false,
+      "actual_affected": false,
+      "expected_lots": [
+        "SF100"
+      ],
+      "actual_lots": [
+        "SF100"
+      ],
+      "source_sha256": "a6191a2afbca7d2084d03aed22e0e7be31d9e6d9dd9d15a4bf29bd306d4e67df",
+      "scope": {
+        "verification": "primary_page_read",
+        "source_url": "https://fixture.invalid/primary/R2-09",
+        "source_sha256": "a6191a2afbca7d2084d03aed22e0e7be31d9e6d9dd9d15a4bf29bd306d4e67df",
+        "brand": "Harbor Medical",
+        "product": "Saline Flush Syringe 10 mL",
+        "ndc": "12345-678-90",
+        "lots": [
+          "SF100"
+        ],
+        "action_quote": "Wholesale distributors should quarantine SF100.",
+        "model_audit": {
+          "model": "deepseek/deepseek-v4.1-flash",
+          "usage": {
+            "prompt_tokens": 292,
+            "completion_tokens": 201,
+            "total_tokens": 493,
+            "cost": 9.86784e-05,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 256,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 9.86784e-05,
+              "upstream_inference_prompt_cost": 7.0224e-06,
+              "upstream_inference_completions_cost": 9.1656e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 149,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "response_id": "gen-1790620597-ZduTOacTFmH6hksXtLbi",
+          "latency_ms": 2402,
+          "prompt_version": "recall-notice-v1"
+        }
+      },
+      "agent_latency_ms": 2402,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620597-ZduTOacTFmH6hksXtLbi",
+          "http_status": 200,
+          "latency_ms": 2402,
+          "input_tokens": 292,
+          "output_tokens": 201,
+          "provider_cost_usd": 9.86784e-05
+        }
+      ],
+      "input_tokens": 292,
+      "output_tokens": 201,
+      "provider_cost_usd": 9.8678e-05
+    },
+    {
+      "case_id": "R2-10",
+      "trial": 3,
+      "passed": true,
+      "checks": {
+        "unsupported_rejected": true,
+        "no_affected_conclusion": true
+      },
+      "error_type": "ValueError",
+      "expected_error": true,
+      "expected_affected": null,
+      "actual_affected": null,
+      "expected_lots": null,
+      "actual_lots": null,
+      "source_sha256": "3bd4fd6dd21ec826bb95489fc0eb2f993a89a7befa404a069ea388bdf48e6d92",
+      "scope": null,
+      "agent_latency_ms": 0,
+      "model_calls": [],
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "provider_cost_usd": 0
+    }
+  ]
+}

@@ -129,15 +129,14 @@
 							</g:if>
 
 
-							<g:if test="${!shipmentWorkflow?.isExcluded('additionalInformation') && shipmentInstance?.additionalInformation}">
+							<g:set var="shipmentInformation" value="${org.pih.warehouse.shipping.ShipmentSidecarService.displayInformation(shipmentInstance?.additionalInformation)}"/>
+							<g:if test="${!shipmentWorkflow?.isExcluded('additionalInformation') && shipmentInformation}">
 								<tr class="prop">
 									<td valign="top" class="name">
 										<label><warehouse:message code="shipping.additionalInformation.label" default="Additional information" /></label><br/>
 									</td>
 									<td valign="top" class="value">
-										<g:if test="${shipmentInstance.additionalInformation}">
-											${shipmentInstance.additionalInformation}<br/>
-										</g:if>
+										${shipmentInformation}<br/>
 									</td>
 								</tr>
 							</g:if>

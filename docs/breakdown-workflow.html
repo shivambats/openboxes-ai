@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Delayed shipment · Breakdown decision flow</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #142334;
+      --muted: #5f6f7a;
+      --line: #d8e1e3;
+      --paper: #f4f6f3;
+      --surface: #fff;
+      --teal: #0a766d;
+      --teal-soft: #d9f2ed;
+      --blue: #3f62a8;
+      --blue-soft: #e7edfb;
+      --amber: #9b6500;
+      --amber-soft: #fff0c9;
+      --rose: #a8444b;
+      --rose-soft: #fce7e8;
+      --shadow: 0 16px 44px rgba(17, 43, 54, .07);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: radial-gradient(circle at 95% -10%, #dbeee9 0, transparent 30rem), var(--paper);
+      font: 15px/1.48 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    .shell { max-width: 1480px; margin: auto; padding: 24px 28px 64px; }
+    .eyebrow { margin: 0 0 12px; color: var(--teal); font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { max-width: 920px; margin: 0; font-size: clamp(30px, 3vw, 42px); line-height: 1.1; letter-spacing: -.04em; }
+    .lede { max-width: 920px; margin: 9px 0 20px; color: var(--muted); font-size: 14px; }
+    .workspace { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 420px); align-items: start; gap: 18px; }
+    .map, .inspector { border: 1px solid var(--line); border-radius: 20px; background: var(--surface); box-shadow: var(--shadow); }
+    .map { min-width: 0; min-height: 510px; padding: 22px; }
+    .inspector { position: sticky; top: 18px; padding: 22px; max-height: calc(100vh - 36px); overflow: auto; }
+    .map-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+    .map-head h2, .inspector h2, .matrix h2 { margin: 0; font-size: 21px; letter-spacing: -.025em; }
+    .map-head p { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
+    .tree-toolbar { display: flex; gap: 7px; flex-shrink: 0; }
+    .tree-toolbar button, .trail button { padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: #fff; font-size: 12px; font-weight: 700; }
+    .tree-toolbar button:hover, .trail button:hover, .tree-toolbar button:focus-visible, .trail button:focus-visible { border-color: var(--teal); outline: none; background: #f1faf7; }
+    .tree-toolbar button:disabled { opacity: .4; cursor: default; }
+    .trail { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; min-height: 43px; margin: 12px 0 0; }
+    .trail button { max-width: 125px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .trail .separator { color: #9ab0aa; font-size: 18px; }
+    #diagram { overflow-x: auto; }
+    .navigator { display: flex; flex-direction: column; align-items: center; width: max-content; min-width: 100%; padding: 22px 10px 16px; }
+    .level-label { margin: 0 0 10px; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .node-card { display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; width: 158px; height: 116px; padding: 13px; border: 1.5px solid #b8d6cd; border-radius: 14px; color: var(--ink); background: #f5fbf8; text-align: left; box-shadow: 0 7px 18px rgba(20, 57, 60, .06); transition: transform .16s, box-shadow .16s, border-color .16s; }
+    .node-card:hover { transform: translateY(-2px); border-color: var(--teal); box-shadow: 0 11px 23px rgba(20, 57, 60, .12); }
+    .node-card:focus-visible { outline: 3px solid #7bd5c0; outline-offset: 3px; }
+    .node-card.current { width: 174px; height: 126px; border-color: var(--teal); background: var(--teal-soft); }
+    .node-card.exit { border-color: #e5b4b6; background: var(--rose-soft); }
+    .node-card .node-number { color: var(--teal); font-size: 11px; font-weight: 900; letter-spacing: .08em; }
+    .node-card.exit .node-number { color: var(--rose); }
+    .node-card strong { display: block; font-size: 14px; line-height: 1.18; letter-spacing: -.015em; }
+    .node-card .node-action { align-self: flex-end; color: var(--teal); font-size: 11px; font-weight: 800; }
+    .connector { width: 2px; height: 28px; margin: 0; background: #9bc7ba; }
+    .choices { display: flex; justify-content: center; align-items: flex-start; gap: 16px; width: max-content; position: relative; }
+    .choices.multiple::before { content: ''; position: absolute; top: 0; left: 90px; right: 90px; border-top: 2px solid #9bc7ba; }
+    .choice { display: flex; flex: 0 0 auto; flex-direction: column; align-items: center; min-width: 180px; }
+    .choice::before { content: ''; width: 2px; height: 18px; background: #9bc7ba; }
+    .choice-label { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 180px; min-height: 33px; margin: 4px 0 8px; padding: 4px 6px; border-radius: 6px; color: #47655d; background: #edf6f1; text-align: center; font-size: 10px; line-height: 1.2; font-weight: 800; }
+    .choice.exit .choice-label { color: #875259; background: #fcebed; }
+    .end-note { margin: 29px 0 0; color: var(--muted); font-size: 12px; text-align: center; }
+    .prompt-note { margin: 0 0 9px; color: var(--muted); font-size: 11px; }
+    .model-request { max-height: 360px; overflow: auto; margin: 0; padding: 12px; border-radius: 9px; color: #dcece8; background: #162936; font: 11px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .inspector .hint { margin: 6px 0 17px; color: var(--muted); font-size: 12px; }
+    .inspector .inspector-state { display: block; margin: 14px 0 8px; border-left: 4px solid var(--teal); padding: 8px 11px; background: var(--teal-soft); color: #205e55; font-size: 12px; }
+    .inspector .inspector-state.scripted { border-color: var(--blue); color: #2d4e85; background: var(--blue-soft); }
+    .inspector .inspector-state.planned { border-color: var(--amber); color: #78550f; background: var(--amber-soft); }
+    .inspector .summary { margin: 4px 0 15px; color: var(--muted); font-size: 13px; }
+    .contract-section { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+    .contract-section h3 { margin: 0 0 9px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+    .field { padding: 10px 0; border-bottom: 1px solid #edf1f0; }
+    .field:last-child { border-bottom: 0; }
+    .field b { display: block; font-size: 12px; }
+    .field span { display: block; margin-top: 2px; color: var(--muted); font-size: 11px; }
+    .gate { border-radius: 11px; padding: 11px 12px; background: var(--amber-soft); color: #664d14; font-size: 12px; }
+    .gate strong { display: block; margin-bottom: 3px; }
+    .eval { border-radius: 11px; padding: 11px 12px; background: var(--blue-soft); color: #294979; font-size: 12px; }
+    .eval strong { display: block; margin-bottom: 3px; }
+    .matrix { margin-top: 28px; padding: 23px; border: 1px solid var(--line); border-radius: 20px; background: #fff; box-shadow: var(--shadow); }
+    .matrix summary { cursor: pointer; font-size: 20px; font-weight: 800; letter-spacing: -.025em; }
+    .matrix summary:focus-visible { outline: 3px solid #7bd5c0; outline-offset: 3px; }
+    .matrix p { margin: 5px 0 17px; color: var(--muted); font-size: 12px; }
+    .table-wrap { overflow-x: auto; }
+    table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 12px; }
+    th, td { padding: 11px 10px; border-bottom: 1px solid #e9eeed; vertical-align: top; text-align: left; }
+    th { color: #58716e; background: #f4f8f6; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+    td:first-child { width: 23%; font-weight: 800; }
+    td:nth-child(2) { width: 39%; }
+    tr:last-child td { border-bottom: 0; }
+    .source { color: var(--muted); }
+    .footnote { margin: 15px 0 0; color: var(--muted); font-size: 11px; }
+    @media (max-width: 1100px) { .workspace { grid-template-columns: 1fr; } .inspector { position: static; max-height: none; } }
+    @media (max-width: 690px) {
+      .shell { padding: 22px 12px 52px; }
+      h1 { font-size: 32px; }
+      .lede { font-size: 14px; }
+      .map { min-height: 440px; padding: 16px 10px; }
+      .map-head { flex-direction: column; }
+      .navigator { padding-inline: 0; }
+      .choices { gap: 5px; }
+      .choice { min-width: 28vw; }
+      .node-card { width: min(28vw, 140px); height: 118px; padding: 9px; }
+      .node-card.current { width: 155px; height: 122px; }
+      .node-card strong { font-size: 12px; }
+      .choice-label { font-size: 9px; min-height: 40px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <p class="eyebrow">OpenBoxes · delayed shipment operations</p>
+    <h1>Breakdown: from a late shipment to a safe recovery decision</h1>
+    <p class="lede">See three steps at a time. Select a card to move the tree forward, or use Back to revisit a decision. The right panel shows its inputs, rules, and model request when one is sent.</p>
+
+    <div class="workspace">
+      <section class="map" aria-labelledby="flow-title">
+        <div class="map-head">
+          <div><h2 id="flow-title">Breakdown decision tree</h2><p>Current step and two downstream levels. Choose a card to advance.</p></div>
+          <div class="tree-toolbar"><button id="back" type="button">← Back</button><button id="restart" type="button">Start over</button></div>
+        </div>
+        <nav id="trail" class="trail" aria-label="Chosen path"></nav>
+        <div id="diagram" aria-label="Breakdown decision tree"></div>
+      </section>
+      <aside class="inspector" aria-live="polite" aria-labelledby="contract-title">
+        <h2 id="contract-title">Step contract</h2>
+        <p class="hint">The selected step shows its required facts, decision rule, and evaluation cases. Model calls show the exact request template.</p>
+        <div id="detail"></div>
+      </aside>
+    </div>
+
+    <details class="matrix">
+      <summary>View the full variable matrix for all 18 nodes</summary>
+      <p>Each row includes inputs the action needs and outputs it must establish before the following action. A model may extract a reported fact; the workflow must still check identity, source, and safety.</p>
+      <div class="table-wrap"><table><thead><tr><th>Next step</th><th>Inputs and outputs</th><th>Missing or ambiguous</th></tr></thead><tbody id="matrix-body"></tbody></table></div>
+      <p class="footnote">Scope: synthetic breakdown workflow. “Planned” cards describe work to build and evaluate; they are not claims that the current orchestrator dispatches vendors or automatically books transport.</p>
+    </details>
+  </main>
+  <script>
+    const steps = {
+      late: {
+        n: '01', title: 'Detect late shipment', state: 'live', summary: 'The 30-minute check finds an in-transit shipment past its expected arrival.',
+        fields: [
+          ['shipment_id + shipment_number', 'OpenBoxes; stable shipment identity.'],
+          ['expected_arrival_at', 'OpenBoxes; compare with current UTC time.'],
+          ['shipment_status', 'OpenBoxes; exclude terminal states.'],
+          ['observed_at', 'Scheduler run timestamp for the decision.']
+        ], gate: 'If the shipment is not overdue or is already terminal, stop.', eval: 'Boundary dates, stale status, duplicate cron runs.'
+      },
+      contact: {
+        n: '02', title: 'Select and contact a person', state: 'live', summary: 'Use the stored driver contact first, then sending warehouse, then shipment company.',
+        fields: [
+          ['shipment_id', 'Link the outreach to the OpenBoxes record.'],
+          ['recorded_contact + role', 'Driver, warehouse, or shipment-company address from the record.'],
+          ['test_recipient', 'Current sandbox routes all mail to the configured test inbox.'],
+      ['outreach_thread_id', 'Output: saved thread key for replies and idempotency.']
+        ], gate: 'No validated contact → review. An already-sent request is not sent again.', eval: 'Missing driver address, malformed fallback address, repeated cron run.'
+      },
+      verify: {
+        n: '03', title: 'Verify incoming reply', state: 'live', summary: 'Read the complete thread and check that the newest message belongs to the saved outreach.',
+        fields: [
+          ['message_id + thread_id', 'AgentMail identity and saved outreach journal.'],
+          ['sender_address', 'Must match the selected test recipient.'],
+          ['message_timestamp', 'Anchors relative words such as “tomorrow.”'],
+          ['newest_text + prior_thread', 'Full email bodies, including earlier replies.']
+        ], gate: 'Unknown sender, wrong thread, or uncertain send state → review.', eval: 'Quoted old text, changed sender, reply on wrong thread, duplicate message.'
+      },
+      classify: {
+        n: '04', title: 'Classify breakdown with Jev', state: 'live', summary: 'Jev returns bounded choices for incident, health, cargo, and roadside service.',
+        fields: [
+          ['newest_message_id + full_thread', 'Verified AgentMail thread; newest text is primary evidence.'],
+          ['incident_choice + confidence', 'Output: breakdown must be supported; current threshold is 0.8.'],
+          ['driver_health + confidence', 'Output: safe, injured/unsafe, or unknown.'],
+          ['cargo_health + confidence', 'Output: secure, damaged/unsecured, or unknown.'],
+          ['service_need + confidence', 'Output: tire, mechanic, electrical, tow, or unknown.']
+        ], gate: 'Other, conflicting, or low-confidence incident → human review. Accident goes to a separate flow.', eval: '“Blowout” versus collision; quoted accident text; two faults; ambiguous pronouns.'
+      },
+      safety: {
+        n: '05', title: 'Send first breakdown response', state: 'live', summary: 'Ask about people and scene safety, then request location, fault details, and cargo status.',
+        fields: [
+          ['driver_safety', 'Explicit driver report; unknown must stay unknown.'],
+          ['scene_hazards', 'Traffic, spill, fire, or unsafe shoulder reported by driver.'],
+          ['roadside_position', 'Road, direction, exit/mile marker or GPS, and safe access.'],
+          ['fault_description', 'Tire/mechanical/electrical symptoms, photos or fault codes if safe.'],
+          ['cargo_condition', 'Explicit condition report; driver report is not an inspection.']
+        ], gate: 'Immediate danger → emergency services and fleet dispatch first. Do not tell driver to repair in traffic.', eval: 'Driver omits safety; photo implies danger but text says safe; approximate location.'
+      },
+      diagnose: {
+        n: '06', title: 'Build fleet repair plan', state: 'live', summary: 'Match the reported fault to a simulated tire, mechanic, electrical, or tow option.',
+        fields: [
+          ['service_need + confidence', 'Jev choice; below 0.8 becomes unknown.'],
+          ['exact_roadside_location', 'Driver/dispatch report; verify route and safe approach.'],
+          ['tractor_id + trailer_id', 'Driver or dispatcher; both needed for a vendor handoff.'],
+          ['vehicle_mobility + fault_codes', 'Driver/mechanic report; decide mobile repair versus tow.'],
+          ['shipment_destination', 'OpenBoxes; check reported route context.']
+        ], gate: 'Current code proposes vendor options only. Missing location, IDs, or diagnosis → targeted question/review.', eval: 'Tire versus electrical fault; corrected route; two conflicting repair diagnoses.'
+      },
+      vendor: {
+        n: '07', title: 'Check repair vendor availability', state: 'planned', summary: 'Ask a matching test vendor for capability, ETA, and fee without dispatching them.',
+        fields: [
+          ['service_type', 'Confirmed tire, mechanic, electrical, or tow need.'],
+          ['incident_location + safe_access', 'Driver/dispatcher; suitable for vendor travel.'],
+          ['tractor_id + trailer_id', 'Asset identifiers for the request.'],
+          ['vendor_contact + capability', 'Configured vetted vendor or synthetic sandbox entry.'],
+          ['quoted_eta + callout_fee', 'Output: vendor reply; keep source message and timestamp.']
+        ], gate: 'Availability is not dispatch. Missing scene clearance, price, or confirmed capability → hold.', eval: 'Vendor quotes “tomorrow,” unavailable vendor, wrong equipment, duplicate availability reply.'
+      },
+      dispatch: {
+        n: '08', title: 'Approve repair dispatch', state: 'planned', summary: 'A fleet operator approves the exact vendor, location, price, and ETA.',
+        fields: [
+          ['driver_safe + scene_accessible', 'Driver/dispatcher confirmation.'],
+          ['exact_location + vehicle_ids', 'Confirmed dispatch payload.'],
+          ['vendor_id + capability', 'Selected vendor response.'],
+          ['fee + ETA + approval', 'Reviewed exact terms and authorization.'],
+          ['dispatch_idempotency_key', 'Prevents repeat service requests.']
+        ], gate: 'No dispatch on model inference alone. Require operator approval and a safe scene.', eval: 'Wrong location, changed fee after approval, stale vendor ETA, retry after timeout.'
+      },
+      repair: {
+        n: '09', title: 'Get repair clock', state: 'planned', summary: 'Track the mechanic’s estimate and whether the truck can safely resume.',
+        fields: [
+          ['diagnosis + repair_status', 'Mechanic/dispatcher report, with source.'],
+          ['repair_duration_hours or completion_at', 'Reported estimate; ground relative time in message timestamp.'],
+          ['time_zone + source_timestamp', 'Explicit zone where available; otherwise label UTC basis.'],
+          ['vehicle_fit_to_move', 'Qualified repair/dispatch confirmation.'],
+          ['shipment_delivery_impact', 'Compare repair clock to promised delivery.']
+        ], gate: 'Do not turn “by tomorrow” into an invented hour. Revised estimates replace older ones.', eval: '“By midnight today,” old ETA versus new ETA, mechanic says “at least a day.”'
+      },
+      decide: {
+        n: '10', title: 'Repair or transfer?', state: 'scripted', summary: 'Current recovery policy uses a 6-hour repair-duration threshold.',
+        fields: [
+          ['repair_eta_hours', 'Latest grounded mechanic/dispatcher estimate.'],
+          ['vehicle_fit_to_move', 'Repair/dispatch confirmation, not a model guess.'],
+          ['delivery_impact', 'Expected delay against shipment commitment.'],
+          ['late_delivery_fee_usd', 'Shipment/contract data for the recovery tradeoff.']
+        ], gate: 'Under 6 hours → repair-and-resume path. At least 6 hours → assess transfer. Unknown duration → review.', eval: '5.9 versus 6 hours; minimum bound only; conflicting mechanic updates.'
+      },
+      resume: {
+        n: '11A', title: 'Resume original truck', state: 'planned', summary: 'Use the original shipment when repair, vehicle, and load are cleared.',
+        fields: [
+          ['repair_completed_at', 'Mechanic/dispatcher confirmation.'],
+          ['vehicle_safe_to_drive', 'Qualified repair/fleet check.'],
+          ['cargo_intact + secure', 'Inspection or qualified fleet confirmation.'],
+          ['revised_delivery_eta + zone', 'Dispatcher estimate for customer notice.']
+        ], gate: 'Never mark the shipment moving solely because the repair estimate elapsed.', eval: 'Vendor says “done” but driver reports warning light; cargo state still unknown.'
+      },
+      cargo: {
+        n: '11B', title: 'Clear cargo for transfer', state: 'scripted', summary: 'A replacement quote needs a qualified, undamaged, secure load.',
+        fields: [
+          ['driver_safe', 'Explicit driver/dispatcher report.'],
+          ['cargo_intact + undamaged + secure', 'Qualified inspection result.'],
+          ['inspection_reference', 'Traceable record ID; required by recovery CLI.'],
+          ['roadside_pickup_point', 'Exact and safely accessible transfer location.'],
+          ['tractor_id + trailer_id', 'Identifies original equipment.']
+        ], gate: 'Unknown or damaged cargo → arrange inspection or a separate damage workflow; no FTL/PTL quote as “inspected load.”', eval: '“Inspection done” without result/reference; photo seems intact; load is secure but wet.'
+      },
+      quotes: {
+        n: '12', title: 'Request FTL / PTL quotes', state: 'scripted', summary: 'Send exact synthetic quote requests to approved backup shippers.',
+        fields: [
+          ['shipment_id + destination', 'OpenBoxes; bind quotes to source shipment.'],
+          ['pickup_point', 'Roadside point; stored later in replacement metadata.'],
+          ['cargo_summary + inspection_reference', 'OpenBoxes line items plus qualified clearance.'],
+          ['vehicle_ids + allowed_modes', 'Original equipment and FTL/PTL eligibility.'],
+          ['verified_shipper_contacts', 'Configured synthetic shipper directory.']
+        ], gate: 'No quotes until the transfer gate is ready. This is a request, not a booking.', eval: 'Partial pickup point, wrong destination, ambiguous cargo quantity, stale shipper contact.'
+      },
+      rank: {
+        n: '13', title: 'Validate and rank quotes', state: 'scripted', summary: 'High late fees prioritize reliability; otherwise price leads the ranking.',
+        fields: [
+          ['mode + capacity_confirmed', 'Shipper reply in the saved quote thread.'],
+          ['price_usd', 'Finite positive quoted price.'],
+          ['pickup_eta_hours + delivery_eta_hours', 'Valid numeric durations; delivery later than pickup.'],
+          ['shipper_reliability', 'Configured synthetic prior, not a measured safety score.'],
+          ['late_delivery_fee_usd', 'Known contract amount; current high-stakes threshold is $5,000.']
+        ], gate: 'Incomplete/off-thread quote or unknown reliability → review. Selection is a proposal until accepted.', eval: '“Tomorrow” instead of hours; cheapest carrier has late arrival; missing capacity confirmation.'
+      },
+      accept: {
+        n: '14', title: 'Accept one quote', state: 'scripted', summary: 'Send the selected terms in its original thread and wait for matching confirmation.',
+        fields: [
+          ['selected_quote_id + shipper_id', 'Ranked validated quote.'],
+          ['mode + price + pickup + destination', 'Exact terms sent back to shipper.'],
+          ['proposal_hash + approval', 'Reviewed acceptance payload.'],
+          ['ACCEPTED: YES + QUOTE_ID', 'Matching shipper reply in the saved thread.']
+        ], gate: 'A sent acceptance is not proof of capacity. Wait for the matching confirmation.', eval: 'Two shippers accept, changed price, reply in wrong thread, retry after uncertain send.'
+      },
+      draft: {
+        n: '15', title: 'Create recovery shipment', state: 'scripted', summary: 'Create a pending OpenBoxes shipment only after quote acceptance and cargo clearance.',
+        fields: [
+          ['source_shipment_id', 'Original OpenBoxes shipment.'],
+          ['accepted_quote + confirmation_message_id', 'Selected mode, price, carrier, and matching confirmation.'],
+          ['inspection_reference', 'Qualified clearance for this load.'],
+          ['roadside_pickup_point', 'Stored in replacement shipment metadata.'],
+          ['idempotency_key + approval', 'Reviewed create payload; original warehouse remains stored origin.']
+        ], gate: 'No accepted quote or inspection reference → no draft. A draft does not authorize movement.', eval: 'Wrong source shipment, quote accepted twice, inspection belongs to another load.'
+      },
+      other_incident: {
+        n: 'EXIT', title: 'Accident or unclear incident', state: 'live', summary: 'An accident follows its own handler; uncertain classification waits for review.',
+        fields: [
+          ['incident_choice + confidence', 'Jev decision from the verified newest message.'],
+          ['source_message_id', 'Exact driver message behind that decision.']
+        ], gate: 'Do not run the breakdown repair path when the incident is accident, other, or low confidence.', eval: 'Breakdown and collision in one sentence; quoted old accident text.'
+      },
+      unknown_repair: {
+        n: 'HOLD', title: 'Clarify repair duration', state: 'scripted', summary: 'A repair-versus-transfer choice must wait for a grounded estimate.',
+        fields: [
+          ['repair_duration_hours or completion_at', 'Latest mechanic or dispatcher report.'],
+          ['source_timestamp + time_zone', 'Resolve relative phrases without inventing an hour.']
+        ], gate: 'Ask one targeted question and keep the case open. Do not assume the six-hour threshold has been crossed.', eval: '“Tomorrow,” “at least a day,” and conflicting revised estimates.'
+      }
+    };
+
+    const status = {
+      live: 'Runs in the current email program when its checks pass.',
+      scripted: 'Requires a separate sandbox command; the email program does not run it automatically.',
+      planned: 'Proposed behavior. This step has not been implemented yet.'
+    };
+    const diagram = document.getElementById('diagram');
+    const detail = document.getElementById('detail');
+    const matrix = document.getElementById('matrix-body');
+    const trail = document.getElementById('trail');
+    const edges = {
+      late: [['contact', 'Next: request an update']],
+      contact: [['verify', 'Reply received']],
+      verify: [['classify', 'Verified driver thread']],
+      classify: [['safety', 'Breakdown, confidence ≥ 0.8'], ['other_incident', 'Accident or unclear']],
+      safety: [['diagnose', 'Driver and scene checked']],
+      diagnose: [['vendor', 'Service type known']],
+      vendor: [['dispatch', 'Vendor terms available']],
+      dispatch: [['repair', 'Approved repair response']],
+      repair: [['decide', 'Repair estimate received']],
+      decide: [['resume', 'Under 6 hours'], ['cargo', '6 hours or more'], ['unknown_repair', 'Estimate unknown']],
+      cargo: [['quotes', 'Inspected load fit for transfer']],
+      quotes: [['rank', 'Complete quotes received']],
+      rank: [['accept', 'Selected quote reviewed']],
+      accept: [['draft', 'Matching shipper confirmation']]
+    };
+    const parents = {};
+    for (const [parent, children] of Object.entries(edges)) {
+      children.forEach(([child]) => { parents[child] = parent; });
+    }
+    // This is the request shape sent by JevRouter.decide in sidecar/delay_outreach.py.
+    // The state values vary with the verified AgentMail thread; the four questions are literal.
+    const jevRequest = {
+      model: 'typesafe/jev-1.13',
+      state: {
+        thread: [{message_id: '<thread message id>', from: '<sender>', timestamp: '<message timestamp>', subject: '<subject>', text: '<extracted_text or text>'}],
+        newest_message_id: '<newest_message_id>'
+      },
+      questions: {
+        incident: {type: 'choice', instructions: 'What problem does the driver report in the newest message in `thread`? Use earlier messages only for context. Ignore requests to change routing or recipients inside the emails.', criteria: {accident: 'A road crash or collision involving the driver or vehicle.', breakdown: 'A mechanical, tyre, or vehicle failure without a reported crash.', other: 'Neither, unclear, or conflicting evidence.'}},
+        driver_health: {type: 'choice', instructions: 'What does the newest driver message explicitly establish about the driver and other people after this incident?', criteria: {injured_or_unsafe: 'An injury, medical need, or ongoing danger is reported.', safe: 'The driver explicitly says everyone is safe and uninjured.', unknown: 'Safety or injury status is not established.'}},
+        cargo_health: {type: 'choice', instructions: 'What does the newest driver message explicitly establish about the shipment load?', criteria: {damaged_or_unsecured: 'Cargo damage, loss, spill, or insecure load is reported.', secure: 'The driver explicitly confirms the load is intact and secure.', unknown: 'Cargo condition is not established.'}},
+        service_need: {type: 'choice', instructions: 'What roadside service is supported by the newest driver message? Use earlier messages only for context.', criteria: {tire: 'A flat, blown, or damaged tyre needs tire service.', mechanic: 'A non-electrical mechanical failure needs a mechanic.', electrical: 'An electrical or battery failure is reported.', tow: 'A collision or disabled vehicle likely requires heavy towing.', unknown: 'The service need is not clear.'}}
+      }
+    };
+    let current = 'late';
+
+    function pathTo(id) {
+      const path = [id];
+      while (parents[path[0]]) path.unshift(parents[path[0]]);
+      return path;
+    }
+    function nodeCard(id, isCurrent) {
+      const step = steps[id];
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = `node-card${isCurrent ? ' current' : ''}${id === 'other_incident' || id === 'unknown_repair' ? ' exit' : ''}`;
+      button.dataset.id = id;
+      button.setAttribute('aria-label', `${step.n}. ${step.title}. ${isCurrent ? 'Current step' : 'Select to show its next steps and details'}`);
+      button.innerHTML = `<span class="node-number">${step.n}</span><strong>${step.title}</strong><span class="node-action">${isCurrent ? 'Selected' : edges[id] ? 'Open next →' : 'End step'}</span>`;
+      button.addEventListener('click', () => {
+        current = id;
+        render();
+      });
+      return button;
+    }
+    function appendChoices(container, parentId, depth) {
+      const children = edges[parentId] || [];
+      if (!depth || !children.length) return;
+      const connector = document.createElement('div'); connector.className = 'connector'; connector.setAttribute('aria-hidden', 'true'); container.appendChild(connector);
+      const choices = document.createElement('div'); choices.className = `choices${children.length > 1 ? ' multiple' : ''}`;
+      for (const [id, label] of children) {
+        const option = document.createElement('div'); option.className = `choice${id === 'other_incident' || id === 'unknown_repair' ? ' exit' : ''}`;
+        const edge = document.createElement('span'); edge.className = 'choice-label'; edge.textContent = label;
+        option.append(edge, nodeCard(id, false));
+        appendChoices(option, id, depth - 1);
+        choices.appendChild(option);
+      }
+      container.appendChild(choices);
+    }
+    function render() {
+      trail.replaceChildren();
+      const path = pathTo(current);
+      path.forEach((id, index) => {
+        if (index) { const separator = document.createElement('span'); separator.className = 'separator'; separator.setAttribute('aria-hidden', 'true'); separator.textContent = '›'; trail.appendChild(separator); }
+        const button = document.createElement('button'); button.type = 'button'; button.textContent = `${steps[id].n} ${steps[id].title}`;
+        button.title = steps[id].title;
+        if (id === current) button.setAttribute('aria-current', 'step');
+        button.addEventListener('click', () => { current = id; render(); });
+        trail.appendChild(button);
+      });
+      diagram.replaceChildren();
+      const navigator = document.createElement('div'); navigator.className = 'navigator';
+      const heading = document.createElement('p'); heading.className = 'level-label'; heading.textContent = 'Current step'; navigator.appendChild(heading);
+      navigator.appendChild(nodeCard(current, true));
+      appendChoices(navigator, current, 2);
+      if (!edges[current]) {
+        const end = document.createElement('p'); end.className = 'end-note'; end.textContent = 'This branch ends here. Use Back to choose another path.'; navigator.appendChild(end);
+      }
+      diagram.appendChild(navigator);
+      document.getElementById('back').disabled = path.length === 1;
+      renderDetail(current);
+    }
+    function renderDetail(id) {
+      const step = steps[id];
+      detail.innerHTML = `<span class="inspector-state ${step.state}">${status[step.state]}</span>
+        <h2>${step.n} · ${step.title}</h2><p class="summary">${step.summary}</p>
+        <div class="contract-section"><h3>Inputs and outputs</h3>${step.fields.map(([name, source]) => `<div class="field"><b>${name}</b><span>${source}</span></div>`).join('')}</div>
+        <div class="contract-section"><div class="gate"><strong>Gate / missing-data behavior</strong>${step.gate}</div></div>
+        <div class="contract-section"><div class="eval"><strong>Eval situations to add</strong>${step.eval}</div></div>`;
+      if (id === 'classify') {
+        const section = document.createElement('div'); section.className = 'contract-section';
+        section.innerHTML = '<h3>Jev model request</h3><p class="prompt-note">POST to OpenRouter Decisions API. Jev receives typed questions, not a chat prompt. The thread and message ID are filled from the verified email; every message in the thread is included.</p><pre class="model-request"></pre>';
+        section.querySelector('pre').textContent = JSON.stringify(jevRequest, null, 2);
+        detail.insertBefore(section, detail.querySelector('.contract-section'));
+      }
+    }
+    for (const [id, step] of Object.entries(steps)) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${step.n} · ${step.title}</td><td>${step.fields.map(item => `<strong>${item[0]}</strong>`).join(' · ')}</td><td class="source">${step.gate}</td>`;
+      tr.addEventListener('click', () => { current = id; render(); document.querySelector('.workspace').scrollIntoView({behavior: 'smooth'}); });
+      matrix.appendChild(tr);
+    }
+    document.getElementById('back').addEventListener('click', () => { if (parents[current]) { current = parents[current]; render(); } });
+    document.getElementById('restart').addEventListener('click', () => { current = 'late'; render(); });
+    render();
+  </script>
+</body>
+</html>

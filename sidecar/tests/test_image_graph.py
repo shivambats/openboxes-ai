@@ -3,8 +3,10 @@ from unittest.mock import Mock
 import httpx
 import pytest
 
-from email_orchestrator import AgentMail, EmailJournal, OpenRouter, ShipmentEmailGraph, process_polled_message
+from email_orchestrator import (AgentMail, EmailJournal, OpenRouter, ShipmentEmailGraph,
+                                process_polled_message, review_outcome)
 from image_graph import ShipmentImageGraph
+from incident_image_actions import propose_driver_photo_actions
 
 
 def findings():
@@ -37,6 +39,58 @@ def test_image_graph_rejects_unsupported_and_invalid_output():
                                        'value': ''}]}, {})
     with pytest.raises(ValueError, match='identifiers'):
         agent.analyze(b'image', 'image/png')
+
+
+def test_image_graph_omits_carrier_from_shipment_identifiers():
+    model = Mock()
+    model.describe_image.return_value = (
+        findings() | {'carrier': 'FedEx', 'shipment_identifiers': [
+            {'kind': 'carrier', 'value': 'FedEx'},
+            {'kind': 'shipment', 'value': 'SHIP-1'}]},
+        {'model': 'vision-test'})
+    result = ShipmentImageGraph(model).analyze(b'image', 'image/png')
+    assert result['findings']['carrier'] == 'FedEx'
+    assert result['findings']['shipment_identifiers'] == [
+        {'kind': 'shipment', 'value': 'SHIP-1'}]
+
+
+def test_image_validation_error_has_review_reason():
+    assert review_outcome('message-1', ValueError('Invalid image identifiers')) == {
+        'message_id': 'message-1', 'outcome': 'review',
+        'error_type': 'ValueError', 'reason': 'invalid_image_identifiers'}
+
+
+def test_image_graph_accepts_only_grounded_allowlisted_actions():
+    model = Mock()
+    model.describe_image.return_value = (
+        findings() | {
+            'description': 'A collision with visible truck damage and leaking fluid.',
+            'condition': ['damage', 'leakage'],
+            'recommended_actions': [
+                {'action': 'book_vendor', 'evidence_field': 'condition',
+                 'evidence': 'damage'},
+                {'action': 'request_cleanup_team', 'evidence_field': 'description',
+                 'evidence': 'chemical spill'},
+                {'action': 'request_cleanup_team', 'evidence_field': 'condition',
+                 'evidence': 'leakage'},
+                {'action': 'request_inspection_team', 'evidence_field': 'description',
+                 'evidence': 'collision'},
+                {'action': 'start_insurance_intake', 'evidence_field': 'condition',
+                 'evidence': 'damage'}]},
+        {'model': 'vision-test'})
+    result = ShipmentImageGraph(model).analyze(
+        b'image', 'image/png', source={'kind': 'driver_email', 'message_id': 'm1'})
+    actions = result['findings']['recommended_actions']
+    assert result['source'] == {'kind': 'driver_email', 'message_id': 'm1'}
+    assert [item['action'] for item in actions] == [
+        'request_cleanup_team', 'request_inspection_team', 'start_insurance_intake']
+
+
+def test_photo_plan_does_not_dispatch_from_unrelated_evidence():
+    observations = [{'sha256': 'image-hash', 'findings': {'recommended_actions': [
+        {'action': 'request_cleanup_team', 'evidence_field': 'visible_text',
+         'evidence': 'Call the cleanup team'}]}}]
+    assert propose_driver_photo_actions(observations) == []
 
 
 def test_openrouter_vision_request_contains_image_and_redacted_trace():
@@ -120,7 +174,10 @@ def test_unmatched_damaged_image_previews_then_requests_details_once(tmp_path):
     model = Mock()
     image_findings = findings() | {
         'shipment_identifiers': [{'kind': 'barcode', 'value': 'visible but unreadable'}],
-        'condition': ['2 boxes damaged with crushed and torn sides']}
+        'condition': ['2 boxes damaged with crushed and torn sides'],
+        'recommended_actions': [{'action': 'request_inspection_team',
+                                 'evidence_field': 'condition',
+                                 'evidence': '2 boxes damaged with crushed and torn sides'}]}
     model.describe_image.return_value = (image_findings, {'model': 'vision-test'})
     wms = Mock()
     wms.request.return_value = []

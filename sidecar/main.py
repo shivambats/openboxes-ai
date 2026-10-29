@@ -9,8 +9,9 @@ from context import ContextEvaluator
 from tools.openboxes import OpenBoxesTool
 from tools.carrier_api import CarrierAPITool
 from tools.web_surfer import WebSurferTool
-from carrier_email import CarrierJournal, request_status
 from email_orchestrator import AgentMail, load_local_env
+from delay_outreach import OutreachJournal, request_update
+from execution_observer import observed_run
 
 
 def main():
@@ -21,6 +22,11 @@ def main():
     if os.getenv('SHIPMENT_EMAIL_ENV_FILE'):
         load_local_env(os.environ['SHIPMENT_EMAIL_ENV_FILE'], overwrite=True)
     config = Config()
+    return run_sweep(config, args.apply)
+
+
+@observed_run('delayed_shipments', 'scheduled_sweep')
+def run_sweep(config, apply=False):
     with open(config.state_path + '.lock', 'a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         wms = OpenBoxesTool(config)
@@ -28,23 +34,22 @@ def main():
             wms.login()
             with closing(Journal(config.state_path)) as journal:
                 agent = Agent(wms, CarrierAPITool(config), WebSurferTool(config), ContextEvaluator(config), journal)
-                result = agent.sweep(apply=args.apply)
-            pending_requests = [r for r in result if r.get('carrier_request')]
+                result = agent.sweep(apply=apply)
+            pending_requests = [r for r in result if r.get('contact_needed')]
             if pending_requests:
-                carrier_journal = CarrierJournal(config.state_path)
-                mail = AgentMail(config.agentmail_key, config.agentmail_inbox) if args.apply else None
+                outreach_journal = OutreachJournal(config.state_path)
+                mail = AgentMail(config.agentmail_key, config.agentmail_inbox) if apply else None
                 try:
                     for row in pending_requests:
-                        details = row['carrier_request']
                         try:
-                            row['carrier_email'] = request_status(mail, wms, carrier_journal,
-                                details['shipment_id'], details['bol'], details['pro'],
-                                details['recipient'], details['trigger'], apply=args.apply)
+                            shipment = wms.get_shipment_history(row['shipment'])['shipment']
+                            row['contact_email'] = request_update(
+                                mail, outreach_journal, shipment, apply=apply)
                         except Exception as error:
-                            row['carrier_email'] = {'outcome': 'review',
+                            row['contact_email'] = {'outcome': 'review',
                                                     'error_type': type(error).__name__}
                 finally:
-                    carrier_journal.close()
+                    outreach_journal.close()
                     if mail:
                         mail.client.close()
             print(json.dumps(result, indent=2, ensure_ascii=False))

@@ -165,6 +165,17 @@ class DashboardApiController {
         render(delayedShipments as JSON)
     }
 
+    def getNeedsAttentionItems() {
+        User user = session.user?.id ? User.get(session.user.id) : null
+        Location location = session.warehouse?.id ? Location.get(session.warehouse.id) : null
+        if (!user?.active || !location) {
+            render status: 403, contentType: 'application/json',
+                    text: '{"error":"Warehouse access required"}'
+            return
+        }
+        render([data: indicatorDataService.getNeedsAttentionItems(location)] as JSON)
+    }
+
     def getProductWithNegativeInventory() {
         Location location = Location.get(params.locationId)
         def productsWithNegativeInventory = numberDataService.getProductWithNegativeInventory(location)

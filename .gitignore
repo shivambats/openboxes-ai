@@ -50,3 +50,8 @@ docker/openboxes.war
 .gradle
 .claude
 .~*#
+
+# Local build output and agent state
+/openboxes.war
+*.sqlite3
+/interactive_visual_im_*.html

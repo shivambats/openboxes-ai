@@ -2,6 +2,7 @@ package org.pih.warehouse.api
 
 import grails.converters.JSON
 import org.pih.warehouse.core.User
+import org.pih.warehouse.inventory.InventoryItem
 import org.pih.warehouse.inventory.RecallReviewService
 
 /** Review-only API. Holding or releasing stock is deliberately a separate operation. */
@@ -27,5 +28,9 @@ class RecallReviewApiController {
 
     def resolve() {
         respondWith { recallReviewService.resolve(User.get(session.user?.id), request.JSON as Map) }
+    }
+
+    def summary() {
+        render([data: [count: InventoryItem.countByRecallReviewState('NEEDS_ATTENTION')]] as JSON)
     }
 }

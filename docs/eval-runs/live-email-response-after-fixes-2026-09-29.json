@@ -1,0 +1,1074 @@
+{
+  "dataset_version": "synthetic-email-response-v1",
+  "started_utc": "2026-09-28T18:42:37.047259+00:00",
+  "finished_utc": "2026-09-28T18:43:35.703055+00:00",
+  "model": "deepseek/deepseek-v4.1-flash",
+  "review_status": "development labels; domain owner review pending",
+  "summary": {
+    "passed": 9,
+    "total": 9,
+    "provider_calls": 10,
+    "provider_cost_usd": 0.008849852,
+    "input_tokens": 7238,
+    "output_tokens": 8992,
+    "p50_agent_latency_ms": 6803,
+    "p95_agent_latency_ms": 11861
+  },
+  "trials": [
+    {
+      "case_id": "ER-02",
+      "catalog_id": "E2-02",
+      "trial": 1,
+      "expected_outcome": "committed",
+      "actual_outcome": "committed",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "handled_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the follow-up. We recorded 2026-10-02 as your reported delivery day. The exact delivery ETA was not changed because your message did not include an arrival time and time zone. Please reply with those details when confirmed.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-02-t1",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-02-t1",
+          "body": "Thank you for the follow-up. We recorded 2026-10-02 as your reported delivery day. The exact delivery ETA was not changed because your message did not include an arrival time and time zone. Please reply with those details when confirmed.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:17a97543c0e0f46b639d038d97e14692a22900d4af893355fd7df2251c0bdb8f",
+            "version": 1,
+            "source": "Email",
+            "outcome": "success",
+            "expectedDeliveryDate": null,
+            "metadata": {
+              "reported_delivery_date": "2026-10-02",
+              "date_quote": "2026-10-02",
+              "date_basis": "2026-09-28T12:00:00Z",
+              "agentmail_message_id": "ER-02-t1",
+              "email_timestamp": "2026-09-28T12:00:00Z",
+              "model_audit": [
+                {
+                  "model": "deepseek/deepseek-v4.1-flash",
+                  "usage": {
+                    "prompt_tokens": 749,
+                    "completion_tokens": 1211,
+                    "total_tokens": 1960,
+                    "cost": 0.000637602,
+                    "is_byok": false,
+                    "prompt_tokens_details": {
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "audio_tokens": 0,
+                      "video_tokens": 0
+                    },
+                    "cost_details": {
+                      "upstream_inference_cost": 0.000637602,
+                      "upstream_inference_prompt_cost": 8.5386e-05,
+                      "upstream_inference_completions_cost": 0.000552216
+                    },
+                    "completion_tokens_details": {
+                      "reasoning_tokens": 1080,
+                      "image_tokens": 0,
+                      "audio_tokens": 0
+                    }
+                  },
+                  "response_id": "gen-1790620957-AS5X9ODrK5LAe67b6PcY",
+                  "latency_ms": 7966
+                }
+              ]
+            },
+            "comment": "Email reported delivery day for shipment SHIP-2026-PAPER1: 2026-10-02 (exact arrival time not provided; timestamp ETA unchanged)."
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 7988,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620957-AS5X9ODrK5LAe67b6PcY",
+          "http_status": 200,
+          "latency_ms": 7966,
+          "input_tokens": 749,
+          "output_tokens": 1211,
+          "provider_cost_usd": 0.000637602
+        }
+      ],
+      "input_tokens": 749,
+      "output_tokens": 1211,
+      "provider_cost_usd": 0.000637602
+    },
+    {
+      "case_id": "ER-07",
+      "catalog_id": "E1-09",
+      "trial": 1,
+      "expected_outcome": "review",
+      "actual_outcome": "review",
+      "reason": "ungrounded_shipment_reference",
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "handled_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. We could not identify a shipment from the details provided, so no shipment was updated. Please reply with a shipment number or tracking number, or the origin, destination, product, and quantity.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-07-t1",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-07-t1",
+          "body": "Thank you for the update. We could not identify a shipment from the details provided, so no shipment was updated. Please reply with a shipment number or tracking number, or the origin, destination, product, and quantity.\n"
+        }
+      ],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 2943,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620965-GxEXnieJsqmQYfQjtLgN",
+          "http_status": 200,
+          "latency_ms": 2927,
+          "input_tokens": 706,
+          "output_tokens": 727,
+          "provider_cost_usd": 0.00089604
+        }
+      ],
+      "input_tokens": 706,
+      "output_tokens": 727,
+      "provider_cost_usd": 0.00089604
+    },
+    {
+      "case_id": "ER-10",
+      "catalog_id": "E2-06",
+      "trial": 1,
+      "expected_outcome": "review",
+      "actual_outcome": "review",
+      "reason": "eta_needs_clarification",
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "handled_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. The time a truck reaches an intermediate location is not a confirmed delivery time. No delivery ETA was changed. Please reply with the expected arrival date, local time, and time zone at the delivery destination.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-10-t1",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-10-t1",
+          "body": "Thank you for the update. The time a truck reaches an intermediate location is not a confirmed delivery time. No delivery ETA was changed. Please reply with the expected arrival date, local time, and time zone at the delivery destination.\n"
+        }
+      ],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 11861,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620968-aw7r7GWXwEEyP4TuOZla",
+          "http_status": 200,
+          "latency_ms": 6790,
+          "input_tokens": 726,
+          "output_tokens": 1600,
+          "provider_cost_usd": 0.00194964
+        },
+        {
+          "response_id": "gen-1790620974-SZkdpv0VBQZ2CzGYRzDK",
+          "http_status": 200,
+          "latency_ms": 5041,
+          "input_tokens": 726,
+          "output_tokens": 1271,
+          "provider_cost_usd": 0.00155484
+        }
+      ],
+      "input_tokens": 1452,
+      "output_tokens": 2871,
+      "provider_cost_usd": 0.00350448
+    },
+    {
+      "case_id": "ER-02",
+      "catalog_id": "E2-02",
+      "trial": 2,
+      "expected_outcome": "committed",
+      "actual_outcome": "committed",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "handled_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the follow-up. We recorded 2026-10-02 as your reported delivery day. The exact delivery ETA was not changed because your message did not include an arrival time and time zone. Please reply with those details when confirmed.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-02-t2",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-02-t2",
+          "body": "Thank you for the follow-up. We recorded 2026-10-02 as your reported delivery day. The exact delivery ETA was not changed because your message did not include an arrival time and time zone. Please reply with those details when confirmed.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:c01a22a80e7d536d5927f54c56dc577179ce021802e9a6b605a323e1199ffcad",
+            "version": 1,
+            "source": "Email",
+            "outcome": "success",
+            "expectedDeliveryDate": null,
+            "metadata": {
+              "reported_delivery_date": "2026-10-02",
+              "date_quote": "2026-10-02",
+              "date_basis": "2026-09-28T12:00:00Z",
+              "agentmail_message_id": "ER-02-t2",
+              "email_timestamp": "2026-09-28T12:00:00Z",
+              "model_audit": [
+                {
+                  "model": "deepseek/deepseek-v4.1-flash",
+                  "usage": {
+                    "prompt_tokens": 724,
+                    "completion_tokens": 131,
+                    "total_tokens": 855,
+                    "cost": 4.8385728e-05,
+                    "is_byok": false,
+                    "prompt_tokens_details": {
+                      "cached_tokens": 640,
+                      "cache_write_tokens": 0,
+                      "audio_tokens": 0,
+                      "video_tokens": 0
+                    },
+                    "cost_details": {
+                      "upstream_inference_cost": 4.8385728e-05,
+                      "upstream_inference_prompt_cost": 7.757388e-06,
+                      "upstream_inference_completions_cost": 4.062834e-05
+                    },
+                    "completion_tokens_details": {
+                      "reasoning_tokens": 0,
+                      "image_tokens": 0,
+                      "audio_tokens": 0
+                    }
+                  },
+                  "response_id": "gen-1790620979-Elzb5N4MAh0BtVplBQyZ",
+                  "latency_ms": 6774
+                }
+              ]
+            },
+            "comment": "Email reported delivery day for shipment SHIP-2026-PAPER1: 2026-10-02 (exact arrival time not provided; timestamp ETA unchanged)."
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 6803,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620979-Elzb5N4MAh0BtVplBQyZ",
+          "http_status": 200,
+          "latency_ms": 6774,
+          "input_tokens": 724,
+          "output_tokens": 131,
+          "provider_cost_usd": 4.8385728e-05
+        }
+      ],
+      "input_tokens": 724,
+      "output_tokens": 131,
+      "provider_cost_usd": 4.8386e-05
+    },
+    {
+      "case_id": "ER-07",
+      "catalog_id": "E1-09",
+      "trial": 2,
+      "expected_outcome": "review",
+      "actual_outcome": "review",
+      "reason": "ungrounded_shipment_reference",
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "handled_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. We could not identify a shipment from the details provided, so no shipment was updated. Please reply with a shipment number or tracking number, or the origin, destination, product, and quantity.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-07-t2",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-07-t2",
+          "body": "Thank you for the update. We could not identify a shipment from the details provided, so no shipment was updated. Please reply with a shipment number or tracking number, or the origin, destination, product, and quantity.\n"
+        }
+      ],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 3961,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620986-wJG1UY4NU4u1huyxkXiy",
+          "http_status": 200,
+          "latency_ms": 3941,
+          "input_tokens": 706,
+          "output_tokens": 978,
+          "provider_cost_usd": 0.00119724
+        }
+      ],
+      "input_tokens": 706,
+      "output_tokens": 978,
+      "provider_cost_usd": 0.00119724
+    },
+    {
+      "case_id": "ER-10",
+      "catalog_id": "E2-06",
+      "trial": 2,
+      "expected_outcome": "review",
+      "actual_outcome": "review",
+      "reason": "eta_needs_clarification",
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "handled_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. The time a truck reaches an intermediate location is not a confirmed delivery time. No delivery ETA was changed. Please reply with the expected arrival date, local time, and time zone at the delivery destination.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-10-t2",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-10-t2",
+          "body": "Thank you for the update. The time a truck reaches an intermediate location is not a confirmed delivery time. No delivery ETA was changed. Please reply with the expected arrival date, local time, and time zone at the delivery destination.\n"
+        }
+      ],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 5357,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620990-t64NY24btvycdcZESHgc",
+          "http_status": 200,
+          "latency_ms": 5335,
+          "input_tokens": 726,
+          "output_tokens": 1537,
+          "provider_cost_usd": 0.00187404
+        }
+      ],
+      "input_tokens": 726,
+      "output_tokens": 1537,
+      "provider_cost_usd": 0.00187404
+    },
+    {
+      "case_id": "ER-02",
+      "catalog_id": "E2-02",
+      "trial": 3,
+      "expected_outcome": "committed",
+      "actual_outcome": "committed",
+      "reason": null,
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "handled_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the follow-up. We recorded 2026-10-02 as your reported delivery day. The exact delivery ETA was not changed because your message did not include an arrival time and time zone. Please reply with those details when confirmed.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-02-t3",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-02-t3",
+          "body": "Thank you for the follow-up. We recorded 2026-10-02 as your reported delivery day. The exact delivery ETA was not changed because your message did not include an arrival time and time zone. Please reply with those details when confirmed.\n"
+        }
+      ],
+      "commit_records": [
+        {
+          "shipment_id": "paper-1",
+          "payload": {
+            "idempotency_key": "email:15501911b684561c294f842f6c05d4a194efd725a4a39aa726185624ee873d6d",
+            "version": 1,
+            "source": "Email",
+            "outcome": "success",
+            "expectedDeliveryDate": null,
+            "metadata": {
+              "reported_delivery_date": "2026-10-02",
+              "date_quote": "2026-10-02",
+              "date_basis": "2026-09-28T12:00:00Z",
+              "agentmail_message_id": "ER-02-t3",
+              "email_timestamp": "2026-09-28T12:00:00Z",
+              "model_audit": [
+                {
+                  "model": "deepseek/deepseek-v4.1-flash",
+                  "usage": {
+                    "prompt_tokens": 724,
+                    "completion_tokens": 119,
+                    "total_tokens": 843,
+                    "cost": 4.4664048e-05,
+                    "is_byok": false,
+                    "prompt_tokens_details": {
+                      "cached_tokens": 640,
+                      "cache_write_tokens": 0,
+                      "audio_tokens": 0,
+                      "video_tokens": 0
+                    },
+                    "cost_details": {
+                      "upstream_inference_cost": 4.4664048e-05,
+                      "upstream_inference_prompt_cost": 7.757388e-06,
+                      "upstream_inference_completions_cost": 3.690666e-05
+                    },
+                    "completion_tokens_details": {
+                      "reasoning_tokens": 0,
+                      "image_tokens": 0,
+                      "audio_tokens": 0
+                    }
+                  },
+                  "response_id": "gen-1790620996-BhsbY4K1r0QtknVajz1j",
+                  "latency_ms": 4463
+                }
+              ]
+            },
+            "comment": "Email reported delivery day for shipment SHIP-2026-PAPER1: 2026-10-02 (exact arrival time not provided; timestamp ETA unchanged)."
+          }
+        }
+      ],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 2
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 4491,
+      "model_calls": [
+        {
+          "response_id": "gen-1790620996-BhsbY4K1r0QtknVajz1j",
+          "http_status": 200,
+          "latency_ms": 4463,
+          "input_tokens": 724,
+          "output_tokens": 119,
+          "provider_cost_usd": 4.4664048e-05
+        }
+      ],
+      "input_tokens": 724,
+      "output_tokens": 119,
+      "provider_cost_usd": 4.4664e-05
+    },
+    {
+      "case_id": "ER-07",
+      "catalog_id": "E1-09",
+      "trial": 3,
+      "expected_outcome": "review",
+      "actual_outcome": "review",
+      "reason": "ungrounded_shipment_reference",
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "handled_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. We could not identify a shipment from the details provided, so no shipment was updated. Please reply with a shipment number or tracking number, or the origin, destination, product, and quantity.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-07-t3",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-07-t3",
+          "body": "Thank you for the update. We could not identify a shipment from the details provided, so no shipment was updated. Please reply with a shipment number or tracking number, or the origin, destination, product, and quantity.\n"
+        }
+      ],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 8371,
+      "model_calls": [
+        {
+          "response_id": "gen-1790621000-PRNj9qaWSs3cRqUVt7Vu",
+          "http_status": 200,
+          "latency_ms": 8347,
+          "input_tokens": 728,
+          "output_tokens": 1252,
+          "provider_cost_usd": 0.00058824
+        }
+      ],
+      "input_tokens": 728,
+      "output_tokens": 1252,
+      "provider_cost_usd": 0.00058824
+    },
+    {
+      "case_id": "ER-10",
+      "catalog_id": "E2-06",
+      "trial": 3,
+      "expected_outcome": "review",
+      "actual_outcome": "review",
+      "reason": "eta_needs_clarification",
+      "checks": {
+        "outcome": true,
+        "commit_count": true,
+        "reply_count": true,
+        "recipient_thread": true,
+        "shipment_scope": true,
+        "required_reply": true,
+        "forbidden_reply": true,
+        "exact_eta": true,
+        "reported_date": true,
+        "handled_error": true
+      },
+      "passed": true,
+      "error_type": null,
+      "response_body": "Thank you for the update. The time a truck reaches an intermediate location is not a confirmed delivery time. No delivery ETA was changed. Please reply with the expected arrival date, local time, and time zone at the delivery destination.\n",
+      "reply_records": [
+        {
+          "message_id": "ER-10-t3",
+          "to": "sender@fixture.invalid",
+          "thread_id": "thread-ER-10-t3",
+          "body": "Thank you for the update. The time a truck reaches an intermediate location is not a confirmed delivery time. No delivery ETA was changed. Please reply with the expected arrival date, local time, and time zone at the delivery destination.\n"
+        }
+      ],
+      "commit_records": [],
+      "wms_before": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "wms_after": {
+        "paper-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "toner-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-1": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "archive-2": {
+          "status": "IN_TRANSIT",
+          "expectedDeliveryDate": null,
+          "version": 1
+        },
+        "closed-1": {
+          "status": "RECEIVED",
+          "expectedDeliveryDate": null,
+          "version": 1
+        }
+      },
+      "agent_latency_ms": 6858,
+      "model_calls": [
+        {
+          "response_id": "gen-1790621008-ZKEUIOqmiBw1uLa2ABGC",
+          "http_status": 200,
+          "latency_ms": 6834,
+          "input_tokens": 723,
+          "output_tokens": 166,
+          "provider_cost_usd": 5.9160093e-05
+        }
+      ],
+      "input_tokens": 723,
+      "output_tokens": 166,
+      "provider_cost_usd": 5.916e-05
+    }
+  ]
+}

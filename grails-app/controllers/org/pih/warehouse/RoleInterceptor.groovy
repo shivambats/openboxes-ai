@@ -92,6 +92,8 @@ class RoleInterceptor {
     ]
 
     def static authenticatedActions = [
+        'operatorChatApi'     : ['history', 'send', 'reset', 'progress',
+                                 'progressTicket', 'focus'],
         'api'                 : ['getAppContext', 'getRequestTypes', 'getMenuConfig'],
         'dashboard'           : ['megamenu'],
         'grails'              : ['errors'],
@@ -229,8 +231,14 @@ class RoleInterceptor {
     }
 
     static boolean isSidecarAction(String controller, String action) {
-        (controller == 'shipmentApi' && action in ['list', 'read', 'history', 'update', 'comment', 'event', 'sync']) ||
+        (controller == 'shipmentApi' && action in ['list', 'read', 'history', 'update',
+                                                  'comment', 'event', 'sync', 'recovery']) ||
                 (controller == 'api' && action in ['login', 'logout']) ||
+                (controller == 'dashboardApi' && action == 'getNeedsAttentionItems') ||
+                (controller == 'sidecarRecallApi' && action == 'context') ||
+                (controller == 'sidecarDataApi' && action in ['catalog', 'query']) ||
+                (controller == 'sidecarOpsApi' && action in ['snapshot', 'binMoves', 'purchaseOrderDelivery',
+                                                            'draftPurchaseOrder', 'entityLinks']) ||
                 (controller == 'auth' && action == 'logout')
     }
 
