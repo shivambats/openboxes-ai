@@ -1,0 +1,18 @@
+# Caddy gets and renews the HTTPS certificate for DOMAIN automatically.
+{$DOMAIN} {
+	encode gzip
+
+	# Live progress for the operator chat goes straight to the sidecar.
+	handle /openboxes/api/operator-chat/progress/ws/* {
+		uri strip_prefix /openboxes
+		reverse_proxy sidecar:8091
+	}
+
+	# The sidecar's own console stays private; it is not routed.
+	@root path /
+	redir @root /openboxes/
+
+	handle {
+		reverse_proxy app:8080
+	}
+}

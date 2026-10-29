@@ -1,0 +1,6 @@
+# Only openboxes.war is needed to build the app image.
+mysql/
+*.env
+*.example
+caddy/
+nginx/

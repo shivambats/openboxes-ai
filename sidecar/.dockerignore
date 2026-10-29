@@ -1,0 +1,13 @@
+# Keys, local state and build output never go into the image.
+.env
+*.env
+.venv/
+__pycache__/
+.pytest_cache/
+*.sqlite*
+*.lock
+*.war
+tests/
+evals/
+Dockerfile
+.dockerignore

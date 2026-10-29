@@ -1,0 +1,94 @@
+# Single-VM deployment: OpenBoxes, MariaDB, the vegath-agent sidecar and Caddy (automatic HTTPS).
+# See DEPLOY_VM.md. Run from this directory:
+#   docker compose -f docker-compose-vm.yml --env-file vm.env up -d --build
+services:
+  db:
+    image: mariadb:10
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?set in vm.env}
+      MYSQL_DATABASE: openboxes
+      MYSQL_USER: openboxes
+      MYSQL_PASSWORD: ${DATASOURCE_PASSWORD:?set in vm.env}
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: mysqladmin ping -h localhost -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      interval: 10s
+      timeout: 20s
+      retries: 10
+
+  app:
+    image: openboxes-sidecar:vm
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - "8080"
+    environment:
+      DATASOURCE_USERNAME: openboxes
+      DATASOURCE_PASSWORD: ${DATASOURCE_PASSWORD}
+      DATASOURCE_URL: jdbc:mysql://db/openboxes?serverTimezone=UTC&useSSL=false
+      GRAILS_SERVER_URL: https://${DOMAIN:?set in vm.env}/openboxes/
+      SERVER_USE_FORWARD_HEADERS: "true"
+      JAVA_TOOL_OPTIONS: ${JAVA_TOOL_OPTIONS:--Xms1024m -Xmx1536m -XX:+UseParallelGC -Djava.awt.headless=true}
+      OPENBOXES_SIDECAR_URL: http://sidecar:8091
+      OPENBOXES_SIDECAR_TOKEN: ${OPENBOXES_SIDECAR_TOKEN:?set in vm.env}
+      # Superuser-only setup and demo-data endpoints. Turn on for setup, then off.
+      SIDECAR_SANDBOX_ENABLED: ${SIDECAR_SANDBOX_ENABLED:-false}
+    volumes:
+      - uploads:/app/uploads
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/openboxes/health | grep UP || exit 1"
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 120s
+
+  sidecar:
+    image: vegath-sidecar:vm
+    build:
+      context: ../sidecar
+    restart: unless-stopped
+    depends_on:
+      app:
+        condition: service_healthy
+    expose:
+      - "8091"
+    # Model, mail and search keys live only in this file on the VM.
+    env_file: sidecar.vm.env
+    environment:
+      OPENBOXES_URL: http://app:8080/openboxes
+      OPENBOXES_SIDECAR_TOKEN: ${OPENBOXES_SIDECAR_TOKEN}
+      SIDECAR_STATE_PATH: /data/sidecar.sqlite3
+      BROWSER_EXECUTABLE_PATH: ""
+      PORTAL_ALLOWED_ORIGINS: https://${DOMAIN}
+    volumes:
+      - sidecar-data:/data
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      - app
+      - sidecar
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN}
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  db-data:
+  uploads:
+  sidecar-data:
+  caddy-data:
+  caddy-config:
